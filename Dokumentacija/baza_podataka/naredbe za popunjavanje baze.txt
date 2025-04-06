@@ -1,0 +1,138 @@
+INSERT INTO Korisnik (lozinka, naziv, email) VALUES
+('lozinka123', 'Ivan Horvat', 'ivan@example.com'),
+('1234abcd', 'Petra Perić', 'petra@example.com'),
+('qwerty123', 'Marko Jurić', 'marko@example.com'),
+('passw0rd', 'Ana Kovač', 'ana@example.com'),
+('password1', 'Josip Ivić', 'josip@example.com'),
+('12345abc', 'Maja Novak', 'maja@example.com'),
+('ilovecoding', 'Luka Petrović', 'luka@example.com'),
+('letmein2025', 'Ivana Blažić', 'ivana@example.com'),
+('welcome123', 'Tomislav Mandić', 'tomislav@example.com'),
+('admin1234', 'Sara Lučić', 'sara@example.com'),
+('freelancer01', 'Filip Savić', 'filip@example.com'),
+('strongpassword', 'Lucija Horvatić', 'lucija@example.com'),
+('sunshine2025', 'Karla Milović', 'karla@example.com'),
+('letmein2025!', 'David Kolić', 'david@example.com'),
+('abc123xyz', 'Nina Pavić', 'nina@example.com'),
+('testuser01', 'Nikola Cvjetić', 'nikola@example.com'),
+('qwertyuiop', 'Marija Glavaš', 'marija@example.com'),
+('newpassword123', 'Jure Vuković', 'jure@example.com'),
+('mypassword2025', 'Tomislav Jovanović', 'tomislavj@example.com');
+
+INSERT INTO Vjestina (naziv) VALUES
+('Web Development'),
+('UI/UX Design'),
+('Data Analysis'),
+('SEO Optimization'),
+('Project Management'),
+('Digital Marketing'),
+('Mobile Development'),
+('Python Programming'),
+('Java Development'),
+('Database Administration'),
+('Cloud Computing'),
+('Machine Learning'),
+('DevOps'),
+('Graphic Design'),
+('Blockchain'),
+('Artificial Intelligence'),
+('Cybersecurity'),
+('Business Analysis'),
+('Software Testing'),
+('System Architecture');
+
+INSERT INTO Freelancer (korisnikId, kratkiOpis, edukacija, iskustvo) VALUES
+(1, 'Stručnjak za web development', 'Fakultet računarstva', '5 godina iskustva u front-end razvoju'),
+(2, 'UI/UX dizajner', 'Fakultet likovnih umjetnosti', '3 godine iskustva u dizajnu sučelja'),
+(3, 'Data analyst', 'Ekonomija', '2 godine iskustva u analizi podataka'),
+(4, 'SEO specijalist', 'Edukacija iz SEO-a', '4 godine iskustva u optimizaciji web stranica'),
+(5, 'Menadžer projekata', 'Menadžment', '6 godina iskustva u vođenju timova'),
+(6, 'Digitalni marketinški stručnjak', 'Fakultet marketinga', '3 godine iskustva u digitalnom marketingu'),
+(7, 'Mobilni razvoj', 'Fakultet elektrotehnike', '4 godine iskustva u razvoju mobilnih aplikacija'),
+(8, 'Programer u Pythonu', 'Fakultet računarstva', '5 godina iskustva u razvoju Python aplikacija'),
+(9, 'Razvoj u Javi', 'Računarski inženjering', '2 godine iskustva u razvoju Java aplikacija'),
+(10, 'Administrator baza podataka', 'Fakultet računarstva', '7 godina iskustva u administraciji baza podataka'),
+(11, 'Specijalist za cloud tehnologije', 'Inženjering', '3 godine iskustva u radu s AWS-om'),
+(12, 'Stručnjak za strojno učenje', 'Računarski inženjering', '2 godine iskustva u primjeni ML modela'),
+(13, 'DevOps inženjer', 'Računarska znanost', '4 godine iskustva u DevOps-u'),
+(14, 'Grafički dizajner', 'Fakultet umjetnosti', '3 godine iskustva u dizajniranju'),
+(15, 'Blockchain developer', 'Računarski inženjering', '2 godine iskustva u blockchain razvoju'),
+(16, 'AI inženjer', 'Računarski inženjering', '1 godina iskustva u razvoju AI aplikacija'),
+(17, 'Stručnjak za cyber sigurnost', 'Sigurnost informacijskih sustava', '5 godina iskustva u cyber sigurnosti'),
+(18, 'Poslovni analitičar', 'Poslovna informatika', '3 godine iskustva u poslovnoj analizi'),
+(19, 'Tester softverskih aplikacija', 'Fakultet računarstva', '2 godine iskustva u testiranju aplikacija'),
+(20, 'Sistemski arhitekt', 'Računarska znanost', '6 godina iskustva u dizajniranju sustava');
+
+INSERT INTO ImaVjestinu (korisnikId, vjestinaId) VALUES
+(1, 1), (1, 9), (1, 10),
+(2, 2), (2, 12), (2, 13),
+(3, 3), (3, 15), (3, 17),
+(4, 4), (4, 6), (4, 5),
+(5, 6), (5, 16), (5, 7),
+(6, 11), (6, 14), (6, 19),
+(7, 8), (7, 18), (7, 3),
+(8, 9), (8, 1), (8, 10);
+
+
+INSERT INTO Projekt (naziv, opis, budzet, rok, korisnikId) VALUES
+('Web stranica za tvrtku', 'Izrada profesionalne web stranice za tvrtku.', 5000.00, '2025-06-01', 1),
+('Mobilna aplikacija', 'Razvoj mobilne aplikacije za online trgovinu.', 10000.00, '2025-07-01', 2),
+('SEO optimizacija', 'Optimizacija postojećih web stranica za bolji SEO ranking.', 2000.00, '2025-05-15', 3),
+('Razvoj baze podataka', 'Projektiranje i razvoj baze podataka za poslovnu aplikaciju.', 3000.00, '2025-08-01', 4),
+('Marketing kampanja', 'Kreiranje digitalne marketinške kampanje za novu uslugu.', 4000.00, '2025-09-01', 5),
+('Razvoj u Pythonu', 'Izrada aplikacije u Pythonu za analizu podataka.', 7000.00, '2025-10-01', 6),
+('DevOps implementacija', 'Implementacija DevOps alata i sustava za razvoj.', 12000.00, '2025-12-01', 7),
+('Cloud migracija', 'Migracija postojećeg sustava na cloud.', 15000.00, '2025-11-01', 8),
+('Kreiranje grafičkih materijala', 'Izrada promotivnih materijala za novi proizvod.', 1500.00, '2025-06-15', 9),
+('Blockchain rješenje', 'Razvoj blockchain aplikacije za praćenje transakcija.', 8000.00, '2025-07-15', 10),
+('AI chat bot', 'Razvoj chat bota temeljenog na umjetnoj inteligenciji.', 9000.00, '2025-08-30', 11),
+('Sistemska arhitektura', 'Projektiranje sustava za upravljanje podacima u velikim tvrtkama.', 20000.00, '2025-09-30', 12),
+('Cybersecurity analiza', 'Analiza sigurnosti postojećeg IT sustava.', 5000.00, '2025-10-15', 13),
+('Poslovna analiza', 'Izrada poslovne analize za optimizaciju troškova.', 3000.00, '2025-12-15', 14),
+('Razvoj aplikacije za e-commerce', 'Izrada aplikacije za online trgovinu.', 10000.00, '2025-05-30', 15),
+('Razvoj platforme za e-učenje', 'Izrada platforme za e-učenje s ugrađenim testovima.', 11000.00, '2025-06-30', 16),
+('Stranica za restorane', 'Izrada web stranice za restoran s online narudžbama.', 6000.00, '2025-07-10', 17),
+('Cloud-based rješenje za pohranu', 'Razvoj cloud-based rješenja za pohranu podataka.', 13000.00, '2025-08-01', 18),
+('Sistemski dizajn za banku', 'Projektiranje sustava za online bankarstvo.', 22000.00, '2025-10-01', 19),
+('Razvoj chatbot-a za podršku', 'Izrada chatbota za korisničku podršku.', 7000.00, '2025-11-01', 20);
+
+
+INSERT INTO ZahtijevaVjestine (vjestinaId, projektId) VALUES
+(1, 1), (9, 1), (10, 1),
+(2, 2), (12, 2), (13, 2),
+(4, 3), (6, 3), (5, 3),
+(6, 4), (7, 4), (8, 4),
+(11, 5), (14, 5), (19, 5),
+(8, 6), (9, 6), (3, 6),
+(10, 7), (11, 7), (2, 7);
+
+
+INSERT INTO Prijava (iznos, poruka, projektId, korisnikId) VALUES
+(500.00, 'Interesiram se za projekt, molim vas da me kontaktirate.', 1, 1),
+(700.00, 'Zainteresiran sam za razvoj aplikacije, s iskustvom u mobilnim aplikacijama.', 2, 2),
+(300.00, 'SEO optimizacija je moj specijalitet, rado bih sudjelovao u projektu.', 3, 3),
+(400.00, 'Upravljanje projektima i koordinacija su moje snage, volim raditi s timom.', 4, 4),
+(350.00, 'Imam iskustva u digitalnom marketingu i volio bih se pridružiti kampanji.', 5, 5),
+(800.00, 'Imam iskustva s razvojem Python aplikacija, idealan sam za vaš projekt.', 6, 6),
+(1000.00, 'Specijaliziran sam za DevOps rješenja, mogu doprinijeti u vašem timu.', 7, 7),
+(1500.00, 'Migracija na cloud je moj specijalitet, imam iskustva s AWS-om.', 8, 8),
+(200.00, 'Sposoban sam za izradu grafičkih materijala za vaš proizvod.', 9, 9),
+(600.00, 'Blockchain tehnologija je moj glavni fokus, mogu vam pomoći u projektu.', 10, 10),
+(800.00, 'Razvijam AI chat botove i mogu doprinijeti vašem projektu.', 11, 11),
+(1200.00, 'Sistemski dizajn i arhitektura su moji glavni interesi.', 12, 12),
+(500.00, 'Cybersecurity je moj specijalitet, mogu pomoći u analizi sustava.', 13, 13),
+(300.00, 'Analiziram poslovne procese i mogu optimizirati vaše poslovanje.', 14, 14),
+(1000.00, 'Razvoj e-commerce platformi je moj fokus, mogu pomoći u vašem projektu.', 15, 15),
+(1100.00, 'Izrada platformi za e-učenje je moj specijalitet, mogu pomoći.', 16, 16),
+(500.00, 'Razvijam web stranice za restorane i znam što je potrebno za uspjeh.', 17, 17),
+(900.00, 'Razvijam cloud-based rješenja i mogu vam pomoći u migraciji podataka.', 18, 18),
+(1500.00, 'Projektiranje sustava za banke je moja specijalnost, imam relevantno iskustvo.', 19, 19),
+(700.00, 'Razvijam chatbote za podršku korisnicima, mogu pomoći u vašem projektu.', 20, 20);
+
+INSERT INTO Ugovor (status, datumPocetka, datumKraja, projektId, prijavaId) VALUES
+('aktivno', '2025-05-01', '2025-06-01', 1, 1),
+('aktivno', '2025-06-01', '2025-07-01', 2, 2),
+('aktivno', '2025-05-15', '2025-06-15', 3, 3),
+('zavrseno', '2025-08-01', '2025-09-01', 4, 4),
+('otkazano', '2025-09-01', '2025-10-01', 5, 5),
+('aktivno', '2025-10-01', '2025-11
