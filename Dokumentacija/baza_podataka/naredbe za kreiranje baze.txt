@@ -1,83 +1,88 @@
 CREATE TABLE Korisnik (
-  korisnikId SERIAL PRIMARY KEY,
-  lozinka VARCHAR(255) NOT NULL, -- hashirana lozinka
-  datumStvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  korisnik_id SERIAL PRIMARY KEY,
+  lozinka VARCHAR(255) NOT NULL,
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   naziv VARCHAR(100) NOT NULL,
-  email VARCHAR(255) NOT NULL UNIQUE
+  email VARCHAR(255) NOT NULL UNIQUE,
+  tip VARCHAR(20) NOT NULL CHECK (tip IN ('osoba', 'firma')),
+  uloga VARCHAR(20) NOT NULL CHECK (uloga IN ('klijent', 'slobodnjak', 'administrator')),
+  ime VARCHAR(100),
+  prezime VARCHAR(100),
+  adresa TEXT
 );
 
 CREATE TABLE Vjestina (
-  vjestinaId SERIAL PRIMARY KEY,
-  naziv VARCHAR(100) NOT NULL UNIQUE
-);
-
-CREATE TABLE Freelancer (
-  freelancerId SERIAL UNIQUE,
-  korisnikId INT PRIMARY KEY,
-  kratkiOpis VARCHAR(500),
-  edukacija TEXT,
-  iskustvo TEXT,
-  datumStvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (korisnikId) REFERENCES Korisnik(korisnikId) ON DELETE CASCADE
-);
-
-CREATE TABLE ImaVjestinu (
-  korisnikId INT NOT NULL,
-  vjestinaId INT NOT NULL,
-  PRIMARY KEY (korisnikId, vjestinaId),
-  FOREIGN KEY (korisnikId) REFERENCES Freelancer(korisnikId) ON DELETE CASCADE,
-  FOREIGN KEY (vjestinaId) REFERENCES Vjestina(vjestinaId) ON DELETE CASCADE
+  vjestina_id SERIAL PRIMARY KEY,
+  naziv VARCHAR(100) NOT NULL UNIQUE,
+  kategorija VARCHAR(100)
 );
 
 CREATE TABLE Projekt (
-  projektId SERIAL PRIMARY KEY,
+  projekt_id SERIAL PRIMARY KEY,
   naziv VARCHAR(100) NOT NULL,
   opis TEXT,
   budzet NUMERIC(12,2) NOT NULL CHECK (budzet > 0),
   rok DATE NOT NULL,
-  datumStvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  korisnikId INT NOT NULL,
-  FOREIGN KEY (korisnikId) REFERENCES Korisnik(korisnikId) ON DELETE CASCADE
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  korisnik_id INT NOT NULL,
+  FOREIGN KEY (korisnik_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE
 );
 
-CREATE TABLE ZahtijevaVjestine (
-  vjestinaId INT NOT NULL,
-  projektId INT NOT NULL,
-  PRIMARY KEY (vjestinaId, projektId),
-  FOREIGN KEY (vjestinaId) REFERENCES Vjestina(vjestinaId) ON DELETE CASCADE,
-  FOREIGN KEY (projektId) REFERENCES Projekt(projektId) ON DELETE CASCADE
+CREATE TABLE Slobodnjak (
+  slobodnjak_id SERIAL UNIQUE,
+  korisnik_id INT PRIMARY KEY,
+  kratki_opis VARCHAR(500),
+  edukacija TEXT,
+  iskustvo TEXT,
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (korisnik_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE
+);
+
+CREATE TABLE ImaVjestinu (
+  korisnik_id INT NOT NULL,
+  vjestina_id INT NOT NULL,
+  PRIMARY KEY (korisnik_id, vjestina_id),
+  FOREIGN KEY (korisnik_id) REFERENCES Slobodnjak(korisnik_id) ON DELETE CASCADE,
+  FOREIGN KEY (vjestina_id) REFERENCES Vjestina(vjestina_id) ON DELETE CASCADE
+);
+
+CREATE TABLE ProjektVjestina (
+  vjestina_id INT NOT NULL,
+  projekt_id INT NOT NULL,
+  PRIMARY KEY (vjestina_id, projekt_id),
+  FOREIGN KEY (vjestina_id) REFERENCES Vjestina(vjestina_id) ON DELETE CASCADE,
+  FOREIGN KEY (projekt_id) REFERENCES Projekt(projekt_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Prijava (
-  prijavaId SERIAL PRIMARY KEY,
+  prijava_id SERIAL PRIMARY KEY,
   iznos NUMERIC(12,2) NOT NULL CHECK (iznos >= 0),
   poruka TEXT,
-  datumStvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  projektId INT NOT NULL,
-  korisnikId INT NOT NULL,
-  FOREIGN KEY (projektId) REFERENCES Projekt(projektId) ON DELETE CASCADE,
-  FOREIGN KEY (korisnikId) REFERENCES Freelancer(korisnikId) ON DELETE CASCADE
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  projekt_id INT NOT NULL,
+  korisnik_id INT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'aktivna'
+    CHECK (status IN ('aktivna', 'prihvaćena', 'odbijena', 'povučena')),
+  FOREIGN KEY (projekt_id) REFERENCES Projekt(projekt_id) ON DELETE CASCADE,
+  FOREIGN KEY (korisnik_id) REFERENCES Slobodnjak(korisnik_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Ugovor (
-  ugovorId SERIAL PRIMARY KEY,
+  ugovor_id SERIAL PRIMARY KEY,
   status VARCHAR(20) NOT NULL CHECK (status IN ('aktivno', 'zavrseno', 'otkazano')),
-  datumPocetka DATE NOT NULL,
-  datumKraja DATE NOT NULL CHECK (datumKraja >= datumPocetka),
-  projektId INT NOT NULL,
-  prijavaId INT NOT NULL UNIQUE,
-  FOREIGN KEY (projektId) REFERENCES Projekt(projektId) ON DELETE CASCADE,
-  FOREIGN KEY (prijavaId) REFERENCES Prijava(prijavaId) ON DELETE CASCADE
+  datum_pocetka DATE NOT NULL,
+  datum_kraja DATE NOT NULL CHECK (datum_kraja >= datum_pocetka),
+  prijava_id INT NOT NULL UNIQUE,
+  FOREIGN KEY (prijava_id) REFERENCES Prijava(prijava_id) ON DELETE CASCADE
 );
 
+
 CREATE TABLE Recenzija (
-  recenzijaId SERIAL PRIMARY KEY,
+  recenzija_id SERIAL PRIMARY KEY,
   ocjena INT NOT NULL CHECK (ocjena BETWEEN 1 AND 5),
   komentar TEXT,
-  datumStvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  korisnikId INT NOT NULL,
-  ugovorId INT NOT NULL,
-  FOREIGN KEY (korisnikId) REFERENCES Korisnik(korisnikId) ON DELETE CASCADE,
-  FOREIGN KEY (ugovorId) REFERENCES Ugovor(ugovorId) ON DELETE CASCADE,
-  UNIQUE (korisnikId, ugovorId)
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ugovor_id INT NOT NULL,
+  FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
 );
+
