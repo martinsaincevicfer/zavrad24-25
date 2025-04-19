@@ -1,23 +1,23 @@
-INSERT INTO Korisnik (lozinka, naziv, email, tip, uloga, ime, prezime, adresa) VALUES
-('lozinka123', 'Ivan Horvat', 'ivan@example.com', 'osoba', 'slobodnjak', 'Ivan', 'Horvat', 'Zagreb'),
-('1234abcd', 'Petra Perić', 'petra@example.com', 'osoba', 'slobodnjak', 'Petra', 'Perić', 'Split'),
-('qwerty123', 'Marko Jurić', 'marko@example.com', 'osoba', 'slobodnjak', 'Marko', 'Jurić', 'Osijek'),
-('passw0rd', 'Ana Kovač', 'ana@example.com', 'osoba', 'slobodnjak', 'Ana', 'Kovač', 'Rijeka'),
-('password1', 'Josip Ivić', 'josip@example.com', 'osoba', 'slobodnjak', 'Josip', 'Ivić', 'Zadar'),
-('12345abc', 'Maja Novak', 'maja@example.com', 'osoba', 'slobodnjak', 'Maja', 'Novak', 'Dubrovnik'),
-('ilovecoding', 'Luka Petrović', 'luka@example.com', 'osoba', 'slobodnjak', 'Luka', 'Petrović', 'Varaždin'),
-('letmein2025', 'Ivana Blažić', 'ivana@example.com', 'osoba', 'slobodnjak', 'Ivana', 'Blažić', 'Pula'),
-('welcome123', 'Tomislav Mandić', 'tomislav@example.com', 'osoba', 'slobodnjak', 'Tomislav', 'Mandić', 'Karlovac'),
-('admin1234', 'Sara Lučić', 'sara@example.com', 'osoba', 'slobodnjak', 'Sara', 'Lučić', 'Zagreb'),
-('freelancer01', 'Filip Savić', 'filip@example.com', 'osoba', 'slobodnjak', 'Filip', 'Savić', 'Osijek'),
-('strongpassword', 'Lucija Horvatić', 'lucija@example.com', 'osoba', 'slobodnjak', 'Lucija', 'Horvatić', 'Split'),
-('sunshine2025', 'Karla Milović', 'karla@example.com', 'osoba', 'slobodnjak', 'Karla', 'Milović', 'Rijeka'),
-('letmein2025!', 'David Kolić', 'david@example.com', 'osoba', 'slobodnjak', 'David', 'Kolić', 'Zadar'),
-('abc123xyz', 'Nina Pavić', 'nina@example.com', 'osoba', 'slobodnjak', 'Nina', 'Pavić', 'Pula'),
-('testuser01', 'Nikola Cvjetić', 'nikola@example.com', 'osoba', 'slobodnjak', 'Nikola', 'Cvjetić', 'Vinkovci'),
-('qwertyuiop', 'Marija Glavaš', 'marija@example.com', 'osoba', 'slobodnjak', 'Marija', 'Glavaš', 'Split'),
-('newpassword123', 'Jure Vuković', 'jure@example.com', 'osoba', 'slobodnjak', 'Jure', 'Vuković', 'Zagreb'),
-('mypassword2025', 'Tomislav Jovanović', 'tomislavj@example.com', 'osoba', 'slobodnjak', 'Tomislav', 'Jovanović', 'Osijek');
+INSERT INTO Korisnik (tip, uloga, email, lozinka, ime, prezime, naziv, adresa) VALUES
+('osoba', 'slobodnjak', 'ivan@example.com', 'lozinka123', 'Ivan', 'Horvat', 'Ivan Horvat', 'Zagreb'),
+('osoba', 'slobodnjak', 'petra@example.com', '1234abcd', 'Petra', 'Perić', 'Petra Perić', 'Split'),
+('osoba', 'slobodnjak', 'marko@example.com', 'qwerty123', 'Marko', 'Jurić', 'Marko Jurić', 'Osijek'),
+('osoba', 'slobodnjak', 'ana@example.com', 'passw0rd', 'Ana', 'Kovač', 'Ana Kovač', 'Rijeka'),
+('osoba', 'slobodnjak', 'josip@example.com', 'password1', 'Josip', 'Ivić', 'Josip Ivić', 'Zadar'),
+('osoba', 'slobodnjak', 'maja@example.com', '12345abc', 'Maja', 'Novak', 'Maja Novak', 'Dubrovnik'),
+('osoba', 'slobodnjak', 'luka@example.com', 'ilovecoding', 'Luka', 'Petrović', 'Luka Petrović', 'Varaždin'),
+('osoba', 'slobodnjak', 'ivana@example.com', 'letmein2025', 'Ivana', 'Blažić', 'Ivana Blažić', 'Pula'),
+('osoba', 'slobodnjak', 'tomislav@example.com', 'welcome123', 'Tomislav', 'Mandić', 'Tomislav Mandić', 'Karlovac'),
+('osoba', 'slobodnjak', 'sara@example.com', 'admin1234', 'Sara', 'Lučić', 'Sara Lučić', 'Zagreb'),
+('osoba', 'slobodnjak', 'filip@example.com', 'freelancer01', 'Filip', 'Savić', 'Filip Savić', 'Osijek'),
+('osoba', 'slobodnjak', 'lucija@example.com', 'strongpassword', 'Lucija', 'Horvatić', 'Lucija Horvatić', 'Split'),
+('osoba', 'slobodnjak', 'karla@example.com', 'sunshine2025', 'Karla', 'Milović', 'Karla Milović', 'Rijeka'),
+('osoba', 'slobodnjak', 'david@example.com', 'letmein2025!', 'David', 'Kolić', 'David Kolić', 'Zadar'),
+('osoba', 'slobodnjak', 'nina@example.com', 'abc123xyz', 'Nina', 'Pavić', 'Nina Pavić', 'Pula'),
+('osoba', 'slobodnjak', 'nikola@example.com', 'testuser01', 'Nikola', 'Cvjetić', 'Nikola Cvjetić', 'Vinkovci'),
+('osoba', 'slobodnjak', 'marija@example.com', 'qwertyuiop', 'Marija', 'Glavaš', 'Marija Glavaš', 'Split'),
+('osoba', 'slobodnjak', 'jure@example.com', 'newpassword123', 'Jure', 'Vuković', 'Jure Vuković', 'Zagreb'),
+('osoba', 'slobodnjak', 'tomislavj@example.com', 'mypassword2025', 'Tomislav', 'Jovanović', 'Tomislav Jovanović', 'Osijek');
 
 INSERT INTO Vjestina (naziv, kategorija) VALUES
 ('Web Development', 'Development'),
@@ -62,16 +62,6 @@ INSERT INTO Slobodnjak (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
 (18, 'Poslovni analitičar', 'Poslovna informatika', '3 godine iskustva u poslovnoj analizi'),
 (19, 'Tester softverskih aplikacija', 'Fakultet računarstva', '2 godine iskustva u testiranju aplikacija');
 
-INSERT INTO ImaVjestinu (korisnik_id, vjestina_id) VALUES
-(1, 1), (1, 9), (1, 10),
-(2, 2), (2, 12), (2, 13),
-(3, 3), (3, 15), (3, 17),
-(4, 4), (4, 6), (4, 5),
-(5, 6), (5, 16), (5, 7),
-(6, 11), (6, 14), (6, 19),
-(7, 8), (7, 18), (7, 3),
-(8, 9), (8, 1), (8, 10);
-
 INSERT INTO Projekt (naziv, opis, budzet, rok, korisnik_id) VALUES
 ('Web stranica za tvrtku', 'Izrada profesionalne web stranice za tvrtku.', 5000.00, '2025-06-01', 1),
 ('Mobilna aplikacija', 'Razvoj mobilne aplikacije za online trgovinu.', 10000.00, '2025-07-01', 2),
@@ -93,6 +83,16 @@ INSERT INTO Projekt (naziv, opis, budzet, rok, korisnik_id) VALUES
 ('Cloud-based rješenje za pohranu', 'Razvoj cloud-based rješenja za pohranu podataka.', 13000.00, '2025-08-01', 18),
 ('Sistemski dizajn za banku', 'Projektiranje sustava za online bankarstvo.', 22000.00, '2025-10-01', 19);
 
+INSERT INTO SlobodnjakVjestina (korisnik_id, vjestina_id) VALUES
+(1, 1), (1, 9), (1, 10),
+(2, 2), (2, 12), (2, 13),
+(3, 3), (3, 15), (3, 17),
+(4, 4), (4, 6), (4, 5),
+(5, 6), (5, 16), (5, 7),
+(6, 11), (6, 14), (6, 19),
+(7, 8), (7, 18), (7, 3),
+(8, 9), (8, 1), (8, 10);
+
 INSERT INTO ProjektVjestina (vjestina_id, projekt_id) VALUES
 (1, 1), (9, 1), (10, 1),
 (2, 2), (12, 2), (13, 2),
@@ -102,20 +102,20 @@ INSERT INTO ProjektVjestina (vjestina_id, projekt_id) VALUES
 (8, 6), (9, 6), (3, 6),
 (10, 7), (11, 7), (2, 7);
 
-INSERT INTO Prijava (iznos, poruka, projekt_id, korisnik_id, status) VALUES
-(4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', 1, 1, 'aktivna'),
-(9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', 2, 7, 'prihvaćena'),
-(1800.00, 'SEO optimizaciju mogu završiti brzo i učinkovito.', 3, 4, 'aktivna'),
-(2900.00, 'Radim baze podataka već 7 godina.', 4, 10, 'prihvaćena'),
-(3900.00, 'Digitalni marketing je moja specijalnost.', 5, 6, 'odbijena'),
-(6900.00, 'Python koristim svakodnevno, odlična prilika.', 6, 8, 'prihvaćena'),
-(11500.00, 'DevOps alatima se bavim profesionalno.', 7, 13, 'aktivna'),
-(14000.00, 'Imam iskustvo s migracijama na cloud.', 8, 11, 'aktivna'),
-(1300.00, 'Brzo i kvalitetno izrađujem grafičke materijale.', 9, 14, 'odbijena'),
-(7800.00, 'Blockchain rješenja su moja specijalnost.', 10, 15, 'aktivna'),
-(8500.00, 'Razvijao sam AI chatbot ranije.', 11, 16, 'aktivna'),
-(4500.00, 'Analizirao sam sigurnost za brojne klijente.', 13, 17, 'aktivna'),
-(2800.00, 'Nudim preciznu poslovnu analizu.', 14, 18, 'povučena');
+INSERT INTO Prijava (status, iznos, poruka, projekt_id, korisnik_id) VALUES
+('aktivna', 4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', 1, 1),
+('prihvaćena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', 2, 7),
+('aktivna', 1800.00, 'SEO optimizaciju mogu završiti brzo i učinkovito.', 3, 4),
+('prihvaćena', 2900.00, 'Radim baze podataka već 7 godina.', 4, 10),
+('odbijena', 3900.00, 'Digitalni marketing je moja specijalnost.', 5, 6),
+('prihvaćena', 6900.00, 'Python koristim svakodnevno, odlična prilika.', 6, 8),
+('aktivna', 11500.00, 'DevOps alatima se bavim profesionalno.', 7, 13),
+('aktivna', 14000.00, 'Imam iskustvo s migracijama na cloud.', 8, 11),
+('odbijena', 1300.00, 'Brzo i kvalitetno izrađujem grafičke materijale.', 9, 14),
+('aktivna', 7800.00, 'Blockchain rješenja su moja specijalnost.', 10, 15),
+('aktivna', 8500.00, 'Razvijao sam AI chatbot ranije.', 11, 16),
+('aktivna', 4500.00, 'Analizirao sam sigurnost za brojne klijente.', 13, 17),
+('povučena', 2800.00, 'Nudim preciznu poslovnu analizu.', 14, 18);
 
 INSERT INTO Ugovor (status, datum_pocetka, datum_kraja, prijava_id) VALUES
 ('aktivno', '2025-05-01', '2025-06-01', 1),
