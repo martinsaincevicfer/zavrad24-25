@@ -56,7 +56,7 @@ CREATE TABLE ProjektVjestina (
 
 CREATE TABLE Prijava (
   prijava_id SERIAL PRIMARY KEY,
-  status VARCHAR(20) NOT NULL DEFAULT 'aktivna'
+  status VARCHAR(20) NOT NULL DEFAULT 'aktivna',
   iznos NUMERIC(12,2) NOT NULL CHECK (iznos >= 0),
   poruka TEXT,
   datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
