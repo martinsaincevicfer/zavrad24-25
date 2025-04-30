@@ -24,6 +24,5 @@ public class SlobodnjakService {
         return slobodnjakRepository.findAll().stream()
                 .map(SlobodnjakDTO::new)
                 .collect(Collectors.toList());
-
     }
 }
