@@ -6,6 +6,7 @@ import hr.unizg.fer.backend.backend.service.SlobodnjakService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,15 @@ public class SlobodnjakController {
     @GetMapping
     public ResponseEntity<List<SlobodnjakDTO>> getAllSlobodnjaci() {
         return ResponseEntity.ok(slobodnjakService.getAllSlobodnjaci());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SlobodnjakDTO> getSlobodnjak(@PathVariable Integer id) {
+        try {
+            SlobodnjakDTO slobodnjak = slobodnjakService.getSlobodnjakById(id);
+            return ResponseEntity.ok(slobodnjak);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

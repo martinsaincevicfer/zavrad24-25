@@ -1,1 +1,1 @@
-GET http://localhost:8080/api/projekti/1
+GET http://localhost:8080/api/slobodnjaci

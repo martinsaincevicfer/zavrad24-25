@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <header className="min-w-screen bg-black shadow-md p-4">
             <nav className="max-w-7xl mx-auto flex justify-between items-center">
-                <div className="flex gap-4">
+                <div className="flex gap-6 justify-between items-center">
                     <Link
                         to="/"
                         className="text-xl font-bold text-white-800 hover:text-white-600"
@@ -12,7 +12,7 @@ const Header = () => {
                         Naslovnica
                     </Link>
                     <Link
-                        to="/zaposli-slobodnjaka"
+                        to="/slobodnjaci"
                         className="px-4 py-2 text-gray-600 hover:text-gray-800"
                     >
                         Zaposli slobodnjaka

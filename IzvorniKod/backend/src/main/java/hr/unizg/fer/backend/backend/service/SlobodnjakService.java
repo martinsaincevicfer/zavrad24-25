@@ -25,4 +25,10 @@ public class SlobodnjakService {
                 .map(SlobodnjakDTO::new)
                 .collect(Collectors.toList());
     }
+    @Transactional
+    public SlobodnjakDTO getSlobodnjakById(Integer id) {
+        return slobodnjakRepository.findById(id)
+                .map(SlobodnjakDTO::new)
+                .orElseThrow(() -> new RuntimeException("Slobodnjak s ID-em " + id + " nije pronađen"));
+    }
 }

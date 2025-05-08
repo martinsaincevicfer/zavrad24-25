@@ -86,3 +86,39 @@ CREATE TABLE Recenzija (
   FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Rezultat (
+  rezultat_id SERIAL PRIMARY KEY,
+  ugovor_id INT NOT NULL,
+  naziv VARCHAR(255),
+  datoteka_put TEXT NOT NULL,
+  datum_uploada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Ponuda (
+  ponuda_id SERIAL PRIMARY KEY,
+  klijent_id INT NOT NULL,
+  slobodnjak_id INT NOT NULL,
+  naziv VARCHAR(100) NOT NULL,
+  opis TEXT,
+  budzet NUMERIC(12,2) NOT NULL CHECK (budzet > 0),
+  rok DATE NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'poslano' CHECK (status IN ('poslano', 'prihvaćeno', 'odbijeno')),
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (klijent_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE,
+  FOREIGN KEY (slobodnjak_id) REFERENCES Slobodnjak(korisnik_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Poruka (
+  poruka_id SERIAL PRIMARY KEY,
+  posiljatelj_id INT NOT NULL,
+  primatelj_id INT NOT NULL,
+  sadrzaj TEXT NOT NULL,
+  procitana BOOLEAN NOT NULL DEFAULT FALSE,
+  datum_slanja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (posiljatelj_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE,
+  FOREIGN KEY (primatelj_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE
+);
+
+
+
