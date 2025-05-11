@@ -12,7 +12,6 @@ import java.time.Instant;
 public class Recenzija {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('recenzija_recenzija_id_seq')")
     @Column(name = "recenzija_id", nullable = false)
     private Integer id;
 

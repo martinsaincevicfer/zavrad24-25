@@ -1,55 +1,135 @@
-INSERT INTO Korisnik (tip, uloga, email, lozinka, ime, prezime, naziv, adresa) VALUES
-('osoba', 'slobodnjak', 'ivan@example.com', 'lozinka123', 'Ivan', 'Horvat', 'Ivan Horvat', 'Zagreb'),
-('osoba', 'slobodnjak', 'petra@example.com', '1234abcd', 'Petra', 'Perić', 'Petra Perić', 'Split'),
-('osoba', 'slobodnjak', 'marko@example.com', 'qwerty123', 'Marko', 'Jurić', 'Marko Jurić', 'Osijek'),
-('osoba', 'slobodnjak', 'ana@example.com', 'passw0rd', 'Ana', 'Kovač', 'Ana Kovač', 'Rijeka'),
-('osoba', 'slobodnjak', 'josip@example.com', 'password1', 'Josip', 'Ivić', 'Josip Ivić', 'Zadar'),
-('osoba', 'slobodnjak', 'maja@example.com', '12345abc', 'Maja', 'Novak', 'Maja Novak', 'Dubrovnik'),
-('osoba', 'slobodnjak', 'luka@example.com', 'ilovecoding', 'Luka', 'Petrović', 'Luka Petrović', 'Varaždin'),
-('osoba', 'slobodnjak', 'ivana@example.com', 'letmein2025', 'Ivana', 'Blažić', 'Ivana Blažić', 'Pula'),
-('osoba', 'slobodnjak', 'tomislav@example.com', 'welcome123', 'Tomislav', 'Mandić', 'Tomislav Mandić', 'Karlovac'),
-('osoba', 'slobodnjak', 'sara@example.com', 'admin1234', 'Sara', 'Lučić', 'Sara Lučić', 'Zagreb'),
-('osoba', 'slobodnjak', 'filip@example.com', 'freelancer01', 'Filip', 'Savić', 'Filip Savić', 'Osijek'),
-('osoba', 'slobodnjak', 'lucija@example.com', 'strongpassword', 'Lucija', 'Horvatić', 'Lucija Horvatić', 'Split'),
-('osoba', 'slobodnjak', 'karla@example.com', 'sunshine2025', 'Karla', 'Milović', 'Karla Milović', 'Rijeka'),
-('osoba', 'slobodnjak', 'david@example.com', 'letmein2025!', 'David', 'Kolić', 'David Kolić', 'Zadar'),
-('osoba', 'slobodnjak', 'nina@example.com', 'abc123xyz', 'Nina', 'Pavić', 'Nina Pavić', 'Pula'),
-('osoba', 'slobodnjak', 'nikola@example.com', 'testuser01', 'Nikola', 'Cvjetić', 'Nikola Cvjetić', 'Vinkovci'),
-('osoba', 'slobodnjak', 'marija@example.com', 'qwertyuiop', 'Marija', 'Glavaš', 'Marija Glavaš', 'Split'),
-('osoba', 'slobodnjak', 'jure@example.com', 'newpassword123', 'Jure', 'Vuković', 'Jure Vuković', 'Zagreb'),
-('osoba', 'slobodnjak', 'tomislavj@example.com', 'mypassword2025', 'Tomislav', 'Jovanović', 'Tomislav Jovanović', 'Osijek'),
-('osoba', 'klijent', 'klijent1@example.com', 'clientpass1', 'Marina', 'Barišić', 'Marina Barišić', 'Zagreb'),
-('osoba', 'klijent', 'klijent2@example.com', 'clientpass2', 'Ante', 'Tomić', 'Ante Tomić', 'Split'),
-('osoba', 'klijent', 'klijent3@example.com', 'clientpass3', 'Ema', 'Knežević', 'Ema Knežević', 'Osijek'),
-('osoba', 'klijent', 'klijent4@example.com', 'clientpass4', 'Dario', 'Lovrić', 'Dario Lovrić', 'Rijeka'),
-('osoba', 'klijent', 'klijent5@example.com', 'clientpass5', 'Tihana', 'Marić', 'Tihana Marić', 'Zadar'),
-('osoba', 'klijent', 'klijent6@example.com', 'clientpass6', 'Krešimir', 'Grgić', 'Krešimir Grgić', 'Varaždin'),
-('osoba', 'klijent', 'klijent7@example.com', 'clientpass7', 'Lana', 'Šimić', 'Lana Šimić', 'Dubrovnik'),
-('osoba', 'klijent', 'klijent8@example.com', 'clientpass8', 'Zoran', 'Matić', 'Zoran Matić', 'Karlovac'),
-('osoba', 'klijent', 'klijent9@example.com', 'clientpass9', 'Petra', 'Božić', 'Petra Božić', 'Pula'),
-('osoba', 'klijent', 'klijent10@example.com', 'clientpass10', 'Ivan', 'Krpan', 'Ivan Krpan', 'Vinkovci');
+INSERT INTO Uloga (naziv) VALUES
+('slobodnjak'),
+('klijent'),
+('administrator');
 
-INSERT INTO Vjestina (naziv, kategorija) VALUES
-('Web Development', 'Development'),
-('UI/UX Design', 'Design'),
-('Data Analysis', 'Data'),
-('SEO Optimization', 'Marketing'),
-('Project Management', 'Management'),
-('Digital Marketing', 'Marketing'),
-('Mobile Development', 'Development'),
-('Python Programming', 'Development'),
-('Java Development', 'Development'),
-('Database Administration', 'Database'),
-('Cloud Computing', 'Infrastructure'),
-('Machine Learning', 'AI'),
-('DevOps', 'Infrastructure'),
-('Graphic Design', 'Design'),
-('Blockchain', 'Development'),
-('Artificial Intelligence', 'AI'),
-('Cybersecurity', 'Security'),
-('Business Analysis', 'Business'),
-('Software Testing', 'QA'),
-('System Architecture', 'Architecture');
+-- Ivan - lozinka: lozinka123
+INSERT INTO Korisnik (email, lozinka) VALUES ('ivan@example.com', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+
+-- Petra - lozinka: 1234abcd
+INSERT INTO Korisnik (email, lozinka) VALUES ('petra@example.com', '41c9ae5e4a9c2c86a9bc8273f2bb383f3532c1db');
+
+-- Marko - lozinka: qwerty123
+INSERT INTO Korisnik (email, lozinka) VALUES ('marko@example.com', '3b0c8ac703f828b04c6c197006d17218cfc3e8de');
+
+-- Ana - lozinka: passw0rd
+INSERT INTO Korisnik (email, lozinka) VALUES ('ana@example.com', '1a1dc91c907325c69271ddf0c944bc72');
+
+-- Josip - lozinka: password1
+INSERT INTO Korisnik (email, lozinka) VALUES ('josip@example.com', '7c6a180b36896a0a8c02787eeafb0e4c');
+
+-- Maja - lozinka: 12345abc
+INSERT INTO Korisnik (email, lozinka) VALUES ('maja@example.com', '171764e8eec9b060ce3f353d38c8893e6a54f8ce');
+
+-- Luka - lozinka: ilovecoding
+INSERT INTO Korisnik (email, lozinka) VALUES ('luka@example.com', '1d19f3d1eb38fba7c38f8f7e3a1e9e58');
+
+-- Ivana - lozinka: letmein2025
+INSERT INTO Korisnik (email, lozinka) VALUES ('ivana@example.com', '35fabe80dce52b8ee5f745f9cf1c0592d0ac0491');
+
+-- Tomislav - lozinka: welcome123
+INSERT INTO Korisnik (email, lozinka) VALUES ('tomislav@example.com', '586745ebf9e28a1d8a3073ee81a9f7bb');
+
+-- Sara - lozinka: admin1234
+INSERT INTO Korisnik (email, lozinka) VALUES ('sara@example.com', '7e9c9629a288d0e4df4cbb33be8e5d57');
+
+-- Filip - lozinka: freelancer01
+INSERT INTO Korisnik (email, lozinka) VALUES ('filip@example.com', '53eb700b6f32b71c6477c1e860a5a39b');
+
+-- Lucija - lozinka: strongpassword
+INSERT INTO Korisnik (email, lozinka) VALUES ('lucija@example.com', 'e7cf3ef4f17c3999a94f2c6f612e8a888e5c6f2b');
+
+-- Karla - lozinka: sunshine2025
+INSERT INTO Korisnik (email, lozinka) VALUES ('karla@example.com', 'b1cb9b37373d3512cc2ddfeaa3c6f1b0d6096c85');
+
+-- David - lozinka: letmein2025!
+INSERT INTO Korisnik (email, lozinka) VALUES ('david@example.com', 'c87e5eb69e6ae7f75ff4a276b6d2e50c058bd5a4');
+
+-- Nina - lozinka: abc123xyz
+INSERT INTO Korisnik (email, lozinka) VALUES ('nina@example.com', '5021f84fa1c4e4c4ec9e6ed21a211b2e');
+
+-- Nikola - lozinka: testuser01
+INSERT INTO Korisnik (email, lozinka) VALUES ('nikola@example.com', '78a3e45f871c1e4527f7f6ed91ae9785');
+
+-- Marija - lozinka: qwertyuiop
+INSERT INTO Korisnik (email, lozinka) VALUES ('marija@example.com', 'd0ce7652cba0b1e83941e4cb043fba77');
+
+-- Jure - lozinka: newpassword123
+INSERT INTO Korisnik (email, lozinka) VALUES ('jure@example.com', '43f84f2403f83cbf144c66b6b5c2676f');
+
+-- Tomislav J. - lozinka: mypassword2025
+INSERT INTO Korisnik (email, lozinka) VALUES ('tomislavj@example.com', 'e0839e61b8f59a6cce0e7d81b91cb9d9');
+
+-- Klijent1 - lozinka: clientpass1
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent1@example.com', '6c49fc8f6a3ac06dfd2281fbc6c11755');
+
+-- Klijent2 - lozinka: clientpass2
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent2@example.com', 'e53ae03a709da18591854e7e7b0ab716');
+
+-- Klijent3 - lozinka: clientpass3
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent3@example.com', '823abc2aa4f19c28257017ebdba4c25f');
+
+-- Klijent4 - lozinka: clientpass4
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent4@example.com', '7e2bb180dfdd8bb6363c20d8bdfb7ea6');
+
+-- Klijent5 - lozinka: clientpass5
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent5@example.com', '75840a02b7c91e5a6bc44c3065f3b16b');
+
+-- Klijent6 - lozinka: clientpass6
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent6@example.com', '09e9df4aa6e21c71a7a93884a40a90f0');
+
+-- Klijent7 - lozinka: clientpass7
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent7@example.com', '21c8ea1d72d89809dfbd268a7c2a1f0f');
+
+-- Klijent8 - lozinka: clientpass8
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent8@example.com', 'dbb8c4e44186b602b4f93867fc8b28e2');
+
+-- Klijent9 - lozinka: clientpass9
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent9@example.com', '10d3f7d4f8e49a9b6c37cfdf5b4d39d5');
+
+-- Klijent10 - lozinka: clientpass10
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent10@example.com', 'c6eeb1f29c6832d9c39398fdc03e83ef');
+
+INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1),
+(6, 1), (7, 1), (8, 1), (9, 1), (10, 1),
+(11, 1), (12, 1), (13, 1), (14, 1), (15, 1),
+(16, 1), (17, 1), (18, 1), (19, 1);
+
+INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
+(20, 2), (21, 2), (22, 2), (23, 2), (24, 2),
+(25, 2), (26, 2), (27, 2), (28, 2), (29, 2);
+
+INSERT INTO Osoba (korisnik_id, ime, prezime, adresa) VALUES
+(1, 'Ivan', 'Horvat', 'Zagreb'),
+(2, 'Petra', 'Perić', 'Split'),
+(3, 'Marko', 'Jurić', 'Osijek'),
+(4, 'Ana', 'Kovač', 'Rijeka'),
+(5, 'Josip', 'Ivić', 'Zadar'),
+(6, 'Maja', 'Novak', 'Dubrovnik'),
+(7, 'Luka', 'Petrović', 'Varaždin'),
+(8, 'Ivana', 'Blažić', 'Pula'),
+(9, 'Tomislav', 'Mandić', 'Karlovac'),
+(10, 'Sara', 'Lučić', 'Zagreb'),
+(11, 'Filip', 'Savić', 'Osijek'),
+(12, 'Lucija', 'Horvatić', 'Split'),
+(13, 'Karla', 'Milović', 'Rijeka'),
+(14, 'David', 'Kolić', 'Zadar'),
+(15, 'Nina', 'Pavić', 'Pula'),
+(16, 'Nikola', 'Cvjetić', 'Vinkovci'),
+(17, 'Marija', 'Glavaš', 'Split'),
+(18, 'Jure', 'Vuković', 'Zagreb'),
+(19, 'Tomislav', 'Jovanović', 'Osijek'),
+(20, 'Marina', 'Barišić', 'Zagreb'),
+(21, 'Ante', 'Tomić', 'Split'),
+(22, 'Ema', 'Knežević', 'Osijek'),
+(23, 'Dario', 'Lovrić', 'Rijeka'),
+(24, 'Tihana', 'Marić', 'Zadar'),
+(25, 'Krešimir', 'Grgić', 'Varaždin'),
+(26, 'Lana', 'Šimić', 'Dubrovnik'),
+(27, 'Zoran', 'Matić', 'Karlovac'),
+(28, 'Petra', 'Božić', 'Pula'),
+(29, 'Ivan', 'Krpan', 'Vinkovci');
 
 INSERT INTO Slobodnjak (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
 (1, 'Stručnjak za web development', 'Fakultet računarstva', '5 godina iskustva u front-end razvoju'),
@@ -93,6 +173,28 @@ INSERT INTO Projekt (naziv, opis, budzet, rok, korisnik_id) VALUES
 ('Cloud-based rješenje za pohranu', 'Razvoj cloud-based rješenja za pohranu podataka.', 13000.00, '2025-08-01', 18),
 ('Sistemski dizajn za banku', 'Projektiranje sustava za online bankarstvo.', 22000.00, '2025-10-01', 19);
 
+INSERT INTO Vjestina (naziv, kategorija) VALUES
+('Web Development', 'Development'),
+('UI/UX Design', 'Design'),
+('Data Analysis', 'Data'),
+('SEO Optimization', 'Marketing'),
+('Project Management', 'Management'),
+('Digital Marketing', 'Marketing'),
+('Mobile Development', 'Development'),
+('Python Programming', 'Development'),
+('Java Development', 'Development'),
+('Database Administration', 'Database'),
+('Cloud Computing', 'Infrastructure'),
+('Machine Learning', 'AI'),
+('DevOps', 'Infrastructure'),
+('Graphic Design', 'Design'),
+('Blockchain', 'Development'),
+('Artificial Intelligence', 'AI'),
+('Cybersecurity', 'Security'),
+('Business Analysis', 'Business'),
+('Software Testing', 'QA'),
+('System Architecture', 'Architecture');
+
 INSERT INTO SlobodnjakVjestina (korisnik_id, vjestina_id) VALUES
 (1, 1), (1, 9), (1, 10),
 (2, 2), (2, 12), (2, 13),
@@ -127,19 +229,19 @@ INSERT INTO Prijava (status, iznos, poruka, projekt_id, korisnik_id) VALUES
 ('aktivna', 4500.00, 'Analizirao sam sigurnost za brojne klijente.', 13, 17),
 ('povučena', 2800.00, 'Nudim preciznu poslovnu analizu.', 14, 18);
 
-INSERT INTO Ugovor (status, datum_pocetka, datum_kraja, prijava_id) VALUES
-('aktivno', '2025-06-01', '2025-07-01', 2),
-('zavrseno', '2025-04-01', '2025-05-01', 4),
-('zavrseno', '2025-04-15', '2025-05-15', 6),
-('aktivno', '2025-05-10', '2025-06-10', 7),
-('otkazano', '2025-05-01', '2025-05-15', 5),
-('zavrseno', '2025-03-01', '2025-04-01', 3),
-('aktivno', '2025-05-20', '2025-06-20', 8),
-('zavrseno', '2025-01-01', '2025-02-01', 9),
-('zavrseno', '2025-02-01', '2025-03-01', 10),
-('aktivno', '2025-03-15', '2025-04-15', 11),
-('zavrseno', '2025-04-01', '2025-05-01', 12),
-('otkazano', '2025-02-01', '2025-02-10', 13);
+INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, prijava_id) VALUES
+('aktivan', '2025-06-01', '2025-07-01', 2),
+('zavrsen', '2025-04-01', '2025-05-01', 4),
+('zavrsen', '2025-04-15', '2025-05-15', 6),
+('aktivan', '2025-05-10', '2025-06-10', 7),
+('otkazan', '2025-05-01', '2025-05-15', 5),
+('zavrsen', '2025-03-01', '2025-04-01', 3),
+('aktivan', '2025-05-20', '2025-06-20', 8),
+('zavrsen', '2025-01-01', '2025-02-01', 9),
+('zavrsen', '2025-02-01', '2025-03-01', 10),
+('aktivan', '2025-03-15', '2025-04-15', 11),
+('zavrsen', '2025-04-01', '2025-05-01', 12),
+('otkazan', '2025-02-01', '2025-02-10', 13);
 
 INSERT INTO Recenzija (ocjena, komentar, ugovor_id) VALUES
 (5, 'Odlična suradnja!', 1),
@@ -186,26 +288,26 @@ INSERT INTO Rezultat (ugovor_id, naziv, datoteka_put) VALUES
 (10, 'smart_contract.sol', 'uploads/smart_contract.sol');
 
 INSERT INTO Ponuda (klijent_id, slobodnjak_id, naziv, opis, budzet, rok, status) VALUES
-(3, 1, 'Izrada web stranice', 'Trebam jednostavnu web stranicu za firmu.', 3000, '2025-07-01', 'poslano'),
-(4, 2, 'Redizajn UI/UX', 'Poboljšanje korisničkog sučelja mobilne aplikacije.', 2500, '2025-06-15', 'prihvaćeno'),
-(5, 3, 'Analiza podataka', 'Treba mi izvještaj temeljen na financijskim podacima.', 1800, '2025-06-10', 'odbijeno'),
-(6, 4, 'SEO kampanja', 'Optimizacija za tražilice za novu stranicu.', 2200, '2025-06-05', 'poslano'),
-(7, 5, 'Vođenje projekta', 'Vođenje manjeg razvojnog tima.', 4000, '2025-07-20', 'poslano'),
-(8, 6, 'Digitalni marketing', 'Kampanja za promociju aplikacije.', 3200, '2025-08-01', 'poslano'),
-(9, 7, 'Mobilna aplikacija', 'Izrada aplikacije za iOS i Android.', 8000, '2025-07-30', 'prihvaćeno'),
-(10, 8, 'Python skripta', 'Automatizacija Excel izvještaja.', 1500, '2025-06-12', 'poslano'),
-(11, 9, 'Java backend', 'Izrada REST servisa u Javi.', 3500, '2025-07-01', 'poslano'),
-(12, 10, 'DB administracija', 'Optimizacija i backup procedura.', 4000, '2025-06-18', 'odbijeno'),
-(13, 11, 'AWS migracija', 'Migracija aplikacije na AWS.', 9000, '2025-07-15', 'poslano'),
-(14, 12, 'ML model', 'Razvoj prediktivnog modela.', 5000, '2025-08-01', 'prihvaćeno'),
-(15, 13, 'CI/CD setup', 'Postavljanje CI/CD alata.', 4200, '2025-06-20', 'poslano'),
-(16, 14, 'Grafički dizajn', 'Logo i vizualni identitet.', 1800, '2025-06-15', 'odbijeno'),
-(17, 15, 'Blockchain wallet', 'Razvoj jednostavnog crypto walleta.', 6000, '2025-07-10', 'poslano'),
-(18, 16, 'AI chatbot', 'Chatbot za korisničku podršku.', 7500, '2025-08-15', 'poslano'),
-(19, 17, 'Penetration testing', 'Testiranje sigurnosti web aplikacije.', 4800, '2025-07-20', 'prihvaćeno'),
-(1, 18, 'Analiza poslovanja', 'Pomoć pri donošenju strateških odluka.', 2800, '2025-08-01', 'poslano'),
-(2, 19, 'Testiranje aplikacije', 'Testiranje nove mobilne aplikacije.', 2400, '2025-06-30', 'poslano'),
-(3, 1, 'Redizajn web stranice', 'Novi izgled i funkcionalnosti.', 3500, '2025-07-25', 'poslano');
+(3, 1, 'Izrada web stranice', 'Trebam jednostavnu web stranicu za firmu.', 3000, '2025-07-01', 'poslana'),
+(4, 2, 'Redizajn UI/UX', 'Poboljšanje korisničkog sučelja mobilne aplikacije.', 2500, '2025-06-15', 'prihvacena'),
+(5, 3, 'Analiza podataka', 'Treba mi izvještaj temeljen na financijskim podacima.', 1800, '2025-06-10', 'odbijena'),
+(6, 4, 'SEO kampanja', 'Optimizacija za tražilice za novu stranicu.', 2200, '2025-06-05', 'poslana'),
+(7, 5, 'Vođenje projekta', 'Vođenje manjeg razvojnog tima.', 4000, '2025-07-20', 'poslana'),
+(8, 6, 'Digitalni marketing', 'Kampanja za promociju aplikacije.', 3200, '2025-08-01', 'poslana'),
+(9, 7, 'Mobilna aplikacija', 'Izrada aplikacije za iOS i Android.', 8000, '2025-07-30', 'prihvacena'),
+(10, 8, 'Python skripta', 'Automatizacija Excel izvještaja.', 1500, '2025-06-12', 'poslana'),
+(11, 9, 'Java backend', 'Izrada REST servisa u Javi.', 3500, '2025-07-01', 'poslana'),
+(12, 10, 'DB administracija', 'Optimizacija i backup procedura.', 4000, '2025-06-18', 'odbijena'),
+(13, 11, 'AWS migracija', 'Migracija aplikacije na AWS.', 9000, '2025-07-15', 'poslana'),
+(14, 12, 'ML model', 'Razvoj prediktivnog modela.', 5000, '2025-08-01', 'prihvacena'),
+(15, 13, 'CI/CD setup', 'Postavljanje CI/CD alata.', 4200, '2025-06-20', 'poslana'),
+(16, 14, 'Grafički dizajn', 'Logo i vizualni identitet.', 1800, '2025-06-15', 'odbijena'),
+(17, 15, 'Blockchain wallet', 'Razvoj jednostavnog crypto walleta.', 6000, '2025-07-10', 'poslana'),
+(18, 16, 'AI chatbot', 'Chatbot za korisničku podršku.', 7500, '2025-08-15', 'poslana'),
+(19, 17, 'Penetration testing', 'Testiranje sigurnosti web aplikacije.', 4800, '2025-07-20', 'prihvacena'),
+(1, 18, 'Analiza poslovanja', 'Pomoć pri donošenju strateških odluka.', 2800, '2025-08-01', 'poslana'),
+(2, 19, 'Testiranje aplikacije', 'Testiranje nove mobilne aplikacije.', 2400, '2025-06-30', 'poslana'),
+(3, 1, 'Redizajn web stranice', 'Novi izgled i funkcionalnosti.', 3500, '2025-07-25', 'poslana');
 
 INSERT INTO Poruka (posiljatelj_id, primatelj_id, sadrzaj) VALUES
 (1, 2, 'Bok! Jesi li dostupna za suradnju?'),

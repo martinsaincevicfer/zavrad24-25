@@ -19,16 +19,28 @@ public class SlobodnjakService {
         this.slobodnjakRepository = slobodnjakRepository;
     }
 
-    @Transactional()
-    public List<SlobodnjakDTO> getAllSlobodnjaci() {
+    @Transactional
+    public List<SlobodnjakDTO> getAll() {
         return slobodnjakRepository.findAll().stream()
-                .map(SlobodnjakDTO::new)
+                .map(slobodnjak -> {
+                    if (slobodnjak.getKorisnik().getOsoba() != null) {
+                        return SlobodnjakDTO.fromSlobodnjakOsoba(slobodnjak);
+                    } else {
+                        return SlobodnjakDTO.fromSlobodnjakTvrtka(slobodnjak);
+                    }
+                })
                 .collect(Collectors.toList());
     }
+
     @Transactional
-    public SlobodnjakDTO getSlobodnjakById(Integer id) {
-        return slobodnjakRepository.findById(id)
-                .map(SlobodnjakDTO::new)
-                .orElseThrow(() -> new RuntimeException("Slobodnjak s ID-em " + id + " nije pronađen"));
+    public SlobodnjakDTO getById(Integer id) {
+        Slobodnjak slobodnjak = slobodnjakRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Slobodnjak nije pronađen - ID: " + id));
+
+        if (slobodnjak.getKorisnik().getOsoba() != null) {
+            return SlobodnjakDTO.fromSlobodnjakOsoba(slobodnjak);
+        } else {
+            return SlobodnjakDTO.fromSlobodnjakTvrtka(slobodnjak);
+        }
     }
 }

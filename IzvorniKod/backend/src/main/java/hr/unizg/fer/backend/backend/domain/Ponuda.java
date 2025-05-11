@@ -8,16 +8,24 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "projekt")
-public class Projekt {
+@Table(name = "ponuda")
+public class Ponuda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "projekt_id", nullable = false)
+    @Column(name = "ponuda_id", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "klijent_id", nullable = false)
+    private Korisnik klijent;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "slobodnjak_id", nullable = false)
+    private Slobodnjak slobodnjak;
 
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
@@ -31,25 +39,13 @@ public class Projekt {
     @Column(name = "rok", nullable = false)
     private LocalDate rok;
 
+    @ColumnDefault("'poslana'")
+    @Column(name = "status", nullable = false, length = 20)
+    private String status;
+
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "korisnik_id", nullable = false)
-    private Korisnik korisnik;
-
-    @OneToMany(mappedBy = "projekt")
-    private Set<Prijava> prijave = new LinkedHashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "projektvjestina",
-            joinColumns = @JoinColumn(name = "projekt_id"),
-            inverseJoinColumns = @JoinColumn(name = "vjestina_id")
-    )
-    private Set<Vjestina> vjestine = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -57,6 +53,22 @@ public class Projekt {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Korisnik getKlijent() {
+        return klijent;
+    }
+
+    public void setKlijent(Korisnik klijent) {
+        this.klijent = klijent;
+    }
+
+    public Slobodnjak getSlobodnjak() {
+        return slobodnjak;
+    }
+
+    public void setSlobodnjak(Slobodnjak slobodnjak) {
+        this.slobodnjak = slobodnjak;
     }
 
     public String getNaziv() {
@@ -91,36 +103,20 @@ public class Projekt {
         this.rok = rok;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Instant getDatumStvaranja() {
         return datumStvaranja;
     }
 
     public void setDatumStvaranja(Instant datumStvaranja) {
         this.datumStvaranja = datumStvaranja;
-    }
-
-    public Korisnik getKorisnik() {
-        return korisnik;
-    }
-
-    public void setKorisnik(Korisnik korisnik) {
-        this.korisnik = korisnik;
-    }
-
-    public Set<Prijava> getPrijave() {
-        return prijave;
-    }
-
-    public void setPrijave(Set<Prijava> prijave) {
-        this.prijave = prijave;
-    }
-
-    public Set<Vjestina> getVjestine() {
-        return vjestine;
-    }
-
-    public void setVjestine(Set<Vjestina> vjestine) {
-        this.vjestine = vjestine;
     }
 
 }

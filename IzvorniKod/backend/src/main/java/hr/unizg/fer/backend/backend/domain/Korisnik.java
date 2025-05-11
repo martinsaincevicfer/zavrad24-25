@@ -14,15 +14,8 @@ import java.util.Set;
 public class Korisnik {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('korisnik_korisnik_id_seq')")
     @Column(name = "korisnik_id", nullable = false)
     private Integer id;
-
-    @Column(name = "tip", nullable = false, length = 20)
-    private String tip;
-
-    @Column(name = "uloga", nullable = false, length = 20)
-    private String uloga;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -30,21 +23,27 @@ public class Korisnik {
     @Column(name = "lozinka", nullable = false)
     private String lozinka;
 
-    @Column(name = "ime", length = 100)
-    private String ime;
-
-    @Column(name = "prezime", length = 100)
-    private String prezime;
-
-    @Column(name = "naziv", nullable = false, length = 100)
-    private String naziv;
-
-    @Column(name = "adresa", length = Integer.MAX_VALUE)
-    private String adresa;
-
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
+
+    @ManyToMany
+    @JoinTable(name = "korisnikuloga",
+            joinColumns = @JoinColumn(name = "korisnik_id"),
+            inverseJoinColumns = @JoinColumn(name = "uloga_id"))
+    private Set<Uloga> uloge = new LinkedHashSet<>();
+
+    @OneToOne(mappedBy = "korisnik")
+    private Osoba osoba;
+
+    @OneToMany(mappedBy = "klijent")
+    private Set<Ponuda> ponude = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "posiljatelj")
+    private Set<Poruka> poslanePoruke = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "primatelj")
+    private Set<Poruka> primljenePoruke = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "korisnik")
     private Set<Projekt> projekti = new LinkedHashSet<>();
@@ -52,28 +51,15 @@ public class Korisnik {
     @OneToOne(mappedBy = "korisnik")
     private Slobodnjak slobodnjak;
 
+    @OneToOne(mappedBy = "korisnik")
+    private Tvrtka tvrtka;
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getTip() {
-        return tip;
-    }
-
-    public void setTip(String tip) {
-        this.tip = tip;
-    }
-
-    public String getUloga() {
-        return uloga;
-    }
-
-    public void setUloga(String uloga) {
-        this.uloga = uloga;
     }
 
     public String getEmail() {
@@ -92,44 +78,52 @@ public class Korisnik {
         this.lozinka = lozinka;
     }
 
-    public String getIme() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public String getPrezime() {
-        return prezime;
-    }
-
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
-    public String getAdresa() {
-        return adresa;
-    }
-
-    public void setAdresa(String adresa) {
-        this.adresa = adresa;
-    }
-
     public Instant getDatumStvaranja() {
         return datumStvaranja;
     }
 
     public void setDatumStvaranja(Instant datumStvaranja) {
         this.datumStvaranja = datumStvaranja;
+    }
+
+    public Set<Uloga> getUloge() {
+        return uloge;
+    }
+
+    public void setUloge(Set<Uloga> uloge) {
+        this.uloge = uloge;
+    }
+
+    public Osoba getOsoba() {
+        return osoba;
+    }
+
+    public void setOsoba(Osoba osoba) {
+        this.osoba = osoba;
+    }
+
+    public Set<Ponuda> getPonude() {
+        return ponude;
+    }
+
+    public void setPonude(Set<Ponuda> ponude) {
+        this.ponude = ponude;
+    }
+
+    public Set<Poruka> getPoslanePoruke() {
+        return poslanePoruke;
+    }
+
+    public void setPoslanePoruke(Set<Poruka> poslanePoruke) {
+        this.poslanePoruke = poslanePoruke;
+    }
+
+    public Set<Poruka> getPrimljenePoruke() {
+        return primljenePoruke;
+    }
+
+    public void setPrimljenePoruke(Set<Poruka> primljenePoruke) {
+        this.primljenePoruke = primljenePoruke;
     }
 
     public Set<Projekt> getProjekti() {
@@ -146,6 +140,14 @@ public class Korisnik {
 
     public void setSlobodnjak(Slobodnjak slobodnjak) {
         this.slobodnjak = slobodnjak;
+    }
+
+    public Tvrtka getTvrtka() {
+        return tvrtka;
+    }
+
+    public void setTvrtka(Tvrtka tvrtka) {
+        this.tvrtka = tvrtka;
     }
 
 }

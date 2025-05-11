@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Korisnik, Slobodnjak } from '../types/Slobodnjak.ts';
+import { SlobodnjakDTO } from '../types/Slobodnjak';
 import Header from "./Header.tsx";
 
 const SlobodnjakPopis: React.FC = () => {
-  const [slobodnjaci, setSlobodnjaci] = React.useState<Slobodnjak[]>([]);
+  const [slobodnjaci, setSlobodnjaci] = React.useState<SlobodnjakDTO[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -26,6 +26,13 @@ const SlobodnjakPopis: React.FC = () => {
     fetchSlobodnjaci();
   }, []);
 
+  const getPrikazanoIme = (slobodnjak: SlobodnjakDTO) => {
+    if (slobodnjak.tip === 'OSOBA') {
+      return `${slobodnjak.ime} ${slobodnjak.prezime}`;
+    }
+    return slobodnjak.nazivTvrtke;
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -43,9 +50,8 @@ const SlobodnjakPopis: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto">
-        <Header />
-
+    <div className="container mx-auto">
+      <Header />
       <h1 className="text-3xl font-bold mb-8">Popis Slobodnjaka</h1>
       {slobodnjaci.length === 0 ? (
         <p className="text-center">Nema dostupnih slobodnjaka.</p>
@@ -56,11 +62,12 @@ const SlobodnjakPopis: React.FC = () => {
               key={slobodnjak.id} 
               className="rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
             >
-              <h2 className="text-xl font-semibold mb-2">{slobodnjak.korisnik.naziv}</h2>
+              <h2 className="text-xl font-semibold mb-2">{getPrikazanoIme(slobodnjak)}</h2>
               <p className="mb-4">{slobodnjak.kratkiOpis}</p>
               <Link 
                 to={`/slobodnjaci/${slobodnjak.id}`}
-                className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
+                className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white"
+                style={{ color: 'white' }}
               >
                 Više informacija
               </Link>

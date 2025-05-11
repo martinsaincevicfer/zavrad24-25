@@ -1,17 +1,23 @@
-export interface Korisnik {
+export interface VjestinaDTO {
     id: number;
-    ime: string;
-    prezime: string;
-    email: string;
     naziv: string;
 }
 
-export interface Slobodnjak {
+export interface SlobodnjakDTO {
     id: number;
-    slobodnjakId: number;
+    tip: "OSOBA" | "TVRTKA";
+    email: string;
     kratkiOpis: string;
     edukacija: string;
     iskustvo: string;
     datumStvaranja: string;
-    korisnik: Korisnik;
+    vjestine: VjestinaDTO[];
+    
+    ime?: string;
+    prezime?: string;
+    adresa?: string;
+    
+    nazivTvrtke?: string;
+    oib?: string;
+    adresaTvrtke?: string;
 }

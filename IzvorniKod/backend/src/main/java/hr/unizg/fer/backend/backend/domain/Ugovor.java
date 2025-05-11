@@ -1,7 +1,6 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,7 +15,6 @@ import java.util.Set;
 public class Ugovor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('ugovor_ugovor_id_seq')")
     @Column(name = "ugovor_id", nullable = false)
     private Integer id;
 
@@ -26,8 +24,8 @@ public class Ugovor {
     @Column(name = "datum_pocetka", nullable = false)
     private LocalDate datumPocetka;
 
-    @Column(name = "datum_kraja", nullable = false)
-    private LocalDate datumKraja;
+    @Column(name = "datum_zavrsetka", nullable = false)
+    private LocalDate datumZavrsetka;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -36,6 +34,9 @@ public class Ugovor {
 
     @OneToMany(mappedBy = "ugovor")
     private Set<Recenzija> recenzije = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "ugovor")
+    private Set<Rezultat> rezultati = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -61,12 +62,12 @@ public class Ugovor {
         this.datumPocetka = datumPocetka;
     }
 
-    public LocalDate getDatumKraja() {
-        return datumKraja;
+    public LocalDate getDatumZavrsetka() {
+        return datumZavrsetka;
     }
 
-    public void setDatumKraja(LocalDate datumKraja) {
-        this.datumKraja = datumKraja;
+    public void setDatumZavrsetka(LocalDate datumZavrsetka) {
+        this.datumZavrsetka = datumZavrsetka;
     }
 
     public Prijava getPrijava() {
@@ -83,6 +84,14 @@ public class Ugovor {
 
     public void setRecenzije(Set<Recenzija> recenzije) {
         this.recenzije = recenzije;
+    }
+
+    public Set<Rezultat> getRezultati() {
+        return rezultati;
+    }
+
+    public void setRezultati(Set<Rezultat> rezultati) {
+        this.rezultati = rezultati;
     }
 
 }

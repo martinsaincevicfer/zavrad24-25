@@ -1,6 +1,5 @@
 package hr.unizg.fer.backend.backend.rest;
 
-import hr.unizg.fer.backend.backend.domain.Slobodnjak;
 import hr.unizg.fer.backend.backend.dto.SlobodnjakDTO;
 import hr.unizg.fer.backend.backend.service.SlobodnjakService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,15 @@ public class SlobodnjakController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SlobodnjakDTO>> getAllSlobodnjaci() {
-        return ResponseEntity.ok(slobodnjakService.getAllSlobodnjaci());
+    public ResponseEntity<List<SlobodnjakDTO>> getAll() {
+        List<SlobodnjakDTO> slobodnjaci = slobodnjakService.getAll();
+        return ResponseEntity.ok(slobodnjaci);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SlobodnjakDTO> getSlobodnjak(@PathVariable Integer id) {
+    public ResponseEntity<SlobodnjakDTO> getById(@PathVariable Integer id) {
         try {
-            SlobodnjakDTO slobodnjak = slobodnjakService.getSlobodnjakById(id);
+            SlobodnjakDTO slobodnjak = slobodnjakService.getById(id);
             return ResponseEntity.ok(slobodnjak);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

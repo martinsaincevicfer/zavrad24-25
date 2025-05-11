@@ -13,7 +13,6 @@ import java.time.Instant;
 public class Prijava {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('prijava_prijava_id_seq')")
     @Column(name = "prijava_id", nullable = false)
     private Integer id;
 

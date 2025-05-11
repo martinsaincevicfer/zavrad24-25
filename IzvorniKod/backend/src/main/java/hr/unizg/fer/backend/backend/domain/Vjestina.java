@@ -1,7 +1,6 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,7 +12,6 @@ import java.util.Set;
 public class Vjestina {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('vjestina_vjestina_id_seq')")
     @Column(name = "vjestina_id", nullable = false)
     private Integer id;
 

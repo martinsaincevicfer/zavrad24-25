@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Korisnik, Slobodnjak } from '../types/Slobodnjak.ts';
+import { SlobodnjakDTO } from '../types/Slobodnjak';
 import Header from "./Header.tsx";
 
 const SlobodnjakDetalji: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [slobodnjak, setSlobodnjak] = React.useState<Slobodnjak | null>(null);
+  const [slobodnjak, setSlobodnjak] = React.useState<SlobodnjakDTO | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -53,32 +53,93 @@ const SlobodnjakDetalji: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-        <Header />
+    <div className="container mx-auto">
+      <Header />
+      
+      <div className="max-w-4xl mx-auto mt-8">
+        <h1 className="text-3xl font-bold mb-6">
+          {slobodnjak.tip === 'TVRTKA' ? slobodnjak.nazivTvrtke : `${slobodnjak.ime} ${slobodnjak.prezime}`}
+        </h1>
+        
+        <div className="rounded-lg shadow-md p-8 space-y-8">
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              {slobodnjak.tip === 'TVRTKA' ? 'Podaci o tvrtki' : 'Osobni podaci'}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {slobodnjak.tip === 'TVRTKA' ? (
+                <>
+                  <div>
+                    <p className="font-medium">Naziv tvrtke:</p>
+                    <p>{slobodnjak.nazivTvrtke}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">OIB:</p>
+                    <p>{slobodnjak.oib}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Adresa tvrtke:</p>
+                    <p>{slobodnjak.adresaTvrtke}</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <p className="font-medium">Ime:</p>
+                    <p>{slobodnjak.ime}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Prezime:</p>
+                    <p>{slobodnjak.prezime}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Adresa:</p>
+                    <p>{slobodnjak.adresa}</p>
+                  </div>
+                </>
+              )}
+              <div>
+                <p className="font-medium">Email:</p>
+                <p>{slobodnjak.email}</p>
+              </div>
+            </div>
+          </div>
 
-      <div className="rounded-lg shadow-md p-8">
-        <div className="space-y-6">
           <div>
-            <h2 className="text-xl font-semibold mb-2">O meni</h2>
-            <p>{slobodnjak.kratkiOpis}</p>
+            <h2 className="text-2xl font-semibold mb-4">Profesionalni profil</h2>
+            <div className="space-y-6">
+              <div>
+                <p className="font-medium mb-2">Opis:</p>
+                <p>{slobodnjak.kratkiOpis}</p>
+              </div>
+              <div>
+                <p className="font-medium mb-2">Edukacija:</p>
+                <p>{slobodnjak.edukacija}</p>
+              </div>
+              <div>
+                <p className="font-medium mb-2">Iskustvo:</p>
+                <p>{slobodnjak.iskustvo}</p>
+              </div>
+            </div>
           </div>
+
           <div>
-            <h2 className="text-xl font-semibold mb-2">Edukacija</h2>
-            <p>{slobodnjak.edukacija}</p>
+            <h2 className="text-2xl font-semibold mb-4">Vještine</h2>
+            <div className="flex flex-wrap gap-2">
+              {slobodnjak.vjestine.map((vjestina) => (
+                <span 
+                  key={vjestina.id}
+                  className="bg-blue-300 text-blue-800 px-3 py-1 rounded-full"
+                >
+                  {vjestina.naziv}
+                </span>
+              ))}
+            </div>
           </div>
+
           <div>
-            <h2 className="text-xl font-semibold mb-2">Iskustvo</h2>
-            <p>{slobodnjak.iskustvo}</p>
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Kontakt</h2>
-            <p>{slobodnjak.korisnik.email}</p>
-          </div>
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Datum registracije</h2>
-            <p>
-              {new Date(slobodnjak.datumStvaranja).toLocaleDateString('hr-HR')}
-            </p>
+            <p className="font-medium">Član od:</p>
+            <p>{new Date(slobodnjak.datumStvaranja).toLocaleDateString('hr-HR')}</p>
           </div>
         </div>
       </div>

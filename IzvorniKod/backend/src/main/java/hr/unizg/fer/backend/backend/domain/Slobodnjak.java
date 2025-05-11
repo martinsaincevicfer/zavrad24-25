@@ -10,9 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "slobodnjak", uniqueConstraints = {
-        @UniqueConstraint(name = "slobodnjak_slobodnjak_id_key", columnNames = {"slobodnjak_id"})
-})
+@Table(name = "slobodnjak")
 public class Slobodnjak {
     @Id
     @Column(name = "korisnik_id", nullable = false)
@@ -23,10 +21,6 @@ public class Slobodnjak {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnik_id", nullable = false)
     private Korisnik korisnik;
-
-    @ColumnDefault("nextval('slobodnjak_slobodnjak_id_seq')")
-    @Column(name = "slobodnjak_id", nullable = false)
-    private Integer slobodnjakId;
 
     @Column(name = "kratki_opis", length = 500)
     private String kratkiOpis;
@@ -41,19 +35,16 @@ public class Slobodnjak {
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
+    @OneToMany(mappedBy = "slobodnjak")
+    private Set<Ponuda> ponude = new LinkedHashSet<>();
+
     @OneToMany(mappedBy = "korisnik")
     private Set<Prijava> prijave = new LinkedHashSet<>();
 
     @ManyToMany
-    @JoinTable(
-    name = "slobodnjakvjestina",
-    joinColumns = {
-        @JoinColumn(name = "korisnik_id")
-    },
-    inverseJoinColumns = {
-        @JoinColumn(name = "vjestina_id")
-    }
-    )
+    @JoinTable(name = "slobodnjakvjestina",
+            joinColumns = @JoinColumn(name = "korisnik_id"),
+            inverseJoinColumns = @JoinColumn(name = "vjestina_id"))
     private Set<Vjestina> vjestine = new LinkedHashSet<>();
 
     public Integer getId() {
@@ -70,14 +61,6 @@ public class Slobodnjak {
 
     public void setKorisnik(Korisnik korisnik) {
         this.korisnik = korisnik;
-    }
-
-    public Integer getSlobodnjakId() {
-        return slobodnjakId;
-    }
-
-    public void setSlobodnjakId(Integer slobodnjakId) {
-        this.slobodnjakId = slobodnjakId;
     }
 
     public String getKratkiOpis() {
@@ -110,6 +93,14 @@ public class Slobodnjak {
 
     public void setDatumStvaranja(Instant datumStvaranja) {
         this.datumStvaranja = datumStvaranja;
+    }
+
+    public Set<Ponuda> getPonude() {
+        return ponude;
+    }
+
+    public void setPonude(Set<Ponuda> ponude) {
+        this.ponude = ponude;
     }
 
     public Set<Prijava> getPrijave() {
