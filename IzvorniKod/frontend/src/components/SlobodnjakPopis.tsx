@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { SlobodnjakDTO } from '../types/Slobodnjak';
 import Header from "./Header.tsx";
+import axiosInstance from "../utils/axiosConfig.ts";
 
 const SlobodnjakPopis: React.FC = () => {
   const [slobodnjaci, setSlobodnjaci] = React.useState<SlobodnjakDTO[]>([]);
@@ -12,12 +13,11 @@ const SlobodnjakPopis: React.FC = () => {
   React.useEffect(() => {
     const fetchSlobodnjaci = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/slobodnjaci');
+        const response = await axiosInstance.get('/slobodnjaci');
         setSlobodnjaci(response.data);
-        setError(null);
-      } catch (err) {
-        setError('Došlo je do pogreške prilikom dohvaćanja podataka.');
-        console.error('Greška:', err);
+      } catch (error) {
+        console.error('Greška pri dohvaćanju profila:', error);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }

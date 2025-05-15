@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Projekt } from '../types/projekt';
+import { Projekt } from '../types/Projekt.ts';
 import Header from "./Header.tsx";
+import axiosInstance from "../utils/axiosConfig.ts";
 
 export const DetaljiProjekta: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -13,13 +14,10 @@ export const DetaljiProjekta: React.FC = () => {
         const dohvatiProjekt = async () => {
             try {
                 if (!id) throw new Error('ID projekta nije definiran');
-                const odgovor = await fetch(`http://localhost:8080/api/projekti/${id}`);
-                if (!odgovor.ok) {
-                    throw new Error('Mrežna pogreška');
-                }
-                const podaci = await odgovor.json();
-                setProjekt(podaci);
+                const response = await axiosInstance.get('/projekti/${id}');
+                setProjekt(response.data);
             } catch (error) {
+                console.error('Greška pri dohvaćanju profila:', error);
                 setGreska('Došlo je do pogreške prilikom dohvaćanja projekta.');
             } finally {
                 setUcitavanje(false);

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Projekt } from '../types/projekt';
+import { Projekt } from '../types/Projekt.ts';
 import Header from "./Header.tsx";
+import axiosInstance from "../utils/axiosConfig.ts";
 
 export const ProjektPopis: React.FC = () => {
     const [projekti, setProjekti] = useState<Projekt[]>([]);
@@ -11,14 +12,11 @@ export const ProjektPopis: React.FC = () => {
     useEffect(() => {
         const dohvatiProjekte = async () => {
             try {
-                const odgovor = await fetch('http://localhost:8080/api/projekti');
-                if (!odgovor.ok) {
-                    throw new Error('Mrežna pogreška');
-                }
-                const podaci = await odgovor.json();
-                setProjekti(podaci);
+                const response = await axiosInstance.get('/projekti');
+                setProjekti(response.data);
             } catch (error) {
-                setGreska('Došlo je do pogreške prilikom dohvaćanja projekata.');
+                console.error('Greška pri dohvaćanju profila:', error);
+                setGreska(error.message);
             } finally {
                 setUcitavanje(false);
             }

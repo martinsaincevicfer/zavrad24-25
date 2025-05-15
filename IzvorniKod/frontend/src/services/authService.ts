@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LoginRequest, LoginResponse } from '../types/auth';
+import { LoginRequest, LoginResponse } from '../types/Auth.ts';
 
 const API_URL = 'http://localhost:8080/api/auth';
 

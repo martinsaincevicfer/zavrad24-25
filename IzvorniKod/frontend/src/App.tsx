@@ -6,30 +6,41 @@ import SlobodnjakPopis from "./components/SlobodnjakPopis.tsx";
 import SlobodnjakDetalji from "./components/SlobodnjakDetalji.tsx";
 import {PrivateRoute} from "./components/PrivateRoute.tsx";
 import {Login} from "./components/Login.tsx";
+import Profil from "./components/Profil.tsx";
+import RegistracijaOsoba from "./components/RegistracijaOsoba.tsx";
+import TipRegistracije from "./components/TipRegistracije.tsx";
+import RegistracijaTvrtka from "./components/RegistracijaTvrtka.tsx";
 
 function App() {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route
-                path="/homepage"
-                element={
-                    <PrivateRoute>
-                        <Homepage />
-                    </PrivateRoute>
-                }
-            />
+            <Route path="/homepage" element={<Homepage />}/>
             <Route path="/" element={<Navigate to="/homepage" />}/>
-            <Route path="/projekti" element={
+            <Route path="/login" element={<Login />} />
+            <Route path="/registracija" element={<TipRegistracije />} />
+            <Route path="/registracija/osoba" element={<RegistracijaOsoba />} />
+            <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka />} />
+            <Route path="/profil" element={
                 <PrivateRoute>
-                    <ProjektPopis />
+                    <Profil />
+                </PrivateRoute>
+            }
+            />
+            <Route path="/projekti" element={<ProjektPopis />}/>
+            <Route path="/projekti/:id" element={
+                <PrivateRoute>
+                    <DetaljiProjekta />
                 </PrivateRoute>
                 }
             />
-            <Route path="/projekti/:id" element={<DetaljiProjekta />} />
             <Route path="/slobodnjaci" element={<SlobodnjakPopis />} />
-            <Route path="/slobodnjaci/:id" element={<SlobodnjakDetalji />} />
+            <Route path="/slobodnjaci/:id" element={
+                <PrivateRoute>
+                    <SlobodnjakDetalji />
+                </PrivateRoute>
+                }
+            />
         </Routes>
     </BrowserRouter>
   )

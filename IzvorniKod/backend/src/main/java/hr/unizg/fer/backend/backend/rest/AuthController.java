@@ -1,5 +1,8 @@
 package hr.unizg.fer.backend.backend.rest;
 
+import hr.unizg.fer.backend.backend.dto.OsobaDTO;
+import hr.unizg.fer.backend.backend.dto.TvrtkaDTO;
+import hr.unizg.fer.backend.backend.service.KorisnikService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +27,9 @@ public class AuthController {
     
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private KorisnikService korisnikService;
     
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
@@ -39,5 +45,17 @@ public class AuthController {
         String jwt = jwtService.generateToken(authentication);
         
         return ResponseEntity.ok(new LoginResponse(jwt, loginRequest.getEmail()));
+    }
+
+    @PostMapping("/register/osoba")
+    public ResponseEntity<?> registerOsoba(@RequestBody OsobaDTO osobaDTO) {
+        korisnikService.registerOsoba(osobaDTO);
+        return ResponseEntity.ok("Osoba registrirana uspješno!");
+    }
+
+    @PostMapping("/register/tvrtka")
+    public ResponseEntity<?> registerTvrtka(@RequestBody TvrtkaDTO tvrtkaDTO) {
+        korisnikService.registerTvrtka(tvrtkaDTO);
+        return ResponseEntity.ok("Tvrtka registrirana uspješno!");
     }
 }

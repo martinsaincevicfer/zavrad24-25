@@ -1,1 +1,10 @@
-GET http://localhost:8080/api/slobodnjaci
+POST http://localhost:8080/api/auth/register/osoba
+Content-Type: application/json
+
+{
+  "email": "testni@testnimail.com",
+  "lozinka": "nekalozinka",
+  "ime": "Test",
+  "prezime": "Testić",
+  "adresa": "Adresa 123"
+}

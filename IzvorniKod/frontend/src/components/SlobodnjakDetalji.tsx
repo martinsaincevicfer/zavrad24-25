@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { SlobodnjakDTO } from '../types/Slobodnjak';
 import Header from "./Header.tsx";
+import axiosInstance from "../utils/axiosConfig.ts";
 
 const SlobodnjakDetalji: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,12 +14,13 @@ const SlobodnjakDetalji: React.FC = () => {
   React.useEffect(() => {
     const fetchSlobodnjak = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/slobodnjaci/${id}`);
+        if (!id) throw new Error('ID projekta nije definiran');
+        const response = await axiosInstance.get('/slobodnjaci/${id}');
         setSlobodnjak(response.data);
         setError(null);
-      } catch (err) {
+      } catch (error) {
+        console.error('Greška pri dohvaćanju profila:', error);
         setError('Došlo je do pogreške prilikom dohvaćanja podataka.');
-        console.error('Greška:', err);
       } finally {
         setIsLoading(false);
       }

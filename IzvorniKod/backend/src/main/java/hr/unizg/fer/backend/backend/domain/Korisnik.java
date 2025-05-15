@@ -24,7 +24,7 @@ public class Korisnik {
     private String lozinka;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "datum_stvaranja", nullable = false)
+    @Column(name = "datum_stvaranja", nullable = false, insertable = false, updatable = false)
     private Instant datumStvaranja;
 
     @ManyToMany
@@ -33,7 +33,9 @@ public class Korisnik {
             inverseJoinColumns = @JoinColumn(name = "uloga_id"))
     private Set<Uloga> uloge = new LinkedHashSet<>();
 
-    @OneToOne(mappedBy = "korisnik")
+    @OneToOne(mappedBy = "korisnik",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Osoba osoba;
 
     @OneToMany(mappedBy = "klijent")
@@ -51,7 +53,9 @@ public class Korisnik {
     @OneToOne(mappedBy = "korisnik")
     private Slobodnjak slobodnjak;
 
-    @OneToOne(mappedBy = "korisnik")
+    @OneToOne(mappedBy = "korisnik",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Tvrtka tvrtka;
 
     public Integer getId() {
