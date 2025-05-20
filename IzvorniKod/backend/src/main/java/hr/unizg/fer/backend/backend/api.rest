@@ -2,7 +2,7 @@ POST http://localhost:8080/api/auth/register/osoba
 Content-Type: application/json
 
 {
-  "email": "testni@testnimail.com",
+  "email": "testni2@testnimail.com",
   "lozinka": "nekalozinka",
   "ime": "Test",
   "prezime": "Testić",

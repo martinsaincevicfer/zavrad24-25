@@ -64,6 +64,19 @@ public class SlobodnjakDTO {
         return dto;
     }
 
+    public static SlobodnjakDTO basicInfo(Slobodnjak slobodnjak) {
+        SlobodnjakDTO dto = new SlobodnjakDTO();
+        dto.setId(slobodnjak.getId());
+        dto.setKratkiOpis(slobodnjak.getKratkiOpis());
+        dto.setEdukacija(slobodnjak.getEdukacija());
+        dto.setIskustvo(slobodnjak.getIskustvo());
+        dto.setDatumStvaranja(slobodnjak.getDatumStvaranja());
+        dto.setVjestine(slobodnjak.getVjestine().stream()
+                .map(VjestinaDTO::new)
+                .collect(Collectors.toSet()));
+        return dto;
+    }
+
     public Set<VjestinaDTO> getVjestine() { return vjestine; }
     public void setVjestine(Set<VjestinaDTO> vjestine) { this.vjestine = vjestine; }
     

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LoginRequest, LoginResponse } from '../types/Auth.ts';
+import {jwtDecode} from 'jwt-decode';
 
 const API_URL = 'http://localhost:8080/api/auth';
 
@@ -24,5 +25,19 @@ export const authService = {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  },
+
+  getRoles(): string[] | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken.roles || []; // Uloge su spremljene u claim "roles"
+    }
+    return null;
+  },
+
+  isUserInRole(role: string): boolean {
+    const roles = this.getRoles();
+    return roles ? roles.includes(role) : false;
   }
 };

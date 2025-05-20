@@ -3,9 +3,11 @@ package hr.unizg.fer.backend.backend.service;
 import hr.unizg.fer.backend.backend.dao.KorisnikRepository;
 import hr.unizg.fer.backend.backend.dao.OsobaRepository;
 import hr.unizg.fer.backend.backend.dao.TvrtkaRepository;
+import hr.unizg.fer.backend.backend.dao.UlogaRepository;
 import hr.unizg.fer.backend.backend.domain.Korisnik;
 import hr.unizg.fer.backend.backend.domain.Osoba;
 import hr.unizg.fer.backend.backend.domain.Tvrtka;
+import hr.unizg.fer.backend.backend.domain.Uloga;
 import hr.unizg.fer.backend.backend.dto.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class KorisnikService {
 
     @Autowired
     private TvrtkaRepository tvrtkaRepository;
+
+    @Autowired
+    private UlogaRepository ulogaRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -74,6 +79,11 @@ public class KorisnikService {
         osoba.setAdresa(osobaDTO.getAdresa());
 
         korisnik.setOsoba(osoba);
+
+        Uloga klijentUloga = ulogaRepository.findById(2)
+                .orElseThrow(() -> new RuntimeException("Uloga 'klijent' nije pronađena"));
+        korisnik.getUloge().add(klijentUloga);
+
         korisnikRepository.save(korisnik);
     }
 
@@ -94,6 +104,11 @@ public class KorisnikService {
         tvrtka.setAdresa(tvrtkaDTO.getAdresa());
 
         korisnik.setTvrtka(tvrtka);
+
+        Uloga klijentUloga = ulogaRepository.findById(2)
+                .orElseThrow(() -> new RuntimeException("Uloga 'klijent' nije pronađena"));
+        korisnik.getUloge().add(klijentUloga);
+
         korisnikRepository.save(korisnik);
     }
 }

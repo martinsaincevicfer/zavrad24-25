@@ -3,22 +3,35 @@ import { useState, useEffect } from 'react';
 
 const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
+        const email = localStorage.getItem("user");
+
         setIsLoggedIn(!!token);
+
+        if (email) {
+            try {
+                setUserEmail(email || null);
+            } catch (error) {
+                console.error("Neispravan format podataka u localStorage za ključ 'user'.", error);
+                setUserEmail(null);
+            }
+        }
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setIsLoggedIn(false);
-        navigate('/');
+        setUserEmail(null);
+        navigate("/");
     };
 
     const handleLoginClick = () => {
-        navigate('/login');
+        navigate("/login");
     };
 
     return (
@@ -44,21 +57,21 @@ const Header = () => {
                         Pronađi posao
                     </Link>
                 </div>
-                
-                <div className="flex gap-4">
-                    {isLoggedIn && (
-                        <Link 
+
+                <div className="flex gap-4 justify-between items-center">
+                    {isLoggedIn && userEmail && (
+                        <Link
                             to="/profil"
                             className="px-4 py-2 text-white"
                         >
-                            Profil
+                            {userEmail} {/* Zamjena "Profil" s korisničkim emailom */}
                         </Link>
                     )}
-                    <button 
+                    <button
                         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
                         onClick={isLoggedIn ? handleLogout : handleLoginClick}
                     >
-                        {isLoggedIn ? 'Odjava' : 'Prijava'}
+                        {isLoggedIn ? "Odjava" : "Prijava"}
                     </button>
                     {!isLoggedIn && (
                         <Link

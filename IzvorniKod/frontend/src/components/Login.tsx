@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
+import Header from "./Header.tsx";
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -19,8 +20,9 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen min-w-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen min-w-screen">
+      <Header />
+      <div className="max-w-md w-full min-w-screen min-h-full flex flex-col items-center justify-center">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
             Prijava

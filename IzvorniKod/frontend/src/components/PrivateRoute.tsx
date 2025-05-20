@@ -1,12 +1,18 @@
+import React, {JSX} from 'react';
 import { Navigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 
 interface PrivateRouteProps {
-  children: React.ReactNode;
+  children: JSX.Element;
+  requiredRole?: string;
 }
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const isAuthenticated = !!authService.getToken();
-  
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, requiredRole }) => {
+  const token = authService.getToken();
+  const isAuthorized = token && (!requiredRole || authService.isUserInRole(requiredRole));
+
+  return isAuthorized ? children : <Navigate to="/login" />;
 };
+
+export default PrivateRoute;
+

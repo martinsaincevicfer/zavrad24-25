@@ -4,12 +4,13 @@ import {ProjektPopis} from "./components/ProjektPopis.tsx";
 import {DetaljiProjekta} from "./components/ProjektDetalji.tsx";
 import SlobodnjakPopis from "./components/SlobodnjakPopis.tsx";
 import SlobodnjakDetalji from "./components/SlobodnjakDetalji.tsx";
-import {PrivateRoute} from "./components/PrivateRoute.tsx";
+import PrivateRoute from "./components/PrivateRoute.tsx";
 import {Login} from "./components/Login.tsx";
 import Profil from "./components/Profil.tsx";
 import RegistracijaOsoba from "./components/RegistracijaOsoba.tsx";
 import TipRegistracije from "./components/TipRegistracije.tsx";
 import RegistracijaTvrtka from "./components/RegistracijaTvrtka.tsx";
+import RegistracijaSlobodnjak from "./components/RegistracijaSlobodnjak.tsx";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
             <Route path="/registracija" element={<TipRegistracije />} />
             <Route path="/registracija/osoba" element={<RegistracijaOsoba />} />
             <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka />} />
+            <Route
+                path="/registracija/slobodnjak"
+                element={
+                    <PrivateRoute>
+                        <RegistracijaSlobodnjak />
+                    </PrivateRoute>
+                }
+            />
             <Route path="/profil" element={
                 <PrivateRoute>
                     <Profil />
