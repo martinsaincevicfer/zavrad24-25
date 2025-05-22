@@ -9,6 +9,8 @@ import hr.unizg.fer.backend.backend.domain.Osoba;
 import hr.unizg.fer.backend.backend.domain.Tvrtka;
 import hr.unizg.fer.backend.backend.domain.Uloga;
 import hr.unizg.fer.backend.backend.dto.*;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,7 +39,7 @@ public class KorisnikService {
 
     public Object getKorisnikDetails(String email) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Korisnik nije pronađen"));
+            .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
             
         if (korisnik.getTvrtka() != null) {
             TvrtkaDTO tvrtkaDTO = new TvrtkaDTO();
@@ -64,7 +66,7 @@ public class KorisnikService {
 
     public void registerOsoba(OsobaDTO osobaDTO) {
         if (korisnikRepository.findByEmail(osobaDTO.getEmail()).isPresent()) {
-            throw new RuntimeException("E-mail je već registriran");
+            throw new EntityExistsException("E-mail je već registriran");
         }
 
         Korisnik korisnik = new Korisnik();
@@ -81,7 +83,7 @@ public class KorisnikService {
         korisnik.setOsoba(osoba);
 
         Uloga klijentUloga = ulogaRepository.findById(2)
-                .orElseThrow(() -> new RuntimeException("Uloga 'klijent' nije pronađena"));
+                .orElseThrow(() -> new EntityNotFoundException("Uloga 'klijent' nije pronađena"));
         korisnik.getUloge().add(klijentUloga);
 
         korisnikRepository.save(korisnik);
@@ -89,7 +91,7 @@ public class KorisnikService {
 
     public void registerTvrtka(TvrtkaDTO tvrtkaDTO) {
         if (korisnikRepository.findByEmail(tvrtkaDTO.getEmail()).isPresent()) {
-            throw new RuntimeException("E-mail je već registriran");
+            throw new EntityExistsException("E-mail je već registriran");
         }
 
         Korisnik korisnik = new Korisnik();
@@ -106,7 +108,7 @@ public class KorisnikService {
         korisnik.setTvrtka(tvrtka);
 
         Uloga klijentUloga = ulogaRepository.findById(2)
-                .orElseThrow(() -> new RuntimeException("Uloga 'klijent' nije pronađena"));
+                .orElseThrow(() -> new EntityNotFoundException("Uloga 'klijent' nije pronađena"));
         korisnik.getUloge().add(klijentUloga);
 
         korisnikRepository.save(korisnik);

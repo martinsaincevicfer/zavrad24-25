@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import Header from "./Header.tsx";
@@ -8,8 +8,23 @@ const RegistracijaSlobodnjak: React.FC = () => {
     const [edukacija, setEdukacija] = useState('');
     const [iskustvo, setIskustvo] = useState('');
     const [vjestine, setVjestine] = useState<number[]>([]);
+    const [popisVjestina, setPopisVjestina] = useState<{ id: number; naziv: string; kategorija: string; }[]>([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchVjestine = async () => {
+            try {
+                const response = await axiosInstance.get('/vjestine');
+                setPopisVjestina(response.data);
+            } catch (error) {
+                console.error('Greška prilikom dohvaćanja vještina:', error);
+                setError('Nije moguće učitati popis vještina.');
+            }
+        };
+
+        fetchVjestine();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -89,9 +104,9 @@ const RegistracijaSlobodnjak: React.FC = () => {
                             <label htmlFor="vjestine" className="block text-sm font-medium">
                                 Vještine
                             </label>
-                            <div className="flex flex-wrap gap-2">
-                                {[{ id: 1, naziv: 'JavaScript' }, { id: 3, naziv: 'React' }].map(
-                                    (vjestina) => (
+                            <div className="grid grid-cols-3">
+                                {popisVjestina.length > 0 ? (
+                                    popisVjestina.map((vjestina) => (
                                         <label key={vjestina.id} className="inline-flex items-center">
                                             <input
                                                 type="checkbox"
@@ -100,7 +115,9 @@ const RegistracijaSlobodnjak: React.FC = () => {
                                             />
                                             <span className="ml-2">{vjestina.naziv}</span>
                                         </label>
-                                    )
+                                    ))
+                                ) : (
+                                    <p>Učitavanje vještina...</p>
                                 )}
                             </div>
                         </div>

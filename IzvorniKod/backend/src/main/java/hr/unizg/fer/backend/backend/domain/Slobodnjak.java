@@ -17,7 +17,7 @@ public class Slobodnjak {
     private Integer id;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnik_id", nullable = false)
     private Korisnik korisnik;
@@ -119,4 +119,18 @@ public class Slobodnjak {
         this.vjestine = vjestine;
     }
 
+    @Override
+    public String toString() {
+        return "Slobodnjak{" +
+                "id=" + id +
+                ", korisnik=" + korisnik +
+                ", kratkiOpis='" + kratkiOpis + '\'' +
+                ", edukacija='" + edukacija + '\'' +
+                ", iskustvo='" + iskustvo + '\'' +
+                ", datumStvaranja=" + datumStvaranja +
+                ", ponude=" + ponude +
+                ", prijave=" + prijave +
+                ", vjestine=" + vjestine +
+                '}';
+    }
 }

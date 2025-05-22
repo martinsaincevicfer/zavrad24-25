@@ -3,6 +3,7 @@ package hr.unizg.fer.backend.backend.service;
 import hr.unizg.fer.backend.backend.dao.ProjektRepository;
 import hr.unizg.fer.backend.backend.domain.Projekt;
 import hr.unizg.fer.backend.backend.dto.ProjektDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class ProjektService {
     }
 
     @Transactional
-    public Optional<ProjektDTO> getProjektById(Integer id) {
+    public ProjektDTO getProjektById(Integer id) {
         return projektRepository.findById(id)
-                .map(ProjektDTO::new);
+                .map(ProjektDTO::new).orElseThrow(() -> new EntityNotFoundException("Nije pronađen projekt sa id: " + id));
     }
 }

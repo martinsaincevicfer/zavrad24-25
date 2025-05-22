@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vjestine")
 public class VjestinaController {
-
     private final VjestinaService vjestinaService;
 
     public VjestinaController(VjestinaService vjestinaService) {

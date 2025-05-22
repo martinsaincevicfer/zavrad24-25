@@ -27,34 +27,21 @@ public class SlobodnjakController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SlobodnjakDTO> getById(@PathVariable Integer id) {
-        try {
-            SlobodnjakDTO slobodnjak = slobodnjakService.getById(id);
-            return ResponseEntity.ok(slobodnjak);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        SlobodnjakDTO slobodnjak = slobodnjakService.getById(id);
+        return ResponseEntity.ok(slobodnjak);
     }
 
     @GetMapping("/current")
     public ResponseEntity<SlobodnjakDTO> getCurrentSlobodnjak() {
-        try {
-            String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-            SlobodnjakDTO slobodnjakDTO = slobodnjakService.getByEmail(currentUserEmail);
-            return ResponseEntity.ok(slobodnjakDTO);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null);
-        }
+        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        SlobodnjakDTO slobodnjakDTO = slobodnjakService.getByEmail(currentUserEmail);
+        return ResponseEntity.ok(slobodnjakDTO);
     }
 
     @PostMapping("/register")
     public ResponseEntity<SlobodnjakDTO> createSlobodnjakForCurrentUser(@RequestBody SlobodnjakDTO slobodnjakDTO) {
-        try {
-            String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-
-            SlobodnjakDTO createdSlobodnjak = slobodnjakService.createSlobodnjak(currentUserEmail, slobodnjakDTO);
-            return ResponseEntity.ok(createdSlobodnjak);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        SlobodnjakDTO kreiraniSlobodnjak = slobodnjakService.createSlobodnjak(currentUserEmail, slobodnjakDTO);
+        return ResponseEntity.ok(kreiraniSlobodnjak);
     }
 }

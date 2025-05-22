@@ -29,8 +29,6 @@ public class ProjektController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjektDTO> getProjektById(@PathVariable Integer id) {
-        return projektService.getProjektById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(projektService.getProjektById(id)) ;
     }
 }

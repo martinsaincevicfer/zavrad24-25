@@ -118,4 +118,24 @@ public class SlobodnjakDTO {
     
     public String getAdresaTvrtke() { return adresaTvrtke; }
     public void setAdresaTvrtke(String adresaTvrtke) { this.adresaTvrtke = adresaTvrtke; }
+
+    @Override
+    public String toString() {
+        return "SlobodnjakDTO{" +
+                "id=" + id +
+                ", tip='" + tip + '\'' +
+                ", email='" + email + '\'' +
+                ", kratkiOpis='" + kratkiOpis + '\'' +
+                ", edukacija='" + edukacija + '\'' +
+                ", iskustvo='" + iskustvo + '\'' +
+                ", datumStvaranja=" + datumStvaranja +
+                ", vjestine=" + vjestine +
+                ", ime='" + ime + '\'' +
+                ", prezime='" + prezime + '\'' +
+                ", adresa='" + adresa + '\'' +
+                ", nazivTvrtke='" + nazivTvrtke + '\'' +
+                ", oib='" + oib + '\'' +
+                ", adresaTvrtke='" + adresaTvrtke + '\'' +
+                '}';
+    }
 }

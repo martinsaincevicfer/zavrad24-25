@@ -94,6 +94,8 @@ public class SlobodnjakService {
                         .collect(Collectors.toSet())
         );
 
+        slobodnjakRepository.save(slobodnjak);
+
         korisnik.setSlobodnjak(slobodnjak);
 
         Uloga slobodnjakUloga = ulogaRepository.findById(1)
@@ -102,6 +104,6 @@ public class SlobodnjakService {
 
         korisnikRepository.save(korisnik);
 
-        return SlobodnjakDTO.fromSlobodnjakOsoba(slobodnjak);
+        return SlobodnjakDTO.basicInfo(slobodnjak);
     }
 }
