@@ -34,7 +34,7 @@ CREATE TABLE Tvrtka (
   FOREIGN KEY (korisnik_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Slobodnjak (
+CREATE TABLE Honorarac (
   korisnik_id INT PRIMARY KEY,
   kratki_opis VARCHAR(500),
   edukacija TEXT,
@@ -49,11 +49,11 @@ CREATE TABLE Vjestina (
   kategorija VARCHAR(100)
 );
 
-CREATE TABLE SlobodnjakVjestina (
+CREATE TABLE HonoraracVjestina (
   korisnik_id INT NOT NULL,
   vjestina_id INT NOT NULL,
   PRIMARY KEY (korisnik_id, vjestina_id),
-  FOREIGN KEY (korisnik_id) REFERENCES Slobodnjak(korisnik_id) ON DELETE CASCADE,
+  FOREIGN KEY (korisnik_id) REFERENCES Honorarac(korisnik_id) ON DELETE CASCADE,
   FOREIGN KEY (vjestina_id) REFERENCES Vjestina(vjestina_id) ON DELETE CASCADE
 );
 
@@ -86,7 +86,7 @@ CREATE TABLE Prijava (
   korisnik_id INT NOT NULL,
   CHECK (status IN ('aktivna', 'prihvaćena', 'odbijena', 'povučena')),
   FOREIGN KEY (projekt_id) REFERENCES Projekt(projekt_id) ON DELETE CASCADE,
-  FOREIGN KEY (korisnik_id) REFERENCES Slobodnjak(korisnik_id) ON DELETE CASCADE
+  FOREIGN KEY (korisnik_id) REFERENCES Honorarac(korisnik_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Ugovor (
@@ -120,7 +120,7 @@ CREATE TABLE Rezultat (
 CREATE TABLE Ponuda (
   ponuda_id SERIAL PRIMARY KEY,
   klijent_id INT NOT NULL,
-  slobodnjak_id INT NOT NULL,
+  honorarac_id INT NOT NULL,
   naziv VARCHAR(100) NOT NULL,
   opis TEXT,
   budzet NUMERIC(12,2) NOT NULL CHECK (budzet > 0),
@@ -128,7 +128,7 @@ CREATE TABLE Ponuda (
   status VARCHAR(20) NOT NULL DEFAULT 'poslana' CHECK (status IN ('poslana', 'prihvacena', 'odbijena')),
   datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (klijent_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE,
-  FOREIGN KEY (slobodnjak_id) REFERENCES Slobodnjak(korisnik_id) ON DELETE CASCADE
+  FOREIGN KEY (honorarac_id) REFERENCES Honorarac(korisnik_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Poruka (

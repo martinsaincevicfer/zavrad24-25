@@ -24,8 +24,8 @@ public class Ponuda {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "slobodnjak_id", nullable = false)
-    private Slobodnjak slobodnjak;
+    @JoinColumn(name = "honorarac_id", nullable = false)
+    private Honorarac honorarac;
 
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
@@ -63,12 +63,12 @@ public class Ponuda {
         this.klijent = klijent;
     }
 
-    public Slobodnjak getSlobodnjak() {
-        return slobodnjak;
+    public Honorarac getHonorarac() {
+        return honorarac;
     }
 
-    public void setSlobodnjak(Slobodnjak slobodnjak) {
-        this.slobodnjak = slobodnjak;
+    public void setHonorarac(Honorarac honorarac) {
+        this.honorarac = honorarac;
     }
 
     public String getNaziv() {

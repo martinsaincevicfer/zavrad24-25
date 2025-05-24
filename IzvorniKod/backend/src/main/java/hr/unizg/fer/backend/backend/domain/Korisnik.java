@@ -51,7 +51,7 @@ public class Korisnik {
     private Set<Projekt> projekti = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "korisnik")
-    private Slobodnjak slobodnjak;
+    private Honorarac honorarac;
 
     @OneToOne(mappedBy = "korisnik",
             cascade = CascadeType.ALL,
@@ -138,12 +138,12 @@ public class Korisnik {
         this.projekti = projekti;
     }
 
-    public Slobodnjak getSlobodnjak() {
-        return slobodnjak;
+    public Honorarac getHonorarac() {
+        return honorarac;
     }
 
-    public void setSlobodnjak(Slobodnjak slobodnjak) {
-        this.slobodnjak = slobodnjak;
+    public void setHonorarac(Honorarac honorarac) {
+        this.honorarac = honorarac;
     }
 
     public Tvrtka getTvrtka() {

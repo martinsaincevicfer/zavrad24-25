@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SlobodnjakDTO } from '../types/Slobodnjak';
+import { HonoraracDTO } from '../types/Honorarac.ts';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
 
-const SlobodnjakPopis: React.FC = () => {
-  const [slobodnjaci, setSlobodnjaci] = React.useState<SlobodnjakDTO[]>([]);
+const HonoraracPopis: React.FC = () => {
+  const [honorarci, setHonorarci] = React.useState<HonoraracDTO[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    const fetchSlobodnjaci = async () => {
+    const fetchHonorarci = async () => {
       try {
-        const response = await axiosInstance.get('/slobodnjaci');
-        setSlobodnjaci(response.data);
+        const response = await axiosInstance.get('/honorarci');
+        setHonorarci(response.data);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);
         setError("Greška pri dohvaćanju profila.");
@@ -22,14 +22,14 @@ const SlobodnjakPopis: React.FC = () => {
       }
     };
 
-    fetchSlobodnjaci();
+    fetchHonorarci();
   }, []);
 
-  const getPrikazanoIme = (slobodnjak: SlobodnjakDTO) => {
-    if (slobodnjak.tip === 'OSOBA') {
-      return `${slobodnjak.ime} ${slobodnjak.prezime}`;
+  const getPrikazanoIme = (honorarac: HonoraracDTO) => {
+    if (honorarac.tip === 'OSOBA') {
+      return `${honorarac.ime} ${honorarac.prezime}`;
     }
-    return slobodnjak.nazivTvrtke;
+    return honorarac.nazivTvrtke;
   };
 
   if (isLoading) {
@@ -52,20 +52,20 @@ const SlobodnjakPopis: React.FC = () => {
     <>
       <Header />
       <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-3xl font-bold mb-8">Popis Slobodnjaka</h1>
-        {slobodnjaci.length === 0 ? (
-          <p className="text-center">Nema dostupnih slobodnjaka.</p>
+        <h1 className="text-3xl font-bold mb-8">Popis honoraraca</h1>
+        {honorarci.length === 0 ? (
+          <p className="text-center">Nema dostupnih honoraraca.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {slobodnjaci.map((slobodnjak) => (
+            {honorarci.map((honorarac) => (
               <div
-                key={slobodnjak.id}
+                key={honorarac.id}
                 className="border rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
               >
-                <h2 className="text-xl font-bold mb-2">{getPrikazanoIme(slobodnjak)}</h2>
-                <p className="mb-4">{slobodnjak.kratkiOpis}</p>
+                <h2 className="text-xl font-bold mb-2">{getPrikazanoIme(honorarac)}</h2>
+                <p className="mb-4">{honorarac.kratkiOpis}</p>
                 <Link
-                  to={`/slobodnjaci/${slobodnjak.id}`}
+                  to={`/honorarci/${honorarac.id}`}
                   className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white"
                 >
                   Više informacija
@@ -79,4 +79,4 @@ const SlobodnjakPopis: React.FC = () => {
   );
 };
 
-export default SlobodnjakPopis;
+export default HonoraracPopis;

@@ -3,7 +3,7 @@ export interface VjestinaDTO {
   naziv: string;
 }
 
-export interface SlobodnjakDTO {
+export interface HonoraracDTO {
   id: number;
   tip: "OSOBA" | "TVRTKA";
   email: string;

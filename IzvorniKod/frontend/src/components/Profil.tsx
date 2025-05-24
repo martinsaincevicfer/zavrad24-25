@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { KorisnikDTO } from '../types/Korisnik';
-import { SlobodnjakDTO } from '../types/Slobodnjak';
+import { HonoraracDTO } from '../types/Honorarac.ts';
 import axiosInstance from '../utils/axiosConfig';
 import { authService } from '../services/authService';
 import Header from './Header';
@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom';
 
 const Profil = () => {
   const [userProfile, setUserProfile] = useState<KorisnikDTO | null>(null);
-  const [freelancerProfile, setFreelancerProfile] = useState<SlobodnjakDTO | null>(null);
+  const [freelancerProfile, setFreelancerProfile] = useState<HonoraracDTO | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [userError, setUserError] = useState<string>('');
   const [freelancerError, setFreelancerError] = useState<string>('');
-  const isFreelancer = authService.isUserInRole('slobodnjak');
+  const isFreelancer = authService.isUserInRole('honorarac');
   const navigate = useNavigate();
 
   const fetchUserProfile = async () => {
@@ -27,10 +27,10 @@ const Profil = () => {
 
   const fetchFreelancerProfile = async () => {
     try {
-      const response = await axiosInstance.get('/slobodnjaci/current');
+      const response = await axiosInstance.get('/honorarci/current');
       return response.data;
     } catch (error) {
-      console.error('Greška pri dohvaćanju profila slobodnjaka:', error);
+      console.error('Greška pri dohvaćanju profila honoraraca:', error);
       throw error;
     }
   };
@@ -142,16 +142,16 @@ const Profil = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-red-500">{freelancerError || 'Podaci o slobodnjaku nisu dostupni.'}</div>
+              <div className="text-red-500">{freelancerError || 'Podaci o honorarcu nisu dostupni.'}</div>
             )
           ) : (
             <div className="flex flex-col items-center">
-              <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao slobodnjak.</p>
+              <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao honorarac.</p>
               <button
-                onClick={() => navigate('/registracija/slobodnjak')}
+                onClick={() => navigate('/registracija/honorarac')}
                 className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
               >
-                Registriraj se kao slobodnjak
+                Registriraj se kao honorarac
               </button>
             </div>
           )}

@@ -5,16 +5,16 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "slobodnjakvjestina")
-public class Slobodnjakvjestina {
+@Table(name = "honoraracvjestina")
+public class Honoraracvjestina {
     @EmbeddedId
-    private SlobodnjakvjestinaId id;
+    private HonoraracvjestinaId id;
 
     @MapsId("korisnikId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnik_id", nullable = false)
-    private Slobodnjak korisnik;
+    private Honorarac korisnik;
 
     @MapsId("vjestinaId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -22,19 +22,19 @@ public class Slobodnjakvjestina {
     @JoinColumn(name = "vjestina_id", nullable = false)
     private Vjestina vjestina;
 
-    public SlobodnjakvjestinaId getId() {
+    public HonoraracvjestinaId getId() {
         return id;
     }
 
-    public void setId(SlobodnjakvjestinaId id) {
+    public void setId(HonoraracvjestinaId id) {
         this.id = id;
     }
 
-    public Slobodnjak getKorisnik() {
+    public Honorarac getKorisnik() {
         return korisnik;
     }
 
-    public void setKorisnik(Slobodnjak korisnik) {
+    public void setKorisnik(Honorarac korisnik) {
         this.korisnik = korisnik;
     }
 

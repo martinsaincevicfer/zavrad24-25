@@ -1,12 +1,12 @@
 package hr.unizg.fer.backend.backend.dto;
 
-import hr.unizg.fer.backend.backend.domain.Slobodnjak;
+import hr.unizg.fer.backend.backend.domain.Honorarac;
 
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SlobodnjakDTO {
+public class HonoraracDTO {
     private Integer id;
     private String tip;
     private String email;
@@ -24,54 +24,54 @@ public class SlobodnjakDTO {
     private String oib;
     private String adresaTvrtke;
 
-    public static SlobodnjakDTO fromSlobodnjakOsoba(Slobodnjak slobodnjak) {
-        SlobodnjakDTO dto = new SlobodnjakDTO();
-        dto.setId(slobodnjak.getId());
+    public static HonoraracDTO fromHonoraracOsoba(Honorarac honorarac) {
+        HonoraracDTO dto = new HonoraracDTO();
+        dto.setId(honorarac.getId());
         dto.setTip("OSOBA");
-        dto.setEmail(slobodnjak.getKorisnik().getEmail());
-        dto.setKratkiOpis(slobodnjak.getKratkiOpis());
-        dto.setEdukacija(slobodnjak.getEdukacija());
-        dto.setIskustvo(slobodnjak.getIskustvo());
-        dto.setDatumStvaranja(slobodnjak.getDatumStvaranja());
-        dto.setVjestine(slobodnjak.getVjestine().stream()
+        dto.setEmail(honorarac.getKorisnik().getEmail());
+        dto.setKratkiOpis(honorarac.getKratkiOpis());
+        dto.setEdukacija(honorarac.getEdukacija());
+        dto.setIskustvo(honorarac.getIskustvo());
+        dto.setDatumStvaranja(honorarac.getDatumStvaranja());
+        dto.setVjestine(honorarac.getVjestine().stream()
                 .map(VjestinaDTO::new)
                 .collect(Collectors.toSet()));
         
-        dto.setIme(slobodnjak.getKorisnik().getOsoba().getIme());
-        dto.setPrezime(slobodnjak.getKorisnik().getOsoba().getPrezime());
-        dto.setAdresa(slobodnjak.getKorisnik().getOsoba().getAdresa());
+        dto.setIme(honorarac.getKorisnik().getOsoba().getIme());
+        dto.setPrezime(honorarac.getKorisnik().getOsoba().getPrezime());
+        dto.setAdresa(honorarac.getKorisnik().getOsoba().getAdresa());
         
         return dto;
     }
 
-    public static SlobodnjakDTO fromSlobodnjakTvrtka(Slobodnjak slobodnjak) {
-        SlobodnjakDTO dto = new SlobodnjakDTO();
-        dto.setId(slobodnjak.getId());
+    public static HonoraracDTO fromHonoraracTvrtka(Honorarac honorarac) {
+        HonoraracDTO dto = new HonoraracDTO();
+        dto.setId(honorarac.getId());
         dto.setTip("TVRTKA");
-        dto.setEmail(slobodnjak.getKorisnik().getEmail());
-        dto.setKratkiOpis(slobodnjak.getKratkiOpis());
-        dto.setEdukacija(slobodnjak.getEdukacija());
-        dto.setIskustvo(slobodnjak.getIskustvo());
-        dto.setDatumStvaranja(slobodnjak.getDatumStvaranja());
-        dto.setVjestine(slobodnjak.getVjestine().stream()
+        dto.setEmail(honorarac.getKorisnik().getEmail());
+        dto.setKratkiOpis(honorarac.getKratkiOpis());
+        dto.setEdukacija(honorarac.getEdukacija());
+        dto.setIskustvo(honorarac.getIskustvo());
+        dto.setDatumStvaranja(honorarac.getDatumStvaranja());
+        dto.setVjestine(honorarac.getVjestine().stream()
                 .map(VjestinaDTO::new)
                 .collect(Collectors.toSet()));
         
-        dto.setNazivTvrtke(slobodnjak.getKorisnik().getTvrtka().getNazivTvrtke());
-        dto.setOib(slobodnjak.getKorisnik().getTvrtka().getOib());
-        dto.setAdresaTvrtke(slobodnjak.getKorisnik().getTvrtka().getAdresa());
+        dto.setNazivTvrtke(honorarac.getKorisnik().getTvrtka().getNazivTvrtke());
+        dto.setOib(honorarac.getKorisnik().getTvrtka().getOib());
+        dto.setAdresaTvrtke(honorarac.getKorisnik().getTvrtka().getAdresa());
         
         return dto;
     }
 
-    public static SlobodnjakDTO basicInfo(Slobodnjak slobodnjak) {
-        SlobodnjakDTO dto = new SlobodnjakDTO();
-        dto.setId(slobodnjak.getId());
-        dto.setKratkiOpis(slobodnjak.getKratkiOpis());
-        dto.setEdukacija(slobodnjak.getEdukacija());
-        dto.setIskustvo(slobodnjak.getIskustvo());
-        dto.setDatumStvaranja(slobodnjak.getDatumStvaranja());
-        dto.setVjestine(slobodnjak.getVjestine().stream()
+    public static HonoraracDTO basicInfo(Honorarac honorarac) {
+        HonoraracDTO dto = new HonoraracDTO();
+        dto.setId(honorarac.getId());
+        dto.setKratkiOpis(honorarac.getKratkiOpis());
+        dto.setEdukacija(honorarac.getEdukacija());
+        dto.setIskustvo(honorarac.getIskustvo());
+        dto.setDatumStvaranja(honorarac.getDatumStvaranja());
+        dto.setVjestine(honorarac.getVjestine().stream()
                 .map(VjestinaDTO::new)
                 .collect(Collectors.toSet()));
         return dto;
@@ -121,7 +121,7 @@ public class SlobodnjakDTO {
 
     @Override
     public String toString() {
-        return "SlobodnjakDTO{" +
+        return "HonoraracDTO{" +
                 "id=" + id +
                 ", tip='" + tip + '\'' +
                 ", email='" + email + '\'' +

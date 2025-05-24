@@ -10,8 +10,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "slobodnjak")
-public class Slobodnjak {
+@Table(name = "honorarac")
+public class Honorarac {
     @Id
     @Column(name = "korisnik_id", nullable = false)
     private Integer id;
@@ -35,14 +35,14 @@ public class Slobodnjak {
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
-    @OneToMany(mappedBy = "slobodnjak")
+    @OneToMany(mappedBy = "honorarac")
     private Set<Ponuda> ponude = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "korisnik")
     private Set<Prijava> prijave = new LinkedHashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "slobodnjakvjestina",
+    @JoinTable(name = "honoraracvjestina",
             joinColumns = @JoinColumn(name = "korisnik_id"),
             inverseJoinColumns = @JoinColumn(name = "vjestina_id"))
     private Set<Vjestina> vjestine = new LinkedHashSet<>();
@@ -121,7 +121,7 @@ public class Slobodnjak {
 
     @Override
     public String toString() {
-        return "Slobodnjak{" +
+        return "Honorarac{" +
                 "id=" + id +
                 ", korisnik=" + korisnik +
                 ", kratkiOpis='" + kratkiOpis + '\'' +

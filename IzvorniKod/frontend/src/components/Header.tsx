@@ -59,8 +59,8 @@ const Header = () => {
         </button>
 
         <div className={`md:flex gap-4 justify-between items-center hidden`}>
-          <Link to="/slobodnjaci" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-            Zaposli slobodnjaka
+          <Link to="/honorarci" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
+            Zaposli honorarca
           </Link>
           <Link to="/projekti" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
             Pronađi posao
@@ -103,8 +103,8 @@ const Header = () => {
 
         {menuOpen && (
           <div className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 md:hidden z-50">
-            <Link to="/slobodnjaci" className="dark:text-white hover:text-gray-300">
-              Zaposli slobodnjaka
+            <Link to="/honorarci" className="dark:text-white hover:text-gray-300">
+              Zaposli honorarca
             </Link>
             <Link to="/projekti" className="dark:text-white hover:text-gray-300">
               Pronađi posao

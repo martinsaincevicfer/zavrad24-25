@@ -2,15 +2,15 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Homepage from "./components/Homepage.tsx";
 import {ProjektPopis} from "./components/ProjektPopis.tsx";
 import {DetaljiProjekta} from "./components/ProjektDetalji.tsx";
-import SlobodnjakPopis from "./components/SlobodnjakPopis.tsx";
-import SlobodnjakDetalji from "./components/SlobodnjakDetalji.tsx";
+import HonoraracPopis from "./components/HonoraracPopis.tsx";
+import HonoraracDetalji from "./components/HonoraracDetalji.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import Login from "./components/Login.tsx";
 import Profil from "./components/Profil.tsx";
 import RegistracijaOsoba from "./components/RegistracijaOsoba.tsx";
 import TipRegistracije from "./components/TipRegistracije.tsx";
 import RegistracijaTvrtka from "./components/RegistracijaTvrtka.tsx";
-import RegistracijaSlobodnjak from "./components/RegistracijaSlobodnjak.tsx";
+import RegistracijaHonorarac from "./components/RegistracijaHonorarac.tsx";
 
 function App() {
   return (
@@ -23,10 +23,10 @@ function App() {
         <Route path="/registracija/osoba" element={<RegistracijaOsoba />} />
         <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka />} />
         <Route
-          path="/registracija/slobodnjak"
+          path="/registracija/honorarac"
           element={
             <PrivateRoute>
-              <RegistracijaSlobodnjak />
+              <RegistracijaHonorarac />
             </PrivateRoute>
           }
         />
@@ -43,10 +43,10 @@ function App() {
           </PrivateRoute>
         }
         />
-        <Route path="/slobodnjaci" element={<SlobodnjakPopis />} />
-        <Route path="/slobodnjaci/:id" element={
+        <Route path="/honorarci" element={<HonoraracPopis />} />
+        <Route path="/honorarci/:id" element={
           <PrivateRoute>
-            <SlobodnjakDetalji />
+            <HonoraracDetalji />
           </PrivateRoute>
         }
         />

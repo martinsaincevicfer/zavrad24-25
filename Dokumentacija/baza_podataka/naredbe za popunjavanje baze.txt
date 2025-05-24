@@ -1,5 +1,5 @@
 INSERT INTO Uloga (naziv) VALUES
-('slobodnjak'),
+('honorarac'),
 ('klijent'),
 ('administrator');
 
@@ -131,7 +131,7 @@ INSERT INTO Osoba (korisnik_id, ime, prezime, adresa) VALUES
 (28, 'Petra', 'Božić', 'Pula'),
 (29, 'Ivan', 'Krpan', 'Vinkovci');
 
-INSERT INTO Slobodnjak (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
+INSERT INTO Honorarac (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
 (1, 'Stručnjak za web development', 'Fakultet računarstva', '5 godina iskustva u front-end razvoju'),
 (2, 'UI/UX dizajner', 'Fakultet likovnih umjetnosti', '3 godine iskustva u dizajnu sučelja'),
 (3, 'Data analyst', 'Ekonomija', '2 godine iskustva u analizi podataka'),
@@ -195,7 +195,7 @@ INSERT INTO Vjestina (naziv, kategorija) VALUES
 ('Software Testing', 'QA'),
 ('System Architecture', 'Architecture');
 
-INSERT INTO SlobodnjakVjestina (korisnik_id, vjestina_id) VALUES
+INSERT INTO HonoraracVjestina (korisnik_id, vjestina_id) VALUES
 (1, 1), (1, 9), (1, 10),
 (2, 2), (2, 12), (2, 13),
 (3, 3), (3, 15), (3, 17),
@@ -287,7 +287,7 @@ INSERT INTO Rezultat (ugovor_id, naziv, datoteka_put) VALUES
 (9, 'logo.png', 'uploads/logo.png'),
 (10, 'smart_contract.sol', 'uploads/smart_contract.sol');
 
-INSERT INTO Ponuda (klijent_id, slobodnjak_id, naziv, opis, budzet, rok, status) VALUES
+INSERT INTO Ponuda (klijent_id, honorarac_id, naziv, opis, budzet, rok, status) VALUES
 (3, 1, 'Izrada web stranice', 'Trebam jednostavnu web stranicu za firmu.', 3000, '2025-07-01', 'poslana'),
 (4, 2, 'Redizajn UI/UX', 'Poboljšanje korisničkog sučelja mobilne aplikacije.', 2500, '2025-06-15', 'prihvacena'),
 (5, 3, 'Analiza podataka', 'Treba mi izvještaj temeljen na financijskim podacima.', 1800, '2025-06-10', 'odbijena'),

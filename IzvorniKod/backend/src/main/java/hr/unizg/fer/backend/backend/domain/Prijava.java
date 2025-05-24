@@ -38,7 +38,7 @@ public class Prijava {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnik_id", nullable = false)
-    private Slobodnjak korisnik;
+    private Honorarac korisnik;
 
     @OneToOne(mappedBy = "prijava")
     private Ugovor ugovor;
@@ -91,11 +91,11 @@ public class Prijava {
         this.projekt = projekt;
     }
 
-    public Slobodnjak getKorisnik() {
+    public Honorarac getKorisnik() {
         return korisnik;
     }
 
-    public void setKorisnik(Slobodnjak korisnik) {
+    public void setKorisnik(Honorarac korisnik) {
         this.korisnik = korisnik;
     }
 
