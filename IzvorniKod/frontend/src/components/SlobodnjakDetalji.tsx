@@ -15,7 +15,7 @@ const SlobodnjakDetalji: React.FC = () => {
     const fetchSlobodnjak = async () => {
       try {
         if (!id) throw new Error('ID projekta nije definiran');
-        const response = await axiosInstance.get('/slobodnjaci/${id}');
+        const response = await axiosInstance.get(`/slobodnjaci/${id}`);
         setSlobodnjak(response.data);
         setError(null);
       } catch (error) {
@@ -54,14 +54,13 @@ const SlobodnjakDetalji: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto">
+    <>
       <Header />
-      
-      <div className="max-w-4xl mx-auto mt-8">
+      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-3xl font-bold mb-6">
           {slobodnjak.tip === 'TVRTKA' ? slobodnjak.nazivTvrtke : `${slobodnjak.ime} ${slobodnjak.prezime}`}
         </h1>
-        
+
         <div className="rounded-lg shadow-md p-8 space-y-8">
           <div>
             <h2 className="text-2xl font-semibold mb-4">
@@ -128,7 +127,7 @@ const SlobodnjakDetalji: React.FC = () => {
             <h2 className="text-2xl font-semibold mb-4">Vještine</h2>
             <div className="flex flex-wrap gap-2">
               {slobodnjak.vjestine.map((vjestina) => (
-                <span 
+                <span
                   key={vjestina.id}
                   className="bg-blue-300 text-blue-800 px-3 py-1 rounded-full"
                 >
@@ -144,7 +143,7 @@ const SlobodnjakDetalji: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

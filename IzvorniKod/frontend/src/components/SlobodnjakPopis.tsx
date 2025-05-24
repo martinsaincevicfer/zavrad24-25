@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { SlobodnjakDTO } from '../types/Slobodnjak';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
@@ -17,7 +16,7 @@ const SlobodnjakPopis: React.FC = () => {
         setSlobodnjaci(response.data);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);
-        setError(error.message);
+        setError("Greška pri dohvaćanju profila.");
       } finally {
         setIsLoading(false);
       }
@@ -50,32 +49,33 @@ const SlobodnjakPopis: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto">
+    <>
       <Header />
-      <h1 className="text-3xl font-bold mb-8">Popis Slobodnjaka</h1>
-      {slobodnjaci.length === 0 ? (
-        <p className="text-center">Nema dostupnih slobodnjaka.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {slobodnjaci.map((slobodnjak) => (
-            <div 
-              key={slobodnjak.id} 
-              className="rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-            >
-              <h2 className="text-xl font-semibold mb-2">{getPrikazanoIme(slobodnjak)}</h2>
-              <p className="mb-4">{slobodnjak.kratkiOpis}</p>
-              <Link 
-                to={`/slobodnjaci/${slobodnjak.id}`}
-                className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white"
-                style={{ color: 'white' }}
+      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
+        <h1 className="text-3xl font-bold mb-8">Popis Slobodnjaka</h1>
+        {slobodnjaci.length === 0 ? (
+          <p className="text-center">Nema dostupnih slobodnjaka.</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {slobodnjaci.map((slobodnjak) => (
+              <div
+                key={slobodnjak.id}
+                className="border rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
               >
-                Više informacija
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+                <h2 className="text-xl font-bold mb-2">{getPrikazanoIme(slobodnjak)}</h2>
+                <p className="mb-4">{slobodnjak.kratkiOpis}</p>
+                <Link
+                  to={`/slobodnjaci/${slobodnjak.id}`}
+                  className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white"
+                >
+                  Više informacija
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

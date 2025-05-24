@@ -1,137 +1,155 @@
-import React, { useState, useEffect } from 'react';
-import axiosInstance from '../utils/axiosConfig';
+import React, { useEffect, useState } from 'react';
+import { z } from 'zod';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import Header from "./Header.tsx";
+import axiosInstance from '../utils/axiosConfig';
+import Header from './Header';
+
+const slobodnjakSchema = z.object({
+  kratkiOpis: z.string().min(10, 'Kratki opis mora imati najmanje 10 znakova.'),
+  edukacija: z.string().min(2, 'Edukacija mora imati najmanje 2 znaka.'),
+  iskustvo: z.string().min(10, 'Iskustvo mora imati najmanje 10 znakova.'),
+  vjestine: z.array(z.number()).nonempty('Morate odabrati barem jednu vještinu.')
+});
+
+type SlobodnjakForm = z.infer<typeof slobodnjakSchema>;
 
 const RegistracijaSlobodnjak: React.FC = () => {
-    const [kratkiOpis, setKratkiOpis] = useState('');
-    const [edukacija, setEdukacija] = useState('');
-    const [iskustvo, setIskustvo] = useState('');
-    const [vjestine, setVjestine] = useState<number[]>([]);
-    const [popisVjestina, setPopisVjestina] = useState<{ id: number; naziv: string; kategorija: string; }[]>([]);
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const [popisVjestina, setPopisVjestina] = useState<{ id: number; naziv: string; kategorija: string }[]>([]);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchVjestine = async () => {
-            try {
-                const response = await axiosInstance.get('/vjestine');
-                setPopisVjestina(response.data);
-            } catch (error) {
-                console.error('Greška prilikom dohvaćanja vještina:', error);
-                setError('Nije moguće učitati popis vještina.');
-            }
-        };
-
-        fetchVjestine();
-    }, []);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-
-        try {
-            const data = {
-                kratkiOpis,
-                edukacija,
-                iskustvo,
-                vjestine: vjestine.map((id) => ({ id }))
-            };
-
-            await axiosInstance.post('/slobodnjaci/register', data);
-            alert('Uspješna registracija kao slobodnjak!');
-            navigate('/homepage');
-        } catch (err) {
-            console.error(err);
-            setError('Registracija slobodnjaka nije uspjela.');
-        }
+  useEffect(() => {
+    const fetchVjestine = async () => {
+      try {
+        const response = await axiosInstance.get('/vjestine');
+        setPopisVjestina(response.data);
+      } catch (error) {
+        console.error('Greška prilikom dohvaćanja vještina:', error);
+      }
     };
 
-    const handleVjestinaToggle = (id: number) => {
-        setVjestine((prev) =>
-            prev.includes(id) ? prev.filter((vjestinaId) => vjestinaId !== id) : [...prev, id]
-        );
-    };
+    fetchVjestine();
+  }, []);
 
-    return (
-        <div className="min-h-screen min-w-screen">
-            <Header />
-            <div className="max-w-md w-full mt-5 min-w-screen min-h-full flex flex-col items-center justify-center">
-                <h2 className="text-center text-3xl font-extrabold">Registriraj se kao Slobodnjak</h2>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    {error && <div className="text-red-500 text-center">{error}</div>}
-                    <div className="rounded-md shadow-sm space-y-4">
-                        <div>
-                            <label htmlFor="kratkiOpis" className="block text-sm font-medium">
-                                Kratki Opis
-                            </label>
-                            <textarea
-                                id="kratkiOpis"
-                                required
-                                rows={3}
-                                className="appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm"
-                                value={kratkiOpis}
-                                onChange={(e) => setKratkiOpis(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="edukacija" className="block text-sm font-medium">
-                                Edukacija
-                            </label>
-                            <input
-                                id="edukacija"
-                                type="text"
-                                required
-                                className="appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm"
-                                value={edukacija}
-                                onChange={(e) => setEdukacija(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="iskustvo" className="block text-sm font-medium">
-                                Iskustvo
-                            </label>
-                            <textarea
-                                id="iskustvo"
-                                rows={3}
-                                required
-                                className="appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm"
-                                value={iskustvo}
-                                onChange={(e) => setIskustvo(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="vjestine" className="block text-sm font-medium">
-                                Vještine
-                            </label>
-                            <div className="grid grid-cols-3">
-                                {popisVjestina.length > 0 ? (
-                                    popisVjestina.map((vjestina) => (
-                                        <label key={vjestina.id} className="inline-flex items-center">
-                                            <input
-                                                type="checkbox"
-                                                checked={vjestine.includes(vjestina.id)}
-                                                onChange={() => handleVjestinaToggle(vjestina.id)}
-                                            />
-                                            <span className="ml-2">{vjestina.naziv}</span>
-                                        </label>
-                                    ))
-                                ) : (
-                                    <p>Učitavanje vještina...</p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none"
-                    >
-                        Registriraj se
-                    </button>
-                </form>
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<SlobodnjakForm>({
+    resolver: zodResolver(slobodnjakSchema),
+    mode: 'all'
+  });
+
+  const onSubmit = async (data: SlobodnjakForm) => {
+    try {
+      await axiosInstance.post('/slobodnjaci/register', data);
+      alert('Uspješna registracija kao slobodnjak!');
+      navigate('/homepage');
+    } catch (err) {
+      console.error('Greška prilikom registracije:', err);
+      alert('Registracija slobodnjaka nije uspjela.');
+    }
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
+        <h2 className="text-center text-3xl font-extrabold">Registriraj se kao Slobodnjak</h2>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <div className="rounded-md shadow-sm space-y-4">
+            <div>
+              <label htmlFor="kratkiOpis" className="block text-sm font-medium">
+                Kratki Opis
+              </label>
+              <textarea
+                id="kratkiOpis"
+                rows={3}
+                className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
+                  errors.kratkiOpis ? 'border-red-500' : ''
+                }`}
+                {...register('kratkiOpis')}
+              />
+              {errors.kratkiOpis && <p className="text-red-500 text-sm">{errors.kratkiOpis.message}</p>}
             </div>
-        </div>
-    );
+            <div>
+              <label htmlFor="edukacija" className="block text-sm font-medium">
+                Edukacija
+              </label>
+              <input
+                id="edukacija"
+                type="text"
+                className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
+                  errors.edukacija ? 'border-red-500' : ''
+                }`}
+                {...register('edukacija')}
+              />
+              {errors.edukacija && <p className="text-red-500 text-sm">{errors.edukacija.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="iskustvo" className="block text-sm font-medium">
+                Iskustvo
+              </label>
+              <textarea
+                id="iskustvo"
+                rows={3}
+                className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
+                  errors.iskustvo ? 'border-red-500' : ''
+                }`}
+                {...register('iskustvo')}
+              />
+              {errors.iskustvo && <p className="text-red-500 text-sm">{errors.iskustvo.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="vjestine" className="block text-sm font-medium">
+                Vještine
+              </label>
+              <Controller
+                name="vjestine"
+                control={control}
+                render={({ field }) => (
+                  <div className="grid grid-cols-3">
+                    {popisVjestina.length > 0 ? (
+                      popisVjestina.map((vjestina) => (
+                        <label
+                          key={vjestina.id}
+                          className="inline-flex items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            value={vjestina.id}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                field.onChange([...field.value, parseInt(e.target.value, 10)]);
+                              } else {
+                                field.onChange(field.value.filter((id) => id !== parseInt(e.target.value, 10)));
+                              }
+                            }}
+                          />
+                          <span className="ml-2">{vjestina.naziv}</span>
+                        </label>
+                      ))
+                    ) : (
+                      <p>Učitavanje vještina...</p>
+                    )}
+                  </div>
+                )}
+              />
+              {errors.vjestine && <p className="text-red-500 text-sm">{errors.vjestine.message}</p>}
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 focus:outline-none"
+          >
+            Registriraj se
+          </button>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default RegistracijaSlobodnjak;

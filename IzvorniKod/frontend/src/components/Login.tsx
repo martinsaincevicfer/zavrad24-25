@@ -1,72 +1,85 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
-import Header from "./Header.tsx";
+import Header from './Header';
 
-export const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [lozinka, setLozinka] = useState('');
-  const [error, setError] = useState('');
+const loginSchema = z.object({
+  email: z.string().email('Unesite valjan email.'),
+  lozinka: z.string().min(6, 'Lozinka mora imati najmanje 6 znakova.')
+});
+
+type LoginForm = z.infer<typeof loginSchema>;
+
+const Login: React.FC = () => {
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+    mode: 'all'
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: LoginForm) => {
     try {
-      await authService.login({ email, lozinka });
+      await authService.login(data);
       navigate('/homepage');
-    } catch (err) {
-      setError('Neuspješna prijava. Provjerite email i lozinku.');
+    } catch (error: unknown) {
+      console.error('Greška prilikom prijave: ' ,error)
+      alert('Neuspješna prijava. Provjerite email i lozinku.');
     }
   };
 
   return (
-    <div className="min-h-screen min-w-screen">
+    <>
       <Header />
-      <div className="max-w-md w-full min-w-screen min-h-full flex flex-col items-center justify-center">
+      <div className="container max-w-7xl mx-auto flex flex-col items-center">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
             Prijava
           </h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="text-red-500 text-center">
-              {error}
-            </div>
-          )}
+        <form className="mt-8 space-y-6 min-w-1/3" onSubmit={handleSubmit(onSubmit)}>
           <div className="rounded-md shadow-sm flex flex-col gap-4">
             <div>
               <input
                 type="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email adresa"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register('email')}
+                className={`appearance-none rounded relative block w-full px-3 py-2 border rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
+                  errors.email ? 'border-red-500' : ''
+                }`}
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
             <div>
               <input
                 type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Lozinka"
-                value={lozinka}
-                onChange={(e) => setLozinka(e.target.value)}
+                {...register('lozinka')}
+                className={`appearance-none rounded relative block w-full px-3 py-2 border rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm ${
+                  errors.lozinka ? 'border-red-500' : ''
+                }`}
               />
+              {errors.lozinka && <p className="text-red-500 text-sm">{errors.lozinka.message}</p>}
             </div>
           </div>
-
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Prijavi se
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
+
+export default Login;

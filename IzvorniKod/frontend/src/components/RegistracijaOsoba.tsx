@@ -1,94 +1,128 @@
-import { useState } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import Header from "./Header.tsx";
 import axios from 'axios';
+import Header from './Header';
+
+const registracijaSchema = z.object({
+  email: z.string().email('Email nije ispravan.'),
+  lozinka: z.string().min(6, 'Lozinka mora sadržavati najmanje 6 znakova.'),
+  ponovljenaLozinka: z.string().min(6, 'Morate unijeti istu lozinku.'),
+  ime: z.string().min(2, 'Ime mora sadržavati najmanje 2 znaka.'),
+  prezime: z.string().min(2, 'Prezime mora sadržavati najmanje 2 znaka.'),
+  adresa: z.string().min(5, 'Adresa mora sadržavati najmanje 5 znakova.')
+})
+  .refine(
+    (data) => data.lozinka === data.ponovljenaLozinka,
+    {
+      message: 'Lozinke se ne podudaraju.',
+      path: ['lozinka', 'ponovljenaLozinka']
+    }
+  );
+
+type RegistracijaForm = z.infer<typeof registracijaSchema>;
 
 const RegistracijaOsoba = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        lozinka: '',
-        ime: '',
-        prezime: '',
-        adresa: ''
-    });
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<RegistracijaForm>({
+    resolver: zodResolver(registracijaSchema),
+    mode: 'all'
+  });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
+  const onSubmit = async (data: RegistracijaForm) => {
+    try {
+      await axios.post('/api/auth/register/osoba', data);
+      alert('Registracija uspješna!');
+      navigate('/login');
+    } catch (error: unknown) {
+      console.error('Greška prilikom registracije:', error);
+      alert('Došlo je do greške. Pokušajte ponovno.');
+    }
+  };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            await axios.post('/api/auth/register/osoba', formData);
-            alert('Registracija uspješna!');
-            navigate('/login');
-        } catch (error: any) {
-            console.error('Greška prilikom registracije:', error);
-            alert('Došlo je do greške. Pokušajte ponovno.');
-        }
-    };
+  return (
+    <>
+      <Header />
+      <div className="max-w-7xl mx-auto shadow-md rounded px-3 sm:px-6 lg:px-9">
+        <h1 className="text-2xl font-bold mb-6 text-center">Registracija</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-1/2 mx-auto">
+          <div className="flex flex-col gap-2">
+            <input
+              type="email"
+              placeholder="Email"
+              {...register('email')}
+              className={`p-2 border rounded ${errors.email ? 'border-red-500' : ''}`}
+            />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+          </div>
 
-    return (
-        <div className="max-w-md mx-auto min-w-screen shadow-md rounded">
-            <Header />
-            <h1 className="text-2xl font-bold mb-6 text-center">Registracija</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="p-2 border rounded"
-                />
-                <input
-                    type="password"
-                    name="lozinka"
-                    placeholder="Lozinka"
-                    value={formData.lozinka}
-                    onChange={handleChange}
-                    required
-                    className="p-2 border rounded"
-                />
-                <input
-                    type="text"
-                    name="ime"
-                    placeholder="Ime"
-                    value={formData.ime}
-                    onChange={handleChange}
-                    required
-                    className="p-2 border rounded"
-                />
-                <input
-                    type="text"
-                    name="prezime"
-                    placeholder="Prezime"
-                    value={formData.prezime}
-                    onChange={handleChange}
-                    required
-                    className="p-2 border rounded"
-                />
-                <input
-                    type="text"
-                    name="adresa"
-                    placeholder="Adresa"
-                    value={formData.adresa}
-                    onChange={handleChange}
-                    required
-                    className="p-2 border rounded"
-                />
-                <button
-                    type="submit"
-                    className="p-2 bg-green-500 text-white rounded hover:bg-green-600"
-                >
-                    Registriraj se
-                </button>
-            </form>
-        </div>
-    );
+          <div className="flex flex-col gap-2">
+            <input
+              type="password"
+              placeholder="Lozinka"
+              {...register('lozinka')}
+              className={`p-2 border rounded ${errors.lozinka ? 'border-red-500' : ''}`}
+            />
+            {errors.lozinka && <p className="text-red-500 text-sm">{errors.lozinka.message}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <input
+              type="password"
+              placeholder="Ponovite lozinku"
+              {...register('ponovljenaLozinka')}
+              className={`p-2 border rounded ${errors.ponovljenaLozinka ? 'border-red-500' : ''}`}
+            />
+            {errors.ponovljenaLozinka && (
+              <p className="text-red-500 text-sm">{errors.ponovljenaLozinka.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              placeholder="Ime"
+              {...register('ime')}
+              className={`p-2 border rounded ${errors.ime ? 'border-red-500' : ''}`}
+            />
+            {errors.ime && <p className="text-red-500 text-sm">{errors.ime.message}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              placeholder="Prezime"
+              {...register('prezime')}
+              className={`p-2 border rounded ${errors.prezime ? 'border-red-500' : ''}`}
+            />
+            {errors.prezime && <p className="text-red-500 text-sm">{errors.prezime.message}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              placeholder="Adresa"
+              {...register('adresa')}
+              className={`p-2 border rounded ${errors.adresa ? 'border-red-500' : ''}`}
+            />
+            {errors.adresa && <p className="text-red-500 text-sm">{errors.adresa.message}</p>}
+          </div>
+
+          <button
+            type="submit"
+            className="p-2 bg-green-500 text-white rounded hover:bg-green-600"
+          >
+            Registriraj se
+          </button>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default RegistracijaOsoba;
