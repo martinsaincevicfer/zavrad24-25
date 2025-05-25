@@ -11,6 +11,10 @@ public class VjestinaDTO {
     public VjestinaDTO() {
     }
 
+    public VjestinaDTO(Integer id) {
+        this.id = id;
+    }
+
     public VjestinaDTO(Integer id, String naziv, String kategorija) {
         this.id = id;
         this.naziv = naziv;

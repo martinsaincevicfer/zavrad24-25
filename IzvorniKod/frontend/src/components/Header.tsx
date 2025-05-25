@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {House, LogIn, LogOut, Menu, User, UserPlus, X} from "lucide-react";
+import {House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -43,13 +43,24 @@ const Header = () => {
   return (
     <header className="min-w-screen bg-gray-100 dark:bg-black p-4">
       <nav className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link
-          to="/"
-          className="text-xl font-bold flex items-center gap-1 dark:text-white hover:text-gray-300 dark:hover:text-gray-300"
-        >
-          <House />
-          Naslovnica
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            to="/"
+            className="text-xl font-bold flex items-center gap-1 dark:text-white hover:text-gray-300 dark:hover:text-gray-300"
+          >
+            <House />
+            Naslovnica
+          </Link>
+
+          <div className={`md:flex gap-4 justify-between items-center hidden`}>
+            <Link to="/honorarci" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
+              Zaposli honorarca
+            </Link>
+            <Link to="/projekti" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
+              Pronađi posao
+            </Link>
+          </div>
+        </div>
 
         <button
           className="text-xl dark:text-white md:hidden flex items-center"
@@ -59,12 +70,15 @@ const Header = () => {
         </button>
 
         <div className={`md:flex gap-4 justify-between items-center hidden`}>
-          <Link to="/honorarci" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-            Zaposli honorarca
-          </Link>
-          <Link to="/projekti" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-            Pronađi posao
-          </Link>
+          {isLoggedIn && (
+            <Link
+              to="/projekti/stvori"
+              className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+            >
+              <Plus />
+              Napravi projekt
+            </Link>
+          )}
           {isLoggedIn && userEmail && (
             <Link
               to="/profil"
@@ -109,6 +123,15 @@ const Header = () => {
             <Link to="/projekti" className="dark:text-white hover:text-gray-300">
               Pronađi posao
             </Link>
+            {isLoggedIn && (
+              <Link
+                to="/projekti/stvori"
+                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+              >
+                <Plus />
+                Napravi projekt
+              </Link>
+            )}
             {isLoggedIn && userEmail && (
               <Link
                 to="/profil"

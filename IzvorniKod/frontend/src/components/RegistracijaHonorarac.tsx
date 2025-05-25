@@ -16,14 +16,14 @@ const honoraracSchema = z.object({
 type HonoraracForm = z.infer<typeof honoraracSchema>;
 
 const RegistracijaHonorarac: React.FC = () => {
-  const [popisVjestina, setPopisVjestina] = useState<{ id: number; naziv: string; kategorija: string }[]>([]);
+  const [vjestine, setVjestine] = useState<{ id: number; naziv: string; kategorija: string }[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVjestine = async () => {
       try {
         const response = await axiosInstance.get('/vjestine');
-        setPopisVjestina(response.data);
+        setVjestine(response.data);
       } catch (error) {
         console.error('Greška prilikom dohvaćanja vještina:', error);
       }
@@ -39,7 +39,10 @@ const RegistracijaHonorarac: React.FC = () => {
     formState: { errors }
   } = useForm<HonoraracForm>({
     resolver: zodResolver(honoraracSchema),
-    mode: 'all'
+    mode: 'all',
+    defaultValues: {
+      vjestine: []
+    }
   });
 
   const onSubmit = async (data: HonoraracForm) => {
@@ -109,10 +112,11 @@ const RegistracijaHonorarac: React.FC = () => {
               <Controller
                 name="vjestine"
                 control={control}
+                defaultValue={[]}
                 render={({ field }) => (
                   <div className="grid grid-cols-3">
-                    {popisVjestina.length > 0 ? (
-                      popisVjestina.map((vjestina) => (
+                    {vjestine.length > 0 ? (
+                      vjestine.map((vjestina) => (
                         <label
                           key={vjestina.id}
                           className="inline-flex items-center"
@@ -120,11 +124,14 @@ const RegistracijaHonorarac: React.FC = () => {
                           <input
                             type="checkbox"
                             value={vjestina.id}
+                            checked={field.value.includes(vjestina.id)}
                             onChange={(e) => {
                               if (e.target.checked) {
-                                field.onChange([...field.value, parseInt(e.target.value, 10)]);
+                                field.onChange([...field.value, vjestina.id]);
                               } else {
-                                field.onChange(field.value.filter((id) => id !== parseInt(e.target.value, 10)));
+                                field.onChange(
+                                  field.value.filter((id: number) => id !== vjestina.id)
+                                );
                               }
                             }}
                           />

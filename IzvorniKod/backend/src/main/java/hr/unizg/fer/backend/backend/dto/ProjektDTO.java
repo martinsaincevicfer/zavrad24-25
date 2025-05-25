@@ -1,7 +1,6 @@
 package hr.unizg.fer.backend.backend.dto;
 
 import hr.unizg.fer.backend.backend.domain.Projekt;
-import hr.unizg.fer.backend.backend.domain.Vjestina;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -9,15 +8,32 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+
 public class ProjektDTO {
     private Integer id;
+
+    @NotBlank(message = "Naziv ne smije biti prazan")
     private String naziv;
+
     private String opis;
+
+    @NotNull(message = "Budžet mora biti specificiran")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Budžet mora biti veći od 0")
     private BigDecimal budzet;
+
+    @NotNull(message = "Rok mora biti definiran")
     private LocalDate rok;
+
     private Instant datumStvaranja;
+
     private Integer korisnikId;
-    private Set<VjestinaDTO> vjestine;
+
+    private Set<@Valid VjestinaDTO> vjestine;
+
+    public ProjektDTO() {
+    }
 
     public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, Integer korisnikId, Set<VjestinaDTO> vjestine) {
         this.id = id;

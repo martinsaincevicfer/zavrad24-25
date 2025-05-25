@@ -2,9 +2,11 @@ package hr.unizg.fer.backend.backend.rest;
 
 import hr.unizg.fer.backend.backend.dto.HonoraracDTO;
 import hr.unizg.fer.backend.backend.service.HonoraracService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class HonoraracController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<HonoraracDTO> createHonoraracForCurrentUser(@RequestBody HonoraracDTO honoraracDTO) {
+    public ResponseEntity<HonoraracDTO> createHonoraracForCurrentUser(@Valid @RequestBody HonoraracDTO honoraracDTO) {
         String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         HonoraracDTO kreiraniHonorarac = honoraracService.createHonorarac(currentUserEmail, honoraracDTO);
         return ResponseEntity.ok(kreiraniHonorarac);

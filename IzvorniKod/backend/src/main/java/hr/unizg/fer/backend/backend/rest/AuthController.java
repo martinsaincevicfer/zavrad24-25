@@ -3,12 +3,14 @@ package hr.unizg.fer.backend.backend.rest;
 import hr.unizg.fer.backend.backend.dto.OsobaDTO;
 import hr.unizg.fer.backend.backend.dto.TvrtkaDTO;
 import hr.unizg.fer.backend.backend.service.KorisnikService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,7 @@ public class AuthController {
     private KorisnikService korisnikService;
     
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 loginRequest.getEmail(),
@@ -48,13 +50,13 @@ public class AuthController {
     }
 
     @PostMapping("/register/osoba")
-    public ResponseEntity<?> registerOsoba(@RequestBody OsobaDTO osobaDTO) {
+    public ResponseEntity<?> registerOsoba(@Valid @RequestBody OsobaDTO osobaDTO) {
         korisnikService.registerOsoba(osobaDTO);
         return ResponseEntity.ok("Osoba registrirana uspješno!");
     }
 
     @PostMapping("/register/tvrtka")
-    public ResponseEntity<?> registerTvrtka(@RequestBody TvrtkaDTO tvrtkaDTO) {
+    public ResponseEntity<?> registerTvrtka(@Valid @RequestBody TvrtkaDTO tvrtkaDTO) {
         korisnikService.registerTvrtka(tvrtkaDTO);
         return ResponseEntity.ok("Tvrtka registrirana uspješno!");
     }
