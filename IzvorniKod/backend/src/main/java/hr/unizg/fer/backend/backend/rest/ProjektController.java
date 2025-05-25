@@ -37,4 +37,9 @@ public class ProjektController {
         ProjektDTO createdProjekt = projektService.createProjekt(projektDTO);
         return ResponseEntity.ok(createdProjekt);
     }
+
+    @GetMapping("/moji-projekti")
+    public ResponseEntity<List<ProjektDTO>> getProjektiZaUlogiranogKlijenta() {
+        return ResponseEntity.ok(projektService.getProjektiZaKlijenta());
+    }
 }

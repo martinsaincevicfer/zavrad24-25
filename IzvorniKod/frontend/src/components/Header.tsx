@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
+import {FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -8,6 +8,7 @@ const Header = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const isFreelancer = authService.isUserInRole('honorarac');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -56,9 +57,22 @@ const Header = () => {
             <Link to="/honorarci" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
               Zaposli honorarca
             </Link>
-            <Link to="/projekti" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-              Pronađi posao
-            </Link>
+
+            {isFreelancer && (
+              <Link to="/projekti" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
+                Pronađi posao
+              </Link>
+            )}
+
+            {isLoggedIn && (
+              <Link
+                to="/korisnik/projekti"
+                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+              >
+                <FileUser />
+                Moji projekti
+              </Link>
+            )}
           </div>
         </div>
 
@@ -120,9 +134,13 @@ const Header = () => {
             <Link to="/honorarci" className="dark:text-white hover:text-gray-300">
               Zaposli honorarca
             </Link>
-            <Link to="/projekti" className="dark:text-white hover:text-gray-300">
-              Pronađi posao
-            </Link>
+
+            {isFreelancer && (
+              <Link to="/projekti" className="dark:text-white hover:text-gray-300">
+                Pronađi posao
+              </Link>
+            )}
+
             {isLoggedIn && (
               <Link
                 to="/projekti/stvori"

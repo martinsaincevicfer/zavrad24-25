@@ -12,6 +12,7 @@ import TipRegistracije from "./components/TipRegistracije.tsx";
 import RegistracijaTvrtka from "./components/RegistracijaTvrtka.tsx";
 import RegistracijaHonorarac from "./components/RegistracijaHonorarac.tsx";
 import KreiranjeProjekta from "./components/KreiranjeProjekta.tsx";
+import {MojiProjekti} from "./components/MojiProjekti.tsx";
 
 function App() {
   return (
@@ -57,6 +58,11 @@ function App() {
           </PrivateRoute>
         }
         />
+        <Route path="/korisnik/projekti" element={
+          <PrivateRoute>
+            <MojiProjekti />
+          </PrivateRoute>
+        } />
       </Routes>
     </BrowserRouter>
   )

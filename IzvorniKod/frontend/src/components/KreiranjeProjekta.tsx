@@ -61,7 +61,7 @@ const KreiranjeProjekta: React.FC = () => {
 
       await axiosInstance.post('/projekti/stvori', data);
       alert('Projekt uspješno kreiran!');
-      navigate('/projekti');
+      navigate('/korisnik/projekti');
     } catch (error) {
       console.error('Greška prilikom kreiranja projekta:', error);
       alert('Došlo je do greške. Pokušajte ponovno.');

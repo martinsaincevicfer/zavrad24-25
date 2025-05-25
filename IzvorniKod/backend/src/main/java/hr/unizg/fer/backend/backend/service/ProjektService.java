@@ -80,4 +80,24 @@ public class ProjektService {
         Projekt savedProjekt = projektRepository.save(projekt);
         return new ProjektDTO(savedProjekt);
     }
+
+    @Transactional
+    public List<ProjektDTO> getProjektiZaKlijenta() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+        Korisnik korisnik = korisnikRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Nije pronađen korisnik: " + email));
+
+        boolean isKlijent = korisnik.getUloge().stream()
+                .anyMatch(uloga -> uloga.getNaziv().equalsIgnoreCase("klijent"));
+
+        if (!isKlijent) {
+            throw new SecurityException("Pristup odbijen: korisnik nije klijent.");
+        }
+
+        return korisnik.getProjekti().stream()
+                .map(ProjektDTO::new)
+                .collect(Collectors.toList());
+    }
 }
