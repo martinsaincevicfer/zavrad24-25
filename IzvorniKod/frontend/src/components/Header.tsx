@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {useEffect, useState} from 'react';
 import {FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
@@ -49,7 +49,7 @@ const Header = () => {
             to="/"
             className="text-xl font-bold flex items-center gap-1 dark:text-white hover:text-gray-300 dark:hover:text-gray-300"
           >
-            <House />
+            <House/>
             Naslovnica
           </Link>
 
@@ -69,8 +69,14 @@ const Header = () => {
                 to="/korisnik/projekti"
                 className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
               >
-                <FileUser />
+                <FileUser/>
                 Moji projekti
+              </Link>
+            )}
+
+            {isFreelancer && (
+              <Link to="/prijave" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
+                Moje prijave
               </Link>
             )}
           </div>
@@ -80,7 +86,7 @@ const Header = () => {
           className="text-xl dark:text-white md:hidden flex items-center"
           onClick={toggleMenu}
         >
-          {menuOpen ? <X /> : <Menu />}
+          {menuOpen ? <X/> : <Menu/>}
         </button>
 
         <div className={`md:flex gap-4 justify-between items-center hidden`}>
@@ -89,7 +95,7 @@ const Header = () => {
               to="/projekti/stvori"
               className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
             >
-              <Plus />
+              <Plus/>
               Napravi projekt
             </Link>
           )}
@@ -98,7 +104,7 @@ const Header = () => {
               to="/profil"
               className="px-4 py-2 dark:text-white flex items-center gap-1 hover:text-gray-300 dark:hover:text-gray-300"
             >
-              <User />
+              <User/>
               {userEmail}
             </Link>
           )}
@@ -108,12 +114,12 @@ const Header = () => {
           >
             {isLoggedIn ? (
               <div className="dark:text-white flex items-center gap-1 hover:text-gray-300 dark:hover:text-gray-300">
-                <LogOut />
+                <LogOut/>
                 Odjava
               </div>
             ) : (
               <div className="dark:text-white flex items-center gap-1 hover:text-gray-300 dark:hover:text-gray-300">
-                <LogIn />
+                <LogIn/>
                 Prijava
               </div>
             )}
@@ -123,14 +129,15 @@ const Header = () => {
               to="/registracija"
               className="px-4 py-2.5 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300 flex items-center gap-1"
             >
-              <UserPlus />
+              <UserPlus/>
               Registracija
             </Link>
           )}
         </div>
 
         {menuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 md:hidden z-50">
+          <div
+            className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 md:hidden z-50">
             <Link to="/honorarci" className="dark:text-white hover:text-gray-300">
               Zaposli honorarca
             </Link>
@@ -143,44 +150,64 @@ const Header = () => {
 
             {isLoggedIn && (
               <Link
-                to="/projekti/stvori"
-                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+                to="/korisnik/projekti"
+                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
               >
-                <Plus />
+                <FileUser/>
+                Moji projekti
+              </Link>
+            )}
+
+            {isFreelancer && (
+              <Link to="/prijave" className="dark:text-white dark:hover:text-gray-300">
+                Moje prijave
+              </Link>
+            )}
+
+            {isLoggedIn && (
+              <Link
+                to="/projekti/stvori"
+                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+              >
+                <Plus/>
                 Napravi projekt
               </Link>
             )}
-            {isLoggedIn && userEmail && (
-              <Link
-                to="/profil"
-                className="dark:text-white flex items-center gap-1 hover:text-gray-300"
-              >
-                <User />
-                {userEmail}
-              </Link>
-            )}
-            <button
-              className="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
-              onClick={isLoggedIn ? handleLogout : handleLoginClick}
-            >
-              {isLoggedIn ? (
-                <div className="dark:text-white flex items-center gap-1 hover:text-gray-300">
-                  <LogOut />
-                  Odjava
-                </div>
-              ) : (
-                <div className="dark:text-white flex items-center gap-1 hover:text-gray-300">
-                  <LogIn />
-                  Prijava
-                </div>
+
+            <div className="flex items-center gap-4">
+              {isLoggedIn && userEmail && (
+                <Link
+                  to="/profil"
+                  className="dark:text-white flex items-center gap-1 hover:text-gray-300"
+                >
+                  <User/>
+                  {userEmail}
+                </Link>
               )}
-            </button>
+              <button
+                className="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
+                onClick={isLoggedIn ? handleLogout : handleLoginClick}
+              >
+                {isLoggedIn ? (
+                  <div className="dark:text-white flex items-center gap-1 hover:text-gray-300">
+                    <LogOut/>
+                    Odjava
+                  </div>
+                ) : (
+                  <div className="dark:text-white flex items-center gap-1 hover:text-gray-300">
+                    <LogIn/>
+                    Prijava
+                  </div>
+                )}
+              </button>
+            </div>
+
             {!isLoggedIn && (
               <Link
                 to="/registracija"
                 className="bg-green-500 text-white px-5 py-3 rounded hover:bg-green-600 flex items-center gap-1 transition duration-300"
               >
-                <UserPlus />
+                <UserPlus/>
                 Registracija
               </Link>
             )}

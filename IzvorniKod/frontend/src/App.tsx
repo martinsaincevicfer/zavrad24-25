@@ -13,56 +13,62 @@ import RegistracijaTvrtka from "./components/RegistracijaTvrtka.tsx";
 import RegistracijaHonorarac from "./components/RegistracijaHonorarac.tsx";
 import KreiranjeProjekta from "./components/KreiranjeProjekta.tsx";
 import {MojiProjekti} from "./components/MojiProjekti.tsx";
+import MojePrijave from "./components/MojePrijave.tsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/homepage" element={<Homepage />}/>
-        <Route path="/" element={<Navigate to="/homepage" />}/>
-        <Route path="/login" element={<Login />} />
-        <Route path="/registracija" element={<TipRegistracije />} />
-        <Route path="/registracija/osoba" element={<RegistracijaOsoba />} />
-        <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka />} />
+        <Route path="/homepage" element={<Homepage/>}/>
+        <Route path="/" element={<Navigate to="/homepage"/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/registracija" element={<TipRegistracije/>}/>
+        <Route path="/registracija/osoba" element={<RegistracijaOsoba/>}/>
+        <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka/>}/>
         <Route
           path="/registracija/honorarac"
           element={
             <PrivateRoute>
-              <RegistracijaHonorarac />
+              <RegistracijaHonorarac/>
             </PrivateRoute>
           }
         />
         <Route path="/profil" element={
           <PrivateRoute>
-            <Profil />
+            <Profil/>
           </PrivateRoute>
         }
         />
-        <Route path="/projekti" element={<ProjektPopis />}/>
+        <Route path="/projekti" element={<ProjektPopis/>}/>
         <Route path="/projekti/:id" element={
           <PrivateRoute>
-            <DetaljiProjekta />
+            <DetaljiProjekta/>
           </PrivateRoute>
         }
         />
-        <Route path="/honorarci" element={<HonoraracPopis />} />
+        <Route path="/honorarci" element={<HonoraracPopis/>}/>
         <Route path="/honorarci/:id" element={
           <PrivateRoute>
-            <HonoraracDetalji />
+            <HonoraracDetalji/>
           </PrivateRoute>
         }
         />
         <Route path="/projekti/stvori" element={
           <PrivateRoute>
-            <KreiranjeProjekta />
+            <KreiranjeProjekta/>
           </PrivateRoute>
         }
         />
         <Route path="/korisnik/projekti" element={
           <PrivateRoute>
-            <MojiProjekti />
+            <MojiProjekti/>
           </PrivateRoute>
-        } />
+        }/>
+        <Route path="/prijave" element={
+          <PrivateRoute>
+            <MojePrijave/>
+          </PrivateRoute>
+        }/>
       </Routes>
     </BrowserRouter>
   )

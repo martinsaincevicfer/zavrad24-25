@@ -35,6 +35,11 @@ public class ProjektDTO {
     public ProjektDTO() {
     }
 
+    public ProjektDTO(Integer id, String naziv) {
+        this.id = id;
+        this.naziv = naziv;
+    }
+
     public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, Integer korisnikId, Set<VjestinaDTO> vjestine) {
         this.id = id;
         this.naziv = naziv;

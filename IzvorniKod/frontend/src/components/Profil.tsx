@@ -17,7 +17,7 @@ const Profil = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axiosInstance.get('/korisnik/profil');
+      const response = await axiosInstance.get('/korisnici/profil');
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju korisničkog profila:', error);

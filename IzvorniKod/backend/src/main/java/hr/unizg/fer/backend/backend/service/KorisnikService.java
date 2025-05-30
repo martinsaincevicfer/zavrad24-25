@@ -37,6 +37,14 @@ public class KorisnikService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public KorisnikService(KorisnikRepository korisnikRepository) {
+        this.korisnikRepository = korisnikRepository;
+    }
+
+    public Korisnik findKorisnikById(Integer id) {
+        return korisnikRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
+    }
+
     public Object getKorisnikDetails(String email) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
             .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
