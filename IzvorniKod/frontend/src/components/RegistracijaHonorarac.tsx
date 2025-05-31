@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { z } from 'zod';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {z} from 'zod';
+import {Controller, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useNavigate} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
+import {Vjestina} from "../types/Projekt.ts";
+import AxiosXHR = Axios.AxiosXHR;
 
 const honoraracSchema = z.object({
   kratkiOpis: z.string().min(10, 'Kratki opis mora imati najmanje 10 znakova.'),
@@ -22,7 +24,7 @@ const RegistracijaHonorarac: React.FC = () => {
   useEffect(() => {
     const fetchVjestine = async () => {
       try {
-        const response = await axiosInstance.get('/vjestine');
+        const response: AxiosXHR<Vjestina[]> = await axiosInstance.get('/vjestine');
         setVjestine(response.data);
       } catch (error) {
         console.error('Greška prilikom dohvaćanja vještina:', error);
@@ -36,7 +38,7 @@ const RegistracijaHonorarac: React.FC = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors }
+    formState: {errors}
   } = useForm<HonoraracForm>({
     resolver: zodResolver(honoraracSchema),
     mode: 'all',
@@ -58,7 +60,7 @@ const RegistracijaHonorarac: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
         <h2 className="text-center text-3xl font-extrabold">Registriraj se kao honorarac</h2>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -113,7 +115,7 @@ const RegistracijaHonorarac: React.FC = () => {
                 name="vjestine"
                 control={control}
                 defaultValue={[]}
-                render={({ field }) => (
+                render={({field}) => (
                   <div className="grid grid-cols-3">
                     {vjestine.length > 0 ? (
                       vjestine.map((vjestina) => (

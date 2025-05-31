@@ -1,6 +1,18 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
+import {
+  ArrowDownFromLine,
+  ArrowUpFromLine,
+  FileUser,
+  House,
+  LogIn,
+  LogOut,
+  Menu,
+  Plus,
+  User,
+  UserPlus,
+  X
+} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -8,7 +20,7 @@ const Header = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const isFreelancer = authService.isUserInRole('honorarac');
+  const jeHonorarac = authService.isUserInRole('honorarac');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -54,30 +66,37 @@ const Header = () => {
           </Link>
 
           <div className={`md:flex gap-4 justify-between items-center hidden`}>
-            <Link to="/honorarci" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-              Zaposli honorarca
-            </Link>
-
-            {isFreelancer && (
-              <Link to="/projekti" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-                Pronađi posao
-              </Link>
-            )}
-
             {isLoggedIn && (
-              <Link
-                to="/korisnik/projekti"
-                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
-              >
-                <FileUser/>
-                Moji projekti
-              </Link>
+              <div className="flex gap-2">
+                <Link
+                  to="/korisnik/projekti"
+                  className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+                >
+                  <FileUser/>
+                  Moji projekti
+                </Link>
+                <Link to="/klijent/ponude"
+                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                  <ArrowUpFromLine/>
+                  Poslane ponude
+                </Link>
+              </div>
             )}
 
-            {isFreelancer && (
-              <Link to="/prijave" className="px-4 py-2 dark:text-white dark:hover:text-gray-300">
-                Moje prijave
-              </Link>
+            {jeHonorarac && (
+              <div className="flex gap-2">
+                <Link to="/honorarac/prijave"
+                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                  <ArrowUpFromLine/>
+                  Moje prijave
+                </Link>
+
+                <Link to="/honorarac/ponude"
+                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                  <ArrowDownFromLine/>
+                  Primljene ponude
+                </Link>
+              </div>
             )}
           </div>
         </div>
@@ -138,16 +157,6 @@ const Header = () => {
         {menuOpen && (
           <div
             className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 md:hidden z-50">
-            <Link to="/honorarci" className="dark:text-white hover:text-gray-300">
-              Zaposli honorarca
-            </Link>
-
-            {isFreelancer && (
-              <Link to="/projekti" className="dark:text-white hover:text-gray-300">
-                Pronađi posao
-              </Link>
-            )}
-
             {isLoggedIn && (
               <Link
                 to="/korisnik/projekti"
@@ -158,10 +167,20 @@ const Header = () => {
               </Link>
             )}
 
-            {isFreelancer && (
-              <Link to="/prijave" className="dark:text-white dark:hover:text-gray-300">
-                Moje prijave
-              </Link>
+            {jeHonorarac && (
+              <div className="flex flex-col items-start gap-2">
+                <Link to="/honorarac/prijave"
+                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                  <ArrowUpFromLine/>
+                  Moje prijave
+                </Link>
+
+                <Link to="/honorarac/ponude"
+                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                  <ArrowDownFromLine/>
+                  Primljene ponude
+                </Link>
+              </div>
             )}
 
             {isLoggedIn && (

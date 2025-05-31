@@ -14,6 +14,8 @@ import RegistracijaHonorarac from "./components/RegistracijaHonorarac.tsx";
 import KreiranjeProjekta from "./components/KreiranjeProjekta.tsx";
 import {MojiProjekti} from "./components/MojiProjekti.tsx";
 import MojePrijave from "./components/MojePrijave.tsx";
+import HonoraracPonude from "./components/HonoraracPonude.tsx";
+import KorisnikPonude from "./components/KorisnikPonude.tsx";
 
 function App() {
   return (
@@ -64,9 +66,19 @@ function App() {
             <MojiProjekti/>
           </PrivateRoute>
         }/>
-        <Route path="/prijave" element={
+        <Route path="/honorarac/prijave" element={
           <PrivateRoute>
             <MojePrijave/>
+          </PrivateRoute>
+        }/>
+        <Route path="/honorarac/ponude" element={
+          <PrivateRoute>
+            <HonoraracPonude/>
+          </PrivateRoute>
+        }/>
+        <Route path="/klijent/ponude" element={
+          <PrivateRoute>
+            <KorisnikPonude/>
           </PrivateRoute>
         }/>
       </Routes>

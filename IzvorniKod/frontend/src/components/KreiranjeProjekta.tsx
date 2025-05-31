@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import React, {useEffect, useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {z} from 'zod';
 import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
-import { useNavigate } from 'react-router-dom';
-import { Vjestina } from '../types/Projekt';
+import {useNavigate} from 'react-router-dom';
+import {Vjestina} from '../types/Projekt';
+import AxiosXHR = Axios.AxiosXHR;
 
 const projektSchema = z.object({
   naziv: z.string().min(2, 'Naziv projekta mora sadržavati najmanje 2 znaka.'),
   opis: z.string().min(10, 'Opis projekta mora sadržavati najmanje 10 znakova.'),
   budzet: z
-    .number({ invalid_type_error: 'Budžet mora biti broj.' })
+    .number({invalid_type_error: 'Budžet mora biti broj.'})
     .min(1, 'Budžet mora biti veći od 0.'),
   rok: z.string().refine(
     (value) => !isNaN(Date.parse(value)),
-    { message: 'Datum roka mora biti ispravan.' }
+    {message: 'Datum roka mora biti ispravan.'}
   ),
   vjestine: z.array(z.number()).nonempty('Morate odabrati barem jednu vještinu.')
 });
@@ -31,7 +32,7 @@ const KreiranjeProjekta: React.FC = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors }
+    formState: {errors}
   } = useForm<ProjektForm>({
     resolver: zodResolver(projektSchema),
     mode: 'all',
@@ -43,7 +44,7 @@ const KreiranjeProjekta: React.FC = () => {
   useEffect(() => {
     const dohvatiVjestine = async () => {
       try {
-        const response = await axiosInstance.get('/vjestine');
+        const response: AxiosXHR<Vjestina[]> = await axiosInstance.get('/vjestine');
         setVjestine(response.data);
       } catch (error) {
         console.error('Greška prilikom dohvaćanja vještina:', error);
@@ -74,7 +75,7 @@ const KreiranjeProjekta: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="max-w-4xl mx-auto p-6 shadow-md rounded">
         <h1 className="text-2xl font-bold mb-6 text-center">Kreiraj Novi Projekt</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -112,7 +113,7 @@ const KreiranjeProjekta: React.FC = () => {
               type="number"
               id="budzet"
               className={`w-full p-2 border rounded ${errors.budzet ? 'border-red-500' : ''}`}
-              {...register('budzet', { valueAsNumber: true })}
+              {...register('budzet', {valueAsNumber: true})}
             />
             {errors.budzet && <p className="text-red-500 text-sm">{errors.budzet.message}</p>}
           </div>
@@ -138,7 +139,7 @@ const KreiranjeProjekta: React.FC = () => {
               name="vjestine"
               control={control}
               defaultValue={[]}
-              render={({ field }) => (
+              render={({field}) => (
                 <div className="grid grid-cols-2 gap-2">
                   {vjestine.map((vjestina) => (
                     <label key={vjestina.id} className="inline-flex items-center">

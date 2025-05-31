@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {PrijavaDTO} from "../types/PrijavaDTO";
 import Header from "./Header";
+import AxiosXHR = Axios.AxiosXHR;
 
 const MojePrijave: React.FC = () => {
   const [prijave, setPrijave] = useState<PrijavaDTO[]>([]);
@@ -12,7 +13,7 @@ const MojePrijave: React.FC = () => {
     const fetchPrijave = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get("/prijave/moje-prijave");
+        const response: AxiosXHR<PrijavaDTO[]> = await axiosInstance.get("/prijave/moje-prijave");
         setPrijave(response.data);
       } catch (err) {
         console.error("Greška kod dohvaćanja prijava:", err);
@@ -54,7 +55,7 @@ const MojePrijave: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="max-w-6xl mx-auto p-4">
+      <div className="max-w-7xl mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Moje Prijave</h1>
         {prijave.length === 0 ? (
           <p className="text-gray-700 text-center">Nemate prijava.</p>

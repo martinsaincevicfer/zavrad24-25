@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Projekt } from '../types/Projekt.ts';
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {Projekt} from '../types/Projekt.ts';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
+import AxiosXHR = Axios.AxiosXHR;
 
 export const ProjektPopis: React.FC = () => {
   const [projekti, setProjekti] = useState<Projekt[]>([]);
@@ -12,7 +13,7 @@ export const ProjektPopis: React.FC = () => {
   useEffect(() => {
     const dohvatiProjekte = async () => {
       try {
-        const response = await axiosInstance.get('/projekti');
+        const response: AxiosXHR<Projekt[]> = await axiosInstance.get('/projekti');
         setProjekti(response.data);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);
@@ -30,7 +31,7 @@ export const ProjektPopis: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6">Popis projekata</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

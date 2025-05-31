@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
-import { KorisnikDTO } from '../types/Korisnik';
-import { HonoraracDTO } from '../types/Honorarac.ts';
+import {useEffect, useState} from 'react';
+import {KorisnikDTO} from '../types/Korisnik';
+import {HonoraracDTO} from '../types/Honorarac.ts';
 import axiosInstance from '../utils/axiosConfig';
-import { authService } from '../services/authService';
+import {authService} from '../services/authService';
 import Header from './Header';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import AxiosXHR = Axios.AxiosXHR;
 
 const Profil = () => {
   const [userProfile, setUserProfile] = useState<KorisnikDTO | null>(null);
@@ -12,12 +13,12 @@ const Profil = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userError, setUserError] = useState<string>('');
   const [freelancerError, setFreelancerError] = useState<string>('');
-  const isFreelancer = authService.isUserInRole('honorarac');
+  const jeHonorarac = authService.isUserInRole('honorarac');
   const navigate = useNavigate();
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axiosInstance.get('/korisnici/profil');
+      const response: AxiosXHR<KorisnikDTO> = await axiosInstance.get('/korisnici/profil');
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju korisničkog profila:', error);
@@ -27,10 +28,11 @@ const Profil = () => {
 
   const fetchFreelancerProfile = async () => {
     try {
-      const response = await axiosInstance.get('/honorarci/current');
+      const response: AxiosXHR<HonoraracDTO> = await axiosInstance.get('/honorarci/current');
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju profila honoraraca:', error);
+      setFreelancerError(error.response.data.message);
       throw error;
     }
   };
@@ -41,7 +43,7 @@ const Profil = () => {
         const userData = await fetchUserProfile();
         setUserProfile(userData);
 
-        if (isFreelancer) {
+        if (jeHonorarac) {
           const freelancerData = await fetchFreelancerProfile();
           setFreelancerProfile(freelancerData);
         }
@@ -53,7 +55,7 @@ const Profil = () => {
     };
 
     loadProfiles();
-  }, [isFreelancer]);
+  }, [jeHonorarac]);
 
   if (loading) {
     return (
@@ -73,7 +75,7 @@ const Profil = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="max-w-7xl mx-auto rounded-lg shadow-xl flex flex-col items-center">
         <h1 className="text-3xl mt-3 font-bold mb-6">Moj Profil</h1>
         <div className="space-y-4 grid grid-cols-2 gap-4">
@@ -113,7 +115,7 @@ const Profil = () => {
             </div>
           )}
 
-          {isFreelancer ? (
+          {jeHonorarac ? (
             freelancerProfile ? (
               <div className="space-y-4">
                 <div className="p-4 rounded-lg">

@@ -9,6 +9,7 @@ import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
 import {PrijavaDTO} from "../types/PrijavaDTO.ts";
+import AxiosXHR = Axios.AxiosXHR;
 
 const prijavaSchema = z.object({
   iznos: z.number().positive('Iznos mora biti pozitivan broj.').min(1, 'Minimalni iznos je 1€.'),
@@ -24,7 +25,7 @@ export const DetaljiProjekta: React.FC = () => {
   const [ucitavanje, setUcitavanje] = useState(true);
   const [greska, setGreska] = useState<string | null>(null);
   const [prikaziFormu, setPrikaziFormu] = useState(false);
-  const isFreelancer = authService.isUserInRole('honorarac');
+  const jeHonorarac = authService.isUserInRole('honorarac');
   const [prijave, setPrijave] = useState<PrijavaDTO[] | null>(null);
 
   const ulogiraniKorisnik = authService.getCurrentUser();
@@ -43,14 +44,14 @@ export const DetaljiProjekta: React.FC = () => {
     const dohvatiProjekt = async () => {
       try {
         if (!id) throw new Error('ID projekta nije definiran');
-        const response = await axiosInstance.get(`/projekti/${id}`);
+        const response: AxiosXHR<Projekt> = await axiosInstance.get(`/projekti/${id}`);
         setProjekt(response.data);
 
-        const korisnikResponse = await axiosInstance.get(`/korisnici/${response.data.korisnikId}`);
+        const korisnikResponse: AxiosXHR<KorisnikDTO> = await axiosInstance.get(`/korisnici/${response.data.korisnikId}`);
         setKorisnik(korisnikResponse.data);
 
         if (ulogiraniKorisnik === korisnikResponse.data.email) {
-          const prijaveResponse = await axiosInstance.get(`/prijave/projekt/${id}`);
+          const prijaveResponse: AxiosXHR<PrijavaDTO[]> = await axiosInstance.get(`/prijave/projekt/${id}`);
           setPrijave(prijaveResponse.data);
         }
       } catch (error) {
@@ -159,7 +160,7 @@ export const DetaljiProjekta: React.FC = () => {
           </div>
         </div>
 
-        {isFreelancer && (
+        {jeHonorarac && (
           <div className="mt-6">
             <button
               onClick={() => setPrikaziFormu(true)}
