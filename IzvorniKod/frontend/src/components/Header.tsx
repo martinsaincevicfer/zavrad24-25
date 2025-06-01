@@ -1,18 +1,6 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {
-  ArrowDownFromLine,
-  ArrowUpFromLine,
-  FileUser,
-  House,
-  LogIn,
-  LogOut,
-  Menu,
-  Plus,
-  User,
-  UserPlus,
-  X
-} from "lucide-react";
+import {ArrowUpFromLine, FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -75,10 +63,10 @@ const Header = () => {
                   <FileUser/>
                   Moji projekti
                 </Link>
-                <Link to="/klijent/ponude"
-                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
-                  <ArrowUpFromLine/>
-                  Poslane ponude
+                <Link
+                  to="/ugovori"
+                  className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                  Moji ugovori
                 </Link>
               </div>
             )}
@@ -89,12 +77,6 @@ const Header = () => {
                       className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
                   <ArrowUpFromLine/>
                   Moje prijave
-                </Link>
-
-                <Link to="/honorarac/ponude"
-                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
-                  <ArrowDownFromLine/>
-                  Primljene ponude
                 </Link>
               </div>
             )}
@@ -173,12 +155,6 @@ const Header = () => {
                       className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
                   <ArrowUpFromLine/>
                   Moje prijave
-                </Link>
-
-                <Link to="/honorarac/ponude"
-                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
-                  <ArrowDownFromLine/>
-                  Primljene ponude
                 </Link>
               </div>
             )}

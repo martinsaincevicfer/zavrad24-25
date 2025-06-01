@@ -38,8 +38,6 @@ public class Korisnik {
             orphanRemoval = true)
     private Osoba osoba;
 
-    @OneToMany(mappedBy = "klijent")
-    private Set<Ponuda> ponude = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "posiljatelj")
     private Set<Poruka> poslanePoruke = new LinkedHashSet<>();
@@ -106,13 +104,6 @@ public class Korisnik {
         this.osoba = osoba;
     }
 
-    public Set<Ponuda> getPonude() {
-        return ponude;
-    }
-
-    public void setPonude(Set<Ponuda> ponude) {
-        this.ponude = ponude;
-    }
 
     public Set<Poruka> getPoslanePoruke() {
         return poslanePoruke;

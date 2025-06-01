@@ -248,6 +248,28 @@ export const DetaljiProjekta: React.FC = () => {
                     <p>
                       <strong>Datum prijave:</strong> {formatDatum(prijava.datumStvaranja)}
                     </p>
+                    <button
+                      onClick={async () => {
+                        try {
+                          await axiosInstance.post('/ugovori/korisnik/stvori', {
+                            prijavaId: prijava.id,
+                            datumPocetka: new Date().toISOString().split('T')[0],
+                            datumZavrsetka: new Date(
+                              new Date().setMonth(new Date().getMonth() + 1)
+                            ).toISOString().split('T')[0],
+                          });
+                          alert('Ugovor uspješno kreiran!');
+                          reset();
+                          setPrikaziFormu(false);
+                        } catch (error) {
+                          console.error('Greška pri prihvaćanju prijave:', error);
+                          alert('Dogodila se pogreška prilikom prihvaćanja prijave.');
+                        }
+                      }}
+                      className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    >
+                      Prihvati prijavu
+                    </button>
                   </li>
                 ))}
               </ul>

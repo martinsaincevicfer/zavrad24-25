@@ -24,7 +24,7 @@ public class Ugovor {
     @Column(name = "datum_pocetka", nullable = false)
     private LocalDate datumPocetka;
 
-    @Column(name = "datum_zavrsetka", nullable = false)
+    @Column(name = "datum_zavrsetka")
     private LocalDate datumZavrsetka;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)

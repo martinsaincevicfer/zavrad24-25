@@ -287,28 +287,6 @@ INSERT INTO Rezultat (ugovor_id, naziv, datoteka_put) VALUES
 (9, 'logo.png', 'uploads/logo.png'),
 (10, 'smart_contract.sol', 'uploads/smart_contract.sol');
 
-INSERT INTO Ponuda (klijent_id, honorarac_id, naziv, opis, budzet, rok, status) VALUES
-(3, 1, 'Izrada web stranice', 'Trebam jednostavnu web stranicu za firmu.', 3000, '2025-07-01', 'poslana'),
-(4, 2, 'Redizajn UI/UX', 'Poboljšanje korisničkog sučelja mobilne aplikacije.', 2500, '2025-06-15', 'prihvacena'),
-(5, 3, 'Analiza podataka', 'Treba mi izvještaj temeljen na financijskim podacima.', 1800, '2025-06-10', 'odbijena'),
-(6, 4, 'SEO kampanja', 'Optimizacija za tražilice za novu stranicu.', 2200, '2025-06-05', 'poslana'),
-(7, 5, 'Vođenje projekta', 'Vođenje manjeg razvojnog tima.', 4000, '2025-07-20', 'poslana'),
-(8, 6, 'Digitalni marketing', 'Kampanja za promociju aplikacije.', 3200, '2025-08-01', 'poslana'),
-(9, 7, 'Mobilna aplikacija', 'Izrada aplikacije za iOS i Android.', 8000, '2025-07-30', 'prihvacena'),
-(10, 8, 'Python skripta', 'Automatizacija Excel izvještaja.', 1500, '2025-06-12', 'poslana'),
-(11, 9, 'Java backend', 'Izrada REST servisa u Javi.', 3500, '2025-07-01', 'poslana'),
-(12, 10, 'DB administracija', 'Optimizacija i backup procedura.', 4000, '2025-06-18', 'odbijena'),
-(13, 11, 'AWS migracija', 'Migracija aplikacije na AWS.', 9000, '2025-07-15', 'poslana'),
-(14, 12, 'ML model', 'Razvoj prediktivnog modela.', 5000, '2025-08-01', 'prihvacena'),
-(15, 13, 'CI/CD setup', 'Postavljanje CI/CD alata.', 4200, '2025-06-20', 'poslana'),
-(16, 14, 'Grafički dizajn', 'Logo i vizualni identitet.', 1800, '2025-06-15', 'odbijena'),
-(17, 15, 'Blockchain wallet', 'Razvoj jednostavnog crypto walleta.', 6000, '2025-07-10', 'poslana'),
-(18, 16, 'AI chatbot', 'Chatbot za korisničku podršku.', 7500, '2025-08-15', 'poslana'),
-(19, 17, 'Penetration testing', 'Testiranje sigurnosti web aplikacije.', 4800, '2025-07-20', 'prihvacena'),
-(1, 18, 'Analiza poslovanja', 'Pomoć pri donošenju strateških odluka.', 2800, '2025-08-01', 'poslana'),
-(2, 19, 'Testiranje aplikacije', 'Testiranje nove mobilne aplikacije.', 2400, '2025-06-30', 'poslana'),
-(3, 1, 'Redizajn web stranice', 'Novi izgled i funkcionalnosti.', 3500, '2025-07-25', 'poslana');
-
 INSERT INTO Poruka (posiljatelj_id, primatelj_id, sadrzaj) VALUES
 (1, 2, 'Bok! Jesi li dostupna za suradnju?'),
 (2, 1, 'Hej, mogu danas pogledati projekt.'),

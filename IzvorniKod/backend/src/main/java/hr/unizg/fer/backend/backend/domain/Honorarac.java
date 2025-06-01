@@ -35,9 +35,6 @@ public class Honorarac {
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
-    @OneToMany(mappedBy = "honorarac")
-    private Set<Ponuda> ponude = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "korisnik")
     private Set<Prijava> prijave = new LinkedHashSet<>();
 
@@ -95,14 +92,6 @@ public class Honorarac {
         this.datumStvaranja = datumStvaranja;
     }
 
-    public Set<Ponuda> getPonude() {
-        return ponude;
-    }
-
-    public void setPonude(Set<Ponuda> ponude) {
-        this.ponude = ponude;
-    }
-
     public Set<Prijava> getPrijave() {
         return prijave;
     }
@@ -128,7 +117,6 @@ public class Honorarac {
                 ", edukacija='" + edukacija + '\'' +
                 ", iskustvo='" + iskustvo + '\'' +
                 ", datumStvaranja=" + datumStvaranja +
-                ", ponude=" + ponude +
                 ", prijave=" + prijave +
                 ", vjestine=" + vjestine +
                 '}';
