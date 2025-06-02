@@ -15,6 +15,7 @@ import KreiranjeProjekta from "./components/KreiranjeProjekta.tsx";
 import {MojiProjekti} from "./components/MojiProjekti.tsx";
 import MojePrijave from "./components/MojePrijave.tsx";
 import MojiUgovori from "./components/MojiUgovori.tsx";
+import UgovorDetalji from "./components/UgovorDetalji.tsx";
 
 function App() {
   return (
@@ -73,6 +74,11 @@ function App() {
         <Route path="/ugovori" element={
           <PrivateRoute>
             <MojiUgovori/>
+          </PrivateRoute>
+        }/>
+        <Route path="/ugovori/:id" element={
+          <PrivateRoute>
+            <UgovorDetalji/>
           </PrivateRoute>
         }/>
       </Routes>

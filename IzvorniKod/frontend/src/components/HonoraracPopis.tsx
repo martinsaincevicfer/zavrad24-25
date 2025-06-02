@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {HonoraracDTO} from '../types/Honorarac.ts';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
-import AxiosXHR = Axios.AxiosXHR;
+
 
 const HonoraracPopis: React.FC = () => {
   const [honorarci, setHonorarci] = React.useState<HonoraracDTO[]>([]);
@@ -13,7 +13,7 @@ const HonoraracPopis: React.FC = () => {
   React.useEffect(() => {
     const fetchHonorarci = async () => {
       try {
-        const response: AxiosXHR<HonoraracDTO[]> = await axiosInstance.get('/honorarci');
+        const response = await axiosInstance.get<HonoraracDTO[]>('/honorarci');
         setHonorarci(response.data);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);

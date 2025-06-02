@@ -3,7 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {HonoraracDTO} from '../types/Honorarac';
 import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
-import AxiosXHR = Axios.AxiosXHR;
+
 
 const HonoraracDetalji: React.FC = () => {
   const {id} = useParams<{ id: string }>();
@@ -16,7 +16,7 @@ const HonoraracDetalji: React.FC = () => {
     const fetchHonorarac = async () => {
       try {
         if (!id) throw new Error('ID honorarca nije definiran');
-        const response: AxiosXHR<HonoraracDTO> = await axiosInstance.get(`/honorarci/${id}`);
+        const response = await axiosInstance.get<HonoraracDTO>(`/honorarci/${id}`);
         setHonorarac(response.data);
         setError(null);
       } catch (error) {

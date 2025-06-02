@@ -216,54 +216,46 @@ INSERT INTO ProjektVjestina (vjestina_id, projekt_id) VALUES
 
 INSERT INTO Prijava (status, iznos, poruka, projekt_id, korisnik_id) VALUES
 ('aktivna', 4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', 1, 1),
-('prihvaćena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', 2, 7),
+('prihvacena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', 2, 7),
 ('aktivna', 1800.00, 'SEO optimizaciju mogu završiti brzo i učinkovito.', 3, 4),
-('prihvaćena', 2900.00, 'Radim baze podataka već 7 godina.', 4, 10),
+('prihvacena', 2900.00, 'Radim baze podataka već 7 godina.', 4, 10),
 ('odbijena', 3900.00, 'Digitalni marketing je moja specijalnost.', 5, 6),
-('prihvaćena', 6900.00, 'Python koristim svakodnevno, odlična prilika.', 6, 8),
+('prihvacena', 6900.00, 'Python koristim svakodnevno, odlična prilika.', 6, 8),
 ('aktivna', 11500.00, 'DevOps alatima se bavim profesionalno.', 7, 13),
 ('aktivna', 14000.00, 'Imam iskustvo s migracijama na cloud.', 8, 11),
 ('odbijena', 1300.00, 'Brzo i kvalitetno izrađujem grafičke materijale.', 9, 14),
 ('aktivna', 7800.00, 'Blockchain rješenja su moja specijalnost.', 10, 15),
 ('aktivna', 8500.00, 'Razvijao sam AI chatbot ranije.', 11, 16),
 ('aktivna', 4500.00, 'Analizirao sam sigurnost za brojne klijente.', 13, 17),
-('povučena', 2800.00, 'Nudim preciznu poslovnu analizu.', 14, 18);
+('povucena', 2800.00, 'Nudim preciznu poslovnu analizu.', 14, 18);
 
-INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, prijava_id) VALUES
-('aktivan', '2025-06-01', '2025-07-01', 2),
-('zavrsen', '2025-04-01', '2025-05-01', 4),
-('zavrsen', '2025-04-15', '2025-05-15', 6),
-('aktivan', '2025-05-10', '2025-06-10', 7),
-('otkazan', '2025-05-01', '2025-05-15', 5),
-('zavrsen', '2025-03-01', '2025-04-01', 3),
-('aktivan', '2025-05-20', '2025-06-20', 8),
-('zavrsen', '2025-01-01', '2025-02-01', 9),
-('zavrsen', '2025-02-01', '2025-03-01', 10),
-('aktivan', '2025-03-15', '2025-04-15', 11),
-('zavrsen', '2025-04-01', '2025-05-01', 12),
-('otkazan', '2025-02-01', '2025-02-10', 13);
+INSERT INTO Recenzija (ocjena, komentar) VALUES
+(5, 'Odlična suradnja!'),
+(4, 'Dobar rad, ali malo kasnio.'),
+(5, 'Vrlo profesionalan pristup.'),
+(3, 'Zadovoljavajuće, ali može bolje.'),
+(5, 'Izvanredan rad!'),
+(2, 'Nije ispunio očekivanja.'),
+(4, 'Solidan rad, dobra komunikacija.'),
+(5, 'Preporučujem suradnju.'),
+(3, 'U redu, ali previše bugova.'),
+(4, 'Zadovoljan sam uslugom.'),
+(5, 'Sve prema dogovoru.'),
+(5, 'Vrlo brz i učinkovit.');
 
-INSERT INTO Recenzija (ocjena, komentar, ugovor_id) VALUES
-(5, 'Odlična suradnja!', 1),
-(4, 'Dobar rad, ali malo kasnio.', 2),
-(5, 'Vrlo profesionalan pristup.', 3),
-(3, 'Zadovoljavajuće, ali može bolje.', 4),
-(5, 'Izvanredan rad!', 5),
-(2, 'Nije ispunio očekivanja.', 6),
-(4, 'Solidan rad, dobra komunikacija.', 7),
-(5, 'Preporučujem suradnju.', 8),
-(3, 'U redu, ali previše bugova.', 9),
-(4, 'Zadovoljan sam uslugom.', 10),
-(5, 'Sve prema dogovoru.', 11),
-(5, 'Vrlo brz i učinkovit.', 12),
-(4, 'Profesionalno i kvalitetno.', 3),
-(5, 'Top freelancer!', 4),
-(3, 'Može bolje, ali korektno.', 2),
-(5, 'Super!', 5),
-(4, 'Sve u redu prošlo.', 1),
-(2, 'Problemi u komunikaciji.', 6),
-(5, 'Besprijekoran rad.', 7),
-(4, 'Brzo rješenje i dobra cijena.', 8);
+INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, prijava_id, recenzija_id) VALUES
+('aktivan', '2025-06-01', '2025-07-01', 2, 1),
+('zavrsen', '2025-04-01', '2025-05-01', 4, 2),
+('zavrsen', '2025-04-15', '2025-05-15', 6, 3),
+('aktivan', '2025-05-10', '2025-06-10', 7, 4),
+('otkazan', '2025-05-01', '2025-05-15', 5, 5),
+('zavrsen', '2025-03-01', '2025-04-01', 3, 6),
+('aktivan', '2025-05-20', '2025-06-20', 8, 7),
+('zavrsen', '2025-01-01', '2025-02-01', 9, 8),
+('zavrsen', '2025-02-01', '2025-03-01', 10, 9),
+('aktivan', '2025-03-15', '2025-04-15', 11, 10),
+('zavrsen', '2025-04-01', '2025-05-01', 12, 11),
+('otkazan', '2025-02-01', '2025-02-10', 13, 12);
 
 INSERT INTO Rezultat (ugovor_id, naziv, datoteka_put) VALUES
 (1, 'Završna verzija stranice', 'uploads/stranica_final.zip'),

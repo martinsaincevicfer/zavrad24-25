@@ -1,6 +1,7 @@
 package hr.unizg.fer.backend.backend.rest;
 
 import hr.unizg.fer.backend.backend.dto.UgovorDTO;
+import hr.unizg.fer.backend.backend.dto.UgovorDetaljiDTO;
 import hr.unizg.fer.backend.backend.dto.UgovorRequestDTO;
 import hr.unizg.fer.backend.backend.service.UgovorService;
 import jakarta.validation.Valid;
@@ -18,6 +19,11 @@ public class UgovorController {
 
     public UgovorController(UgovorService ugovorService) {
         this.ugovorService = ugovorService;
+    }
+
+    @GetMapping("/{ugovorId}")
+    public UgovorDetaljiDTO getUgovorById(@PathVariable Integer ugovorId) {
+        return ugovorService.getUgovorById(ugovorId);
     }
 
     @GetMapping("/korisnik")

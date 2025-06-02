@@ -32,8 +32,10 @@ public class Ugovor {
     @JoinColumn(name = "prijava_id", nullable = false)
     private Prijava prijava;
 
-    @OneToMany(mappedBy = "ugovor")
-    private Set<Recenzija> recenzije = new LinkedHashSet<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "recenzija_id")
+    private Recenzija recenzija;
 
     @OneToMany(mappedBy = "ugovor")
     private Set<Rezultat> rezultati = new LinkedHashSet<>();
@@ -76,14 +78,6 @@ public class Ugovor {
 
     public void setPrijava(Prijava prijava) {
         this.prijava = prijava;
-    }
-
-    public Set<Recenzija> getRecenzije() {
-        return recenzije;
-    }
-
-    public void setRecenzije(Set<Recenzija> recenzije) {
-        this.recenzije = recenzije;
     }
 
     public Set<Rezultat> getRezultati() {

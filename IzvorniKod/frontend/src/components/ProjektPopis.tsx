@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Projekt} from '../types/Projekt.ts';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
-import AxiosXHR = Axios.AxiosXHR;
+
 
 export const ProjektPopis: React.FC = () => {
   const [projekti, setProjekti] = useState<Projekt[]>([]);
@@ -13,7 +13,7 @@ export const ProjektPopis: React.FC = () => {
   useEffect(() => {
     const dohvatiProjekte = async () => {
       try {
-        const response: AxiosXHR<Projekt[]> = await axiosInstance.get('/projekti');
+        const response = await axiosInstance.get<Projekt[]>('/projekti');
         setProjekti(response.data);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);

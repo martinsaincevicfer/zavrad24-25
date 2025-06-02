@@ -5,7 +5,7 @@ import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
 import Header from './Header';
 import {useNavigate} from 'react-router-dom';
-import AxiosXHR = Axios.AxiosXHR;
+
 
 const Profil = () => {
   const [userProfile, setUserProfile] = useState<KorisnikDTO | null>(null);
@@ -18,7 +18,7 @@ const Profil = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response: AxiosXHR<KorisnikDTO> = await axiosInstance.get('/korisnici/profil');
+      const response = await axiosInstance.get<KorisnikDTO>('/korisnici/profil');
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju korisničkog profila:', error);
@@ -28,7 +28,7 @@ const Profil = () => {
 
   const fetchFreelancerProfile = async () => {
     try {
-      const response: AxiosXHR<HonoraracDTO> = await axiosInstance.get('/honorarci/current');
+      const response = await axiosInstance.get<HonoraracDTO>('/honorarci/current');
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju profila honoraraca:', error);

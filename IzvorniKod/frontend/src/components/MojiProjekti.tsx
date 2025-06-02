@@ -3,7 +3,7 @@ import axiosInstance from "../utils/axiosConfig";
 import {Projekt} from "../types/Projekt";
 import Header from "./Header";
 import {Link} from "react-router-dom";
-import AxiosXHR = Axios.AxiosXHR;
+
 
 export const MojiProjekti: React.FC = () => {
   const [projekti, setProjekti] = useState<Projekt[]>([]);
@@ -13,7 +13,7 @@ export const MojiProjekti: React.FC = () => {
   useEffect(() => {
     const dohvatiMojeProjekte = async () => {
       try {
-        const response: AxiosXHR<Projekt[]> = await axiosInstance.get("/projekti/moji-projekti");
+        const response = await axiosInstance.get<Projekt[]>("/projekti/moji-projekti");
         setProjekti(response.data);
       } catch (error) {
         console.error("Greška pri dohvaćanju projekata:", error);

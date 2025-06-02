@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {PrijavaDTO} from "../types/PrijavaDTO";
 import Header from "./Header";
-import AxiosXHR = Axios.AxiosXHR;
+
 
 const MojePrijave: React.FC = () => {
   const [prijave, setPrijave] = useState<PrijavaDTO[]>([]);
@@ -13,7 +13,7 @@ const MojePrijave: React.FC = () => {
     const fetchPrijave = async () => {
       try {
         setLoading(true);
-        const response: AxiosXHR<PrijavaDTO[]> = await axiosInstance.get("/prijave/moje-prijave");
+        const response = await axiosInstance.get<PrijavaDTO[]>("/prijave/moje-prijave");
         setPrijave(response.data);
       } catch (err) {
         console.error("Greška kod dohvaćanja prijava:", err);

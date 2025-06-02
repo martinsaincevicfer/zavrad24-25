@@ -84,9 +84,16 @@ CREATE TABLE Prijava (
   datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   projekt_id INT NOT NULL,
   korisnik_id INT NOT NULL,
-  CHECK (status IN ('aktivna', 'prihvaćena', 'odbijena', 'povučena')),
+  CHECK (status IN ('aktivna', 'prihvacena', 'odbijena', 'povucena')),
   FOREIGN KEY (projekt_id) REFERENCES Projekt(projekt_id) ON DELETE CASCADE,
   FOREIGN KEY (korisnik_id) REFERENCES Honorarac(korisnik_id) ON DELETE CASCADE
+);
+
+CREATE TABLE Recenzija (
+  recenzija_id SERIAL PRIMARY KEY,
+  ocjena INT NOT NULL CHECK (ocjena BETWEEN 1 AND 5),
+  komentar TEXT,
+  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Ugovor (
@@ -95,16 +102,9 @@ CREATE TABLE Ugovor (
   datum_pocetka DATE NOT NULL,
   datum_zavrsetka DATE CHECK (datum_zavrsetka >= datum_pocetka),
   prijava_id INT NOT NULL UNIQUE,
-  FOREIGN KEY (prijava_id) REFERENCES Prijava(prijava_id) ON DELETE CASCADE
-);
-
-CREATE TABLE Recenzija (
-  recenzija_id SERIAL PRIMARY KEY,
-  ocjena INT NOT NULL CHECK (ocjena BETWEEN 1 AND 5),
-  komentar TEXT,
-  datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  ugovor_id INT NOT NULL,
-  FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
+  recenzija_id INT UNIQUE,
+  FOREIGN KEY (prijava_id) REFERENCES Prijava(prijava_id) ON DELETE CASCADE,
+  FOREIGN KEY (recenzija_id) REFERENCES Recenzija(recenzija_id) ON DELETE SET NULL
 );
 
 CREATE TABLE Rezultat (

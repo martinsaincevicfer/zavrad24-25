@@ -2,8 +2,6 @@ package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
 
@@ -25,9 +23,7 @@ public class Recenzija {
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "ugovor_id", nullable = false)
+    @OneToOne(mappedBy = "recenzija")
     private Ugovor ugovor;
 
     public Integer getId() {
@@ -60,14 +56,6 @@ public class Recenzija {
 
     public void setDatumStvaranja(Instant datumStvaranja) {
         this.datumStvaranja = datumStvaranja;
-    }
-
-    public Ugovor getUgovor() {
-        return ugovor;
-    }
-
-    public void setUgovor(Ugovor ugovor) {
-        this.ugovor = ugovor;
     }
 
 }

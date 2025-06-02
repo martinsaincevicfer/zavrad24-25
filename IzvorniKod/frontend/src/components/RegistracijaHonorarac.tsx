@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
 import {Vjestina} from "../types/Projekt.ts";
-import AxiosXHR = Axios.AxiosXHR;
+
 
 const honoraracSchema = z.object({
   kratkiOpis: z.string().min(10, 'Kratki opis mora imati najmanje 10 znakova.'),
@@ -24,7 +24,7 @@ const RegistracijaHonorarac: React.FC = () => {
   useEffect(() => {
     const fetchVjestine = async () => {
       try {
-        const response: AxiosXHR<Vjestina[]> = await axiosInstance.get('/vjestine');
+        const response = await axiosInstance.get<Vjestina[]>('/vjestine');
         setVjestine(response.data);
       } catch (error) {
         console.error('Greška prilikom dohvaćanja vještina:', error);

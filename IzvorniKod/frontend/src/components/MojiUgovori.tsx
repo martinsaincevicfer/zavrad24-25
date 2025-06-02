@@ -2,16 +2,21 @@ import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import Header from "./Header";
 import {Ugovor} from "../types/Ugovor";
-import AxiosXHR = Axios.AxiosXHR;
+import {authService} from "../services/authService.ts";
+import {Link} from "react-router-dom";
 
 const MojiUgovori: React.FC = () => {
   const [ugovori, setUgovori] = useState<Ugovor[]>([]);
   const [ucitavanje, setUcitavanje] = useState<boolean>(true);
   const [greska, setGreska] = useState<string | null>(null);
+  const jeHonorarac = authService.isUserInRole("honorarac");
 
   const fetchUgovori = async () => {
     try {
-      const response: AxiosXHR<Ugovor[]> = await axiosInstance.get("/ugovori/honorarac"); // Promijenite endpoint na "/api/ugovori/korisnik" ako je klijent
+      const response = await axiosInstance.get<Ugovor[]>(
+        jeHonorarac ? "/ugovori/honorarac" : "/ugovori/korisnik"
+      );
+      console.log(response.data);
       setUgovori(response.data);
     } catch (error) {
       console.error("Greška pri dohvaćanju ugovora:", error);
@@ -44,13 +49,20 @@ const MojiUgovori: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ugovori.map((ugovor) => (
-              <div
+              <Link
+                to={`/ugovori/${ugovor.id}`}
                 key={ugovor.id}
-                className="p-4 border rounded-lg shadow-md"
+                className="p-4 border rounded-lg shadow-md hover:shadow-lg hover:border-blue-500 transition"
               >
                 <p>
-                  <strong>Status: </strong>
-                  {ugovor.status}
+                  <strong>Projekt: </strong>{ugovor.nazivProjekta}
+                </p>
+                <p>
+                  <strong>Korisnik: </strong>
+                  {ugovor.nazivKorisnika}
+                </p>
+                <p>
+                  <strong>Status: </strong>{ugovor.status}
                 </p>
                 <p>
                   <strong>Datum početka: </strong>
@@ -62,7 +74,7 @@ const MojiUgovori: React.FC = () => {
                     ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
                     : "N/A"}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         )}

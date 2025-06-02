@@ -6,7 +6,7 @@ import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
 import {useNavigate} from 'react-router-dom';
 import {Vjestina} from '../types/Projekt';
-import AxiosXHR = Axios.AxiosXHR;
+
 
 const projektSchema = z.object({
   naziv: z.string().min(2, 'Naziv projekta mora sadržavati najmanje 2 znaka.'),
@@ -44,7 +44,7 @@ const KreiranjeProjekta: React.FC = () => {
   useEffect(() => {
     const dohvatiVjestine = async () => {
       try {
-        const response: AxiosXHR<Vjestina[]> = await axiosInstance.get('/vjestine');
+        const response = await axiosInstance.get<Vjestina[]>('/vjestine');
         setVjestine(response.data);
       } catch (error) {
         console.error('Greška prilikom dohvaćanja vještina:', error);

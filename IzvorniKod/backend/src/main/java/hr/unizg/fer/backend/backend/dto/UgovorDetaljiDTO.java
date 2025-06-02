@@ -2,35 +2,24 @@ package hr.unizg.fer.backend.backend.dto;
 
 import java.time.LocalDate;
 
-public class UgovorDTO {
+public class UgovorDetaljiDTO {
     private Integer id;
     private String status;
     private LocalDate datumPocetka;
     private LocalDate datumZavrsetka;
     private Integer prijavaId;
-    private String nazivProjekta;
-    private String nazivKorisnika;
+    private ProjektDTO projekt;
 
-    public UgovorDTO() {
+    public UgovorDetaljiDTO() {
     }
 
-    public UgovorDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka,
-                     Integer prijavaId, String nazivProjekta, String korisnikImePrezimeTvrtka) {
+    public UgovorDetaljiDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka, Integer prijavaId, ProjektDTO projekt) {
         this.id = id;
         this.status = status;
         this.datumPocetka = datumPocetka;
         this.datumZavrsetka = datumZavrsetka;
         this.prijavaId = prijavaId;
-        this.nazivProjekta = nazivProjekta;
-        this.nazivKorisnika = korisnikImePrezimeTvrtka;
-    }
-
-    public UgovorDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka, Integer prijavaId) {
-        this.id = id;
-        this.status = status;
-        this.datumPocetka = datumPocetka;
-        this.datumZavrsetka = datumZavrsetka;
-        this.prijavaId = prijavaId;
+        this.projekt = projekt;
     }
 
     public Integer getId() {
@@ -73,19 +62,11 @@ public class UgovorDTO {
         this.prijavaId = prijavaId;
     }
 
-    public String getNazivProjekta() {
-        return nazivProjekta;
+    public ProjektDTO getProjekt() {
+        return projekt;
     }
 
-    public void setNazivProjekta(String nazivProjekta) {
-        this.nazivProjekta = nazivProjekta;
-    }
-
-    public String getNazivKorisnika() {
-        return nazivKorisnika;
-    }
-
-    public void setNazivKorisnika(String nazivKorisnika) {
-        this.nazivKorisnika = nazivKorisnika;
+    public void setProjekt(ProjektDTO projekt) {
+        this.projekt = projekt;
     }
 }
