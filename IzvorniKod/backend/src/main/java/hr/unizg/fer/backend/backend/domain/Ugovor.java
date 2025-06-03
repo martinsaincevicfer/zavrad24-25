@@ -88,4 +88,11 @@ public class Ugovor {
         this.rezultati = rezultati;
     }
 
+    public Recenzija getRecenzija() {
+        return recenzija;
+    }
+
+    public void setRecenzija(Recenzija recenzija) {
+        this.recenzija = recenzija;
+    }
 }

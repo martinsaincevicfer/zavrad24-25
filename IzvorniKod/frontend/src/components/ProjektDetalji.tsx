@@ -122,7 +122,7 @@ export const DetaljiProjekta: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <h2 className="text-xl font-semibold mb-2">Opis projekta</h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-6">{projekt.opis}</p>
+            <p className="text-gray-700 dark:text-gray-300 mb-6 truncate">{projekt.opis}</p>
 
             <h2 className="text-xl font-semibold mb-2">Potrebne vještine</h2>
             <div className="flex flex-wrap gap-2 mb-4">
@@ -248,7 +248,8 @@ export const DetaljiProjekta: React.FC = () => {
                     <p>
                       <strong>Datum prijave:</strong> {formatDatum(prijava.datumStvaranja)}
                     </p>
-                    <button
+
+                    {prijava.status === 'aktivna' && (<button
                       onClick={async () => {
                         try {
                           await axiosInstance.post('/ugovori/korisnik/stvori', {
@@ -259,7 +260,7 @@ export const DetaljiProjekta: React.FC = () => {
                             ).toISOString().split('T')[0],
                           });
                           alert('Ugovor uspješno kreiran!');
-                          reset();
+                          location.reload();
                           setPrikaziFormu(false);
                         } catch (error) {
                           console.error('Greška pri prihvaćanju prijave:', error);
@@ -269,7 +270,7 @@ export const DetaljiProjekta: React.FC = () => {
                       className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                     >
                       Prihvati prijavu
-                    </button>
+                    </button>)}
                   </li>
                 ))}
               </ul>

@@ -1,4 +1,5 @@
 import {Projekt} from "./Projekt";
+import {Recenzija} from "./Recenzija.ts";
 
 export interface Ugovor {
   id: number;
@@ -9,4 +10,5 @@ export interface Ugovor {
   nazivProjekta: string;
   nazivKorisnika: string;
   projekt: Projekt;
+  recenzija: Recenzija | null;
 }

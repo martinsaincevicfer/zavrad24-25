@@ -58,4 +58,11 @@ public class Recenzija {
         this.datumStvaranja = datumStvaranja;
     }
 
+    public Ugovor getUgovor() {
+        return ugovor;
+    }
+
+    public void setUgovor(Ugovor ugovor) {
+        this.ugovor = ugovor;
+    }
 }

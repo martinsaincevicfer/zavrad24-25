@@ -4,10 +4,7 @@ import hr.unizg.fer.backend.backend.dao.KorisnikRepository;
 import hr.unizg.fer.backend.backend.dao.PrijavaRepository;
 import hr.unizg.fer.backend.backend.dao.UgovorRepository;
 import hr.unizg.fer.backend.backend.domain.*;
-import hr.unizg.fer.backend.backend.dto.ProjektDTO;
-import hr.unizg.fer.backend.backend.dto.UgovorDTO;
-import hr.unizg.fer.backend.backend.dto.UgovorDetaljiDTO;
-import hr.unizg.fer.backend.backend.dto.VjestinaDTO;
+import hr.unizg.fer.backend.backend.dto.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.logging.LoggersEndpoint;
@@ -40,7 +37,10 @@ public class UgovorService {
                 .orElseThrow(() -> new IllegalArgumentException("Ugovor ne postoji za ID: " + ugovorId));
 
         Prijava prijava = ugovor.getPrijava();
+        Recenzija recenzija = ugovor.getRecenzija();
         Projekt projekt = prijava.getProjekt();
+
+        System.out.println(recenzija);
 
         ProjektDTO projektDTO = new ProjektDTO(
                 projekt.getId(),
@@ -55,13 +55,23 @@ public class UgovorService {
                         .collect(Collectors.toSet())
         );
 
+        RecenzijaDTO recenzijaDTO = null;
+        if (recenzija != null) {
+            recenzijaDTO = new RecenzijaDTO(
+                    recenzija.getOcjena(),
+                    recenzija.getKomentar(),
+                    recenzija.getDatumStvaranja()
+            );
+        }
+
         return new UgovorDetaljiDTO(
                 ugovor.getId(),
                 ugovor.getStatus(),
                 ugovor.getDatumPocetka(),
                 ugovor.getDatumZavrsetka(),
                 prijava.getId(),
-                projektDTO
+                projektDTO,
+                recenzijaDTO
         );
     }
 
@@ -136,6 +146,9 @@ public class UgovorService {
     public UgovorDTO createUgovorForKorisnik(Integer prijavaId, LocalDate datumPocetka) {
         Prijava prijava = prijavaRepository.findById(prijavaId)
                 .orElseThrow(() -> new IllegalArgumentException("Prijava ne postoji za ID: " + prijavaId));
+
+        prijava.setStatus("prihvacena");
+        prijavaRepository.save(prijava);
 
         Ugovor ugovor = new Ugovor();
         ugovor.setPrijava(prijava);

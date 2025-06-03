@@ -68,8 +68,8 @@ public class PrijavaService {
 
     @Transactional
     public Prijava createPrijava(PrijavaFormDTO prijavaFormDTO) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Honorarac honorarac = korisnikRepository.findByEmail(username)
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Honorarac honorarac = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Honorarac not found"))
                 .getHonorarac();
 

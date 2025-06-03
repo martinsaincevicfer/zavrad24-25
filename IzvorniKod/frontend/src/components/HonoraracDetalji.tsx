@@ -3,6 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {HonoraracDTO} from '../types/Honorarac';
 import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
+import {Recenzija} from "../types/Recenzija.ts";
 
 
 const HonoraracDetalji: React.FC = () => {
@@ -11,6 +12,9 @@ const HonoraracDetalji: React.FC = () => {
   const [honorarac, setHonorarac] = React.useState<HonoraracDTO | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+
+  const [recenzije, setRecenzije] = React.useState<Recenzija[]>([]);
+  const [recenzijeLoading, setRecenzijeLoading] = React.useState(true);
 
   React.useEffect(() => {
     const fetchHonorarac = async () => {
@@ -28,6 +32,22 @@ const HonoraracDetalji: React.FC = () => {
     };
 
     fetchHonorarac();
+  }, [id]);
+
+  React.useEffect(() => {
+    const fetchRecenzije = async () => {
+      if (!id) return;
+      try {
+        setRecenzijeLoading(true);
+        const response = await axiosInstance.get<Recenzija[]>(`/recenzije/honorarac/${id}`);
+        setRecenzije(response.data);
+      } catch (e) {
+        setRecenzije([]);
+      } finally {
+        setRecenzijeLoading(false);
+      }
+    };
+    fetchRecenzije();
   }, [id]);
 
   if (isLoading) {
@@ -142,6 +162,33 @@ const HonoraracDetalji: React.FC = () => {
             <p className="font-medium">Član od:</p>
             <p>{new Date(honorarac.datumStvaranja).toLocaleDateString('hr-HR')}</p>
           </div>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="text-2xl font-semibold mb-4">Recenzije</h2>
+          {recenzijeLoading ? (
+            <div>Učitavanje recenzija...</div>
+          ) : recenzije.length === 0 ? (
+            <div>Još nema recenzija za ovog honorarca.</div>
+          ) : (
+            <div className="space-y-4">
+              {recenzije.map((recenzija, idx) => (
+                <div key={idx} className="border rounded p-4 shadow">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-bold">Ocjena:</span>
+                    <span>{recenzija.ocjena} / 5</span>
+                  </div>
+                  <div>
+                    <span className="font-bold">Komentar:</span>
+                    <span className="ml-2">{recenzija.komentar}</span>
+                  </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    {new Date(recenzija.datumStvaranja).toLocaleDateString('hr-HR')}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
