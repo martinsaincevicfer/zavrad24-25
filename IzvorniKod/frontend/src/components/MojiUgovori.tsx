@@ -16,7 +16,6 @@ const MojiUgovori: React.FC = () => {
       const response = await axiosInstance.get<Ugovor[]>(
         jeHonorarac ? "/ugovori/honorarac" : "/ugovori/korisnik"
       );
-      console.log(response.data);
       setUgovori(response.data);
     } catch (error) {
       console.error("Greška pri dohvaćanju ugovora:", error);

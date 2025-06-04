@@ -43,6 +43,7 @@ const HonoraracDetalji: React.FC = () => {
         setRecenzije(response.data);
       } catch (e) {
         setRecenzije([]);
+        console.error(e);
       } finally {
         setRecenzijeLoading(false);
       }

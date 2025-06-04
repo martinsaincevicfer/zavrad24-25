@@ -4,7 +4,7 @@ import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Projekt} from '../types/Projekt';
-import {KorisnikDTO} from '../types/Korisnik';
+import {KorisnikDTO, OsobaDTO, TvrtkaDTO} from '../types/Korisnik';
 import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
@@ -100,10 +100,16 @@ export const DetaljiProjekta: React.FC = () => {
       minimumFractionDigits: 2,
     }).format(iznos);
 
-  const formatKorisnikPodaci = (korisnik: KorisnikDTO) =>
-    korisnik.tip === 'OSOBA'
-      ? `${korisnik.ime} ${korisnik.prezime}`
-      : korisnik.nazivTvrtke || 'Nepoznati korisnik';
+  const formatKorisnikPodaci = (korisnik: KorisnikDTO) => {
+    if (korisnik.tip === 'OSOBA') {
+      const osoba = korisnik as OsobaDTO;
+      return `${osoba.ime} ${osoba.prezime}`;
+    } else if (korisnik.tip === 'TVRTKA') {
+      const tvrtka = korisnik as TvrtkaDTO;
+      return tvrtka.nazivTvrtke || 'Nepoznati korisnik';
+    }
+    return 'Nepoznati korisnik';
+  };
 
   if (ucitavanje) return <div className="text-center p-4">Učitavanje...</div>;
   if (greska) return <div className="text-red-500 p-4">{greska}</div>;

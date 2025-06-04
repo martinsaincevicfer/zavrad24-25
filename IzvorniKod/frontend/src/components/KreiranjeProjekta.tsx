@@ -58,8 +58,6 @@ const KreiranjeProjekta: React.FC = () => {
 
   const onSubmit = async (data: ProjektForm) => {
     try {
-      console.log('Podaci za slanje:', data);
-
       await axiosInstance.post('/projekti/stvori', data);
       alert('Projekt uspješno kreiran!');
       navigate('/korisnik/projekti');
@@ -138,7 +136,7 @@ const KreiranjeProjekta: React.FC = () => {
             <Controller
               name="vjestine"
               control={control}
-              defaultValue={[]}
+              defaultValue={vjestine.length > 0 ? [vjestine[0].id] : [1]}
               render={({field}) => (
                 <div className="grid grid-cols-2 gap-2">
                   {vjestine.map((vjestina) => (

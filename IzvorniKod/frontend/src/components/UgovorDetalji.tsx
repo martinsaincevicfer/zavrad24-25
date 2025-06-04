@@ -41,7 +41,8 @@ const UgovorDetalji: React.FC = () => {
       setRecenzijaStatus("success");
       reset();
       location.reload();
-    } catch (e) {
+    } catch (err) {
+      console.error(err);
       setRecenzijaStatus("error");
     }
   };
@@ -54,7 +55,6 @@ const UgovorDetalji: React.FC = () => {
         const response = await axiosInstance.get<Ugovor>(
           `/ugovori/${id}`
         );
-        console.log(response.data);
         setUgovor(response.data);
       } catch (err) {
         console.error("Greška prilikom dohvaćanja ugovora:", err);
@@ -72,6 +72,7 @@ const UgovorDetalji: React.FC = () => {
       await axiosInstance.patch(`/ugovori/honorarac/zavrsi/${ugovor?.id}`);
       location.reload();
     } catch (err) {
+      console.error(err);
       alert("Greška pri završavanju ugovora.");
     }
   };

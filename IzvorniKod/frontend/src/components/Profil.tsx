@@ -32,7 +32,7 @@ const Profil = () => {
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju profila honoraraca:', error);
-      setFreelancerError(error.response.data.message);
+      setFreelancerError('Došlo je do pogreške pri dohvaćanju profila honoraraca.');
       throw error;
     }
   };
@@ -48,6 +48,7 @@ const Profil = () => {
           setFreelancerProfile(freelancerData);
         }
       } catch (error) {
+        console.error('Greška pri dohvaćanju profila honorarca:', error);
         setUserError('Došlo je do pogreške pri dohvaćanju podataka korisničkog profila.');
       } finally {
         setLoading(false);
@@ -87,25 +88,33 @@ const Profil = () => {
               </div>
               {userProfile.tip === 'TVRTKA' ? (
                 <>
-                  <div className="p-4 rounded-lg">
-                    <p className="text-gray-600">Naziv tvrtke</p>
-                    <p className="font-semibold">{userProfile.nazivTvrtke}</p>
-                  </div>
-                  <div className="p-4 rounded-lg">
-                    <p className="text-gray-600">OIB</p>
-                    <p className="font-semibold">{userProfile.oib}</p>
-                  </div>
+                  {'nazivTvrtke' in userProfile && (
+                    <div className="p-4 rounded-lg">
+                      <p className="text-gray-600">Naziv tvrtke</p>
+                      <p className="font-semibold">{userProfile.nazivTvrtke}</p>
+                    </div>
+                  )}
+                  {'oib' in userProfile && (
+                    <div className="p-4 rounded-lg">
+                      <p className="text-gray-600">OIB</p>
+                      <p className="font-semibold">{userProfile.oib}</p>
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
-                  <div className="p-4 rounded-lg">
-                    <p className="text-gray-600">Ime</p>
-                    <p className="font-semibold">{userProfile.ime}</p>
-                  </div>
-                  <div className="p-4 rounded-lg">
-                    <p className="text-gray-600">Prezime</p>
-                    <p className="font-semibold">{userProfile.prezime}</p>
-                  </div>
+                  {'ime' in userProfile && (
+                    <div className="p-4 rounded-lg">
+                      <p className="text-gray-600">Ime</p>
+                      <p className="font-semibold">{userProfile.ime}</p>
+                    </div>
+                  )}
+                  {'prezime' in userProfile && (
+                    <div className="p-4 rounded-lg">
+                      <p className="text-gray-600">Prezime</p>
+                      <p className="font-semibold">{userProfile.prezime}</p>
+                    </div>
+                  )}
                 </>
               )}
               <div className="p-4 rounded-lg">

@@ -1,7 +1,7 @@
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
 
@@ -10,7 +10,8 @@ const registracijaTvrtkaSchema = z.object({
   lozinka: z.string().min(6, 'Lozinka mora sadržavati najmanje 6 znakova.'),
   ponovljenaLozinka: z.string().min(6, 'Morate unijeti istu lozinku.'),
   nazivTvrtke: z.string().min(2, 'Naziv tvrtke mora sadržavati najmanje 2 znaka.'),
-  oib: z.string().length(11, 'OIB mora sadržavati točno 11 znakova.'),
+  oib: z.string()
+    .regex(/^\d{11}$/, 'OIB mora sadržavati točno 11 znamenki.'),
   adresa: z.string().min(5, 'Adresa mora sadržavati najmanje 5 znakova.')
 }).refine(
   (data) => data.lozinka === data.ponovljenaLozinka,
@@ -27,7 +28,7 @@ const RegistracijaTvrtka = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: {errors}
   } = useForm<RegistracijaTvrtkaForm>({
     resolver: zodResolver(registracijaTvrtkaSchema),
     mode: 'all'
@@ -46,7 +47,7 @@ const RegistracijaTvrtka = () => {
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="max-w-7xl mx-auto shadow-md rounded">
         <h1 className="text-xl font-bold mb-6 text-center">Registracija Tvrtke</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 px-3 sm:px-6 lg:px-9 max-w-1/2 mx-auto">
@@ -95,6 +96,8 @@ const RegistracijaTvrtka = () => {
           <div className="flex flex-col gap-2">
             <input
               type="text"
+              inputMode="numeric"
+              pattern="\d*"
               placeholder="OIB"
               {...register('oib')}
               className={`p-2 border rounded ${errors.oib ? 'border-red-500' : ''}`}

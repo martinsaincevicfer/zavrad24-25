@@ -114,7 +114,7 @@ const RegistracijaHonorarac: React.FC = () => {
               <Controller
                 name="vjestine"
                 control={control}
-                defaultValue={[]}
+                defaultValue={vjestine.length > 0 ? [vjestine[0].id] : [1]}
                 render={({field}) => (
                   <div className="grid grid-cols-3">
                     {vjestine.length > 0 ? (
