@@ -1,6 +1,6 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {ArrowUpFromLine, FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
+import {ArrowUpFromLine, FileText, FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -60,12 +60,13 @@ const Header = () => {
                   to="/korisnik/projekti"
                   className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
                 >
-                  <FileUser/>
+                  <FileText/>
                   Moji projekti
                 </Link>
                 <Link
                   to="/ugovori"
                   className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                  <FileUser/>
                   Moji ugovori
                 </Link>
               </div>

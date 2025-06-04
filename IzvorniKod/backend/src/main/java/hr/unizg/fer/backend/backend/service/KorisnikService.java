@@ -8,7 +8,8 @@ import hr.unizg.fer.backend.backend.domain.Korisnik;
 import hr.unizg.fer.backend.backend.domain.Osoba;
 import hr.unizg.fer.backend.backend.domain.Tvrtka;
 import hr.unizg.fer.backend.backend.domain.Uloga;
-import hr.unizg.fer.backend.backend.dto.*;
+import hr.unizg.fer.backend.backend.dto.OsobaDTO;
+import hr.unizg.fer.backend.backend.dto.TvrtkaDTO;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,7 +22,7 @@ import java.time.Instant;
 @Service
 @Transactional
 public class KorisnikService {
-    
+
     @Autowired
     private KorisnikRepository korisnikRepository;
 
@@ -47,8 +48,8 @@ public class KorisnikService {
 
     public Object getKorisnikDetails(String email) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
-            
+                .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
+
         if (korisnik.getTvrtka() != null) {
             TvrtkaDTO tvrtkaDTO = new TvrtkaDTO();
             tvrtkaDTO.setId(korisnik.getId());
@@ -68,7 +69,7 @@ public class KorisnikService {
             osobaDTO.setAdresa(korisnik.getOsoba().getAdresa());
             return osobaDTO;
         }
-        
+
         return null;
     }
 

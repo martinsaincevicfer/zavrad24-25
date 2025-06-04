@@ -39,9 +39,7 @@ public class UgovorService {
         Prijava prijava = ugovor.getPrijava();
         Recenzija recenzija = ugovor.getRecenzija();
         Projekt projekt = prijava.getProjekt();
-
-        System.out.println(recenzija);
-
+        
         ProjektDTO projektDTO = new ProjektDTO(
                 projekt.getId(),
                 projekt.getNaziv(),

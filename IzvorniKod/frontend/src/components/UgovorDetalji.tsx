@@ -67,6 +67,15 @@ const UgovorDetalji: React.FC = () => {
     fetchUgovor();
   }, [id]);
 
+  const zavrsiUgovor = async () => {
+    try {
+      await axiosInstance.patch(`/ugovori/honorarac/zavrsi/${ugovor?.id}`);
+      location.reload();
+    } catch (err) {
+      alert("Greška pri završavanju ugovora.");
+    }
+  };
+
   if (loading) return <div className="text-center p-4">Učitavanje...</div>;
   if (error) return <div className="text-red-500 p-4">{error}</div>;
   if (!ugovor) return <div className="text-center p-4">Ugovor nije pronađen.</div>;
@@ -100,7 +109,18 @@ const UgovorDetalji: React.FC = () => {
           <p><strong>Datum stvaranja:</strong> {new Date(ugovor.projekt.datumStvaranja).toLocaleDateString()}</p>
         </div>
 
-        {!ugovor.recenzija && !jeHonorarac && (
+        {jeHonorarac && ugovor.status !== "zavrsen" && (
+          <div className="mt-4">
+            <button
+              onClick={zavrsiUgovor}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              Označi ugovor kao završen
+            </button>
+          </div>
+        )}
+
+        {ugovor.status === "zavrsen" && !ugovor.recenzija && !jeHonorarac && (
           <div className="p-6 border-t mt-4">
             <h2 className="text-xl font-bold mb-2">Dodaj recenziju</h2>
             <form onSubmit={handleSubmit(onSubmitRecenzija)} className="space-y-4 max-w-md">

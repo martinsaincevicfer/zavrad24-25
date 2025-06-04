@@ -7,98 +7,106 @@ INSERT INTO Uloga (naziv) VALUES
 INSERT INTO Korisnik (email, lozinka) VALUES ('ivan@example.com', '$2a$10$FiAE6kXu4m2L7T4vmGMZCerdBENWPZHHZw5nzm5ZA4rbOgVjD52ku');
 
 -- Petra - lozinka: 1234abcd
-INSERT INTO Korisnik (email, lozinka) VALUES ('petra@example.com', '$2a$10$Tbb79g8Ft9h1nMRmGpJh4u48U9K8VXJfzmBTE9ptAfXyoeRPxiPbC');
+INSERT INTO Korisnik (email, lozinka) VALUES ('petra@example.com', '$2a$10$Lcj4pYpBrb/yvFowHg4b6OBzxPZ90WwjDON8h9z6L2f1HhrgjlhGm');
 
 -- Marko - lozinka: qwerty123
-INSERT INTO Korisnik (email, lozinka) VALUES ('marko@example.com', '$2a$10$BflZAv9qLhtsP85V/vsGxO8uTxMcMdktI8EnIVDSoBUs.f3MgUeAm');
+INSERT INTO Korisnik (email, lozinka) VALUES ('marko@example.com', '$2a$10$PRrbGAnfHytftoUdd4OwKOaoYqgMbBlsv89pkZZhueoTlWDXyY9/C');
 
 -- Ana - lozinka: passw0rd
-INSERT INTO Korisnik (email, lozinka) VALUES ('ana@example.com', '$2a$10$C8l3AYzXlnpxHtJ6qOYkW.FJic3pXjDdJ2xbtqbZLRNRZAfTtqxcu');
+INSERT INTO Korisnik (email, lozinka) VALUES ('ana@example.com', '$2a$10$yprBzTV/gn0llsdqAP1VDulHVXY80RWvDYWFwNPg9F/p/Oy/tHzLu');
 
 -- Josip - lozinka: password1
-INSERT INTO Korisnik (email, lozinka) VALUES ('josip@example.com', '$2a$10$RZvnOjATmXtkMRU0HiF2UuAx53jNGOhGoW1vuQd74IX8eyT3zhNHW');
+INSERT INTO Korisnik (email, lozinka) VALUES ('josip@example.com', '$2a$10$9vE1UQQQLnwpGRFk.o89uO4EStNnUb1hxC8m6m.2d.NYekOr0tyr2');
 
 -- Maja - lozinka: 12345abc
-INSERT INTO Korisnik (email, lozinka) VALUES ('maja@example.com', '$2a$10$p9zSHd19cQDUq1JK2wVDoOrLtB1wTTwIkXtRTbDj1HTJVZUt6JaaO');
+INSERT INTO Korisnik (email, lozinka) VALUES ('maja@example.com', '$2a$10$XUsXp/qov.xiTGA7122BGel/OT8khPsopOfd8SZGFiDgpgLSinPCy');
 
 -- Luka - lozinka: ilovecoding
-INSERT INTO Korisnik (email, lozinka) VALUES ('luka@example.com', '$2a$10$z5OssOtZbhjA.C.IchQWcePG0YvDH/znpUt/yw4yArqcnVoIByHRG');
+INSERT INTO Korisnik (email, lozinka) VALUES ('luka@example.com', '$2a$10$rmp/aZNNrJVvB8qy5FirH.2FbEozOVQSuxKw.aDLQahcISOKq.sUK');
 
 -- Ivana - lozinka: letmein2025
-INSERT INTO Korisnik (email, lozinka) VALUES ('ivana@example.com', '$2a$10$Sw7GbX6CGE3nLa2O5T1T1eRtKp8DeF8XxjwnuR6MpDWZhldKfg5t6');
+INSERT INTO Korisnik (email, lozinka) VALUES ('ivana@example.com', '$2a$10$eUSGsSUf9C/ew1.qazOTOe6x78yOfrXqlnicP7YwcLGPyyjHhaofq');
 
 -- Tomislav - lozinka: welcome123
-INSERT INTO Korisnik (email, lozinka) VALUES ('tomislav@example.com', '$2a$10$r5ZhfxtM32N.XNDNfyOKS.0v8KcBAhOe9pnmEW7eUY/5OZWWmGhQK');
+INSERT INTO Korisnik (email, lozinka) VALUES ('tomislav@example.com', '$2a$10$dG5IrI6X8sNtGQJ90wEAQeoV95hsqPYNKpfT/Nc8JK/YyJTTUo/Fi');
 
 -- Sara - lozinka: admin1234
-INSERT INTO Korisnik (email, lozinka) VALUES ('sara@example.com', '$2a$10$9ToWSt3i7JYph8AiDqkShO2g2StnSSs3V2XpF7EtQZAX0tbk1KslK');
+INSERT INTO Korisnik (email, lozinka) VALUES ('sara@example.com', '$2a$10$qP76Nl7wRFxVcasu/Ki6P.D5AYxz6aQvXfOIdEzinA/Epu3fqP2im');
 
 -- Filip - lozinka: freelancer01
-INSERT INTO Korisnik (email, lozinka) VALUES ('filip@example.com', '$2a$10$YqQtwhOEtc0IlvqU5sdF7upW5U0c3kFGoBa.SXKw7V6MyGvArzR2K');
+INSERT INTO Korisnik (email, lozinka) VALUES ('filip@example.com', '$2a$10$v7Uk91mJnL/NdWrLCVri7Ofz0/NnmT/JKzDYWF9oi4O9YffnTwTNO');
 
 -- Lucija - lozinka: strongpassword
-INSERT INTO Korisnik (email, lozinka) VALUES ('lucija@example.com', '$2a$10$BQbbmc/g21FA3RIk7eNh3u9EnTiwUbxrExw6SCw0EzPBtN4.xOKQe');
+INSERT INTO Korisnik (email, lozinka) VALUES ('lucija@example.com', '$2a$10$iD7mLtt5Bj9YhM1/B19MGe6r4V/hMccJ7QmOXFmVQGDowUCuIa2Ae');
 
 -- Karla - lozinka: sunshine2025
-INSERT INTO Korisnik (email, lozinka) VALUES ('karla@example.com', '$2a$10$VUt1w.BO5xmrJ9brdYqQxuxexH3AhtK2fgV1Q0HPcH2a76kQZ3XVe');
+INSERT INTO Korisnik (email, lozinka) VALUES ('karla@example.com', '$2a$10$9796g0PdKoXtjjcHtE.NDOCdKJgT.nGdc0hJO.51eUTcm0gbXsnAu');
 
 -- David - lozinka: letmein2025!
-INSERT INTO Korisnik (email, lozinka) VALUES ('david@example.com', '$2a$10$QufKfRG6T1U7hBbPRrHqgOGsR1ZQACPYKaH4AdblzG6ZHMwnFZkVe');
+INSERT INTO Korisnik (email, lozinka) VALUES ('david@example.com', '$2a$10$Wpw5U8StLU6eVIJ97glYsu1bf3QATKBzIOzfHqn5TI9QDynGptOYm');
 
 -- Nina - lozinka: abc123xyz
-INSERT INTO Korisnik (email, lozinka) VALUES ('nina@example.com', '$2a$10$x5I8TT5wC7tU0HDZFezjVOPnvB8fDYGz78FgGFGORnMcBCzSJDZCi');
+INSERT INTO Korisnik (email, lozinka) VALUES ('nina@example.com', '$2a$10$i582K6.SDeviIQhjtxGk.e/BvvgkKZh/HDq42tqQwG5vvtwZCtiBm');
 
 -- Nikola - lozinka: testuser01
-INSERT INTO Korisnik (email, lozinka) VALUES ('nikola@example.com', '$2a$10$5jL97Zo4ra2EV3rKGHYc8OkNPlV2EXhbf6A/3OVlyY43E6QpSRZxC');
+INSERT INTO Korisnik (email, lozinka) VALUES ('nikola@example.com', '$2a$10$ZqGX3NIYzsGuLxV2iSdTEeNAh0LLgNIsrHA6yhiuPV8azHR3LKk1u');
 
 -- Marija - lozinka: qwertyuiop
-INSERT INTO Korisnik (email, lozinka) VALUES ('marija@example.com', '$2a$10$8h0bf8MdqrRYxWBosY91Juxzsb9ReNHcZKBD6rPqbzlyRJ6sEZ6qO');
+INSERT INTO Korisnik (email, lozinka) VALUES ('marija@example.com', '$2a$10$9mDZWwOFnFtcEjDsqXGX7OZhsdqXzZuoZbkzFiI3gq9Sd9PbuFLR6');
 
 -- Jure - lozinka: newpassword123
-INSERT INTO Korisnik (email, lozinka) VALUES ('jure@example.com', '$2a$10$C2AfWxU2yEBTyzHTaxmgBeoZcSkG7yRt.BuBhQ4U7uwNFF9NTkUR2');
+INSERT INTO Korisnik (email, lozinka) VALUES ('jure@example.com', '$2a$10$8FmKYmj1WL.hbyKdaVdHb.NUI42XlTAJB0EKmdd.jTFBqP7uRDVNa');
 
 -- Tomislav J. - lozinka: mypassword2025
-INSERT INTO Korisnik (email, lozinka) VALUES ('tomislavj@example.com', '$2a$10$qNY6XbZW7uGL7GMM0pdolOMSCjssEqqHeedmrxzjTPMG.J77w7iTu');
+INSERT INTO Korisnik (email, lozinka) VALUES ('tomislavj@example.com', '$2a$10$BagtsIXBcXyZ6jjo/lNB1.4RdujOAYeWv7TFdy5GGIjPk6l6pq1Ky');
 
 -- Klijent1 - lozinka: clientpass1
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent1@example.com', '$2a$10$9rBhJpJRV3ZTF8Qbm.S6YOWdzCrAZB7t2T7aFojDJ/zwLUYXP3oCG');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent1@example.com', '$2a$10$wNlvDZ97pictHTdHEFmrHur7oRSkz/n9WXI6auW6pEE19U8//v44S');
 
 -- Klijent2 - lozinka: clientpass2
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent2@example.com', '$2a$10$FazCOAKsEtFekKipmsMtnOmD27qI.YBKRLKfbYolXtZUE46cJTR7S');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent2@example.com', '$2a$10$0X27uYMXTZ6mNoH/7BIbtOuU2is2N5zOdYazc4H96Cg.87j2ikf/m');
 
 -- Klijent3 - lozinka: clientpass3
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent3@example.com', '$2a$10$5/7af1oRxM9aTZV3z2xGR.kXLGrnkHLQLfSJu8hVw22uXrOeZ9S4C');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent3@example.com', '$2a$10$8zhiQq04J0rzNAVjU8yHCOuXiZzL9920TbWTW72yJ3FLgwUQEgOX2');
 
 -- Klijent4 - lozinka: clientpass4
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent4@example.com', '$2a$10$zFADJRhON9j5A9feyLDuL.Hks0ErM07MEiTSeWkOBleQf6Wj3ozp6');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent4@example.com', '$2a$10$oRJ.PJHoGjBfKQSDN5okl.73zG.6jLI05CPiMSXMtNy41LOmJy3R2');
 
 -- Klijent5 - lozinka: clientpass5
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent5@example.com', '$2a$10$WqGIP.yGV/V2Qpg8X/o/8.IWHMSkGnmnwN1yx2ZT0t4D8tI3aPR96');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent5@example.com', '$2a$10$yJcNZnfNkN4Bwry18NgCxO84wNKqoDUdwcNc/Jry1hhSU8H/RYScW');
 
 -- Klijent6 - lozinka: clientpass6
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent6@example.com', '$2a$10$fFtsB3/jkqU5CD1Hd/dDEu/IfjjFQHEpMHxswQXeQ2bEkiRwKFApC');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent6@example.com', '$2a$10$.Hv9aHQnT7nAvlILp3hTUu8YWYXbp.efr43GuKmmo8IXA1a2wpmnK');
 
 -- Klijent7 - lozinka: clientpass7
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent7@example.com', '$2a$10$ASg5VSuusx4Vm8odrDiyRuOqPrAVpWzQurKrsEBKn2MzljDXKrW0e');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent7@example.com', '$2a$10$mZjkNIKLGlCxTfaGQc9souoypuGSusKWt7iS22T8iRaHcEtJt871G');
 
 -- Klijent8 - lozinka: clientpass8
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent8@example.com', '$2a$10$A65xNgNxoE5/1mrG9lLkOeNw1OaED2smP9p1AO/yyzSCE0xSDX4Si');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent8@example.com', '$2a$10$LI/d.9mJYPbR8JsKWl7/zelKaLM3k7NxaIoU4U9a1hHIvh0icopCq');
 
 -- Klijent9 - lozinka: clientpass9
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent9@example.com', '$2a$10$yAUMsmGzWJwnfB8cBns9tOC3StQ5hEpEOMucdk1hlhv/5pVRr6RFS');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent9@example.com', '$2a$10$UuBFFii56wTvLJa7PxGxgehw68gy1SuC06kWA5QjWTo/jE1rCkwSO');
 
 -- Klijent10 - lozinka: clientpass10
-INSERT INTO Korisnik (email, lozinka) VALUES ('klijent10@example.com', '$2a$10$IWaNYiIUxv/TOSLcbFcgy.xqSMa/hh4JzzNmexFY7fuFZTDodXkuO');
+INSERT INTO Korisnik (email, lozinka) VALUES ('klijent10@example.com', '$2a$10$gVjymEwb7SY4WFHMi33dO.w/zfWi.haK3qoTx4mK52ucWhpeH0/Jy');
 
 INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
-(1, 1), (2, 1), (3, 1), (4, 1), (5, 1),
-(6, 1), (7, 1), (8, 1), (9, 1), (10, 1),
-(11, 1), (12, 1), (13, 1), (14, 1), (15, 1),
-(16, 1), (17, 1), (18, 1), (19, 1);
+(1, 2), (2, 2), (3, 2), (4, 2), (5, 2),
+(6, 2), (7, 2), (8, 2), (9, 2), (10, 2),
+(11, 2), (12, 2), (13, 2), (14, 2), (15, 2),
+(16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
+(21, 2), (22, 2), (23, 2), (24, 2), (25, 2),
+(26, 2), (27, 2), (28, 2), (29, 2);
 
 INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
-(20, 2), (21, 2), (22, 2), (23, 2), (24, 2),
-(25, 2), (26, 2), (27, 2), (28, 2), (29, 2);
+(1, 1),  -- Ivan
+(3, 1),  -- Marko
+(6, 1),  -- Maja
+(11, 1), -- Filip
+(13, 1), -- Karla
+(17, 1), -- Jure
+(21, 1), -- Klijent2
+(28, 1); -- Klijent9
 
 INSERT INTO Osoba (korisnik_id, ime, prezime, adresa) VALUES
 (1, 'Ivan', 'Horvat', 'Zagreb'),
@@ -244,18 +252,18 @@ INSERT INTO Recenzija (ocjena, komentar) VALUES
 (5, 'Vrlo brz i učinkovit.');
 
 INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, prijava_id, recenzija_id) VALUES
-('aktivan', '2025-06-01', '2025-07-01', 2, 1),
-('zavrsen', '2025-04-01', '2025-05-01', 4, 2),
-('zavrsen', '2025-04-15', '2025-05-15', 6, 3),
-('aktivan', '2025-05-10', '2025-06-10', 7, 4),
-('otkazan', '2025-05-01', '2025-05-15', 5, 5),
-('zavrsen', '2025-03-01', '2025-04-01', 3, 6),
-('aktivan', '2025-05-20', '2025-06-20', 8, 7),
-('zavrsen', '2025-01-01', '2025-02-01', 9, 8),
-('zavrsen', '2025-02-01', '2025-03-01', 10, 9),
-('aktivan', '2025-03-15', '2025-04-15', 11, 10),
-('zavrsen', '2025-04-01', '2025-05-01', 12, 11),
-('otkazan', '2025-02-01', '2025-02-10', 13, 12);
+('aktivan', '2025-06-01', '2025-07-01', 2, NULL),
+('zavrsen', '2025-04-01', '2025-05-01', 4, 1),
+('zavrsen', '2025-04-15', '2025-05-15', 6, 2),
+('aktivan', '2025-05-10', '2025-06-10', 7, NULL),
+('otkazan', '2025-05-01', '2025-05-15', 5, NULL),
+('zavrsen', '2025-03-01', '2025-04-01', 3, 3),
+('aktivan', '2025-05-20', '2025-06-20', 8, NULL),
+('zavrsen', '2025-01-01', '2025-02-01', 9, 4),
+('zavrsen', '2025-02-01', '2025-03-01', 10, 5),
+('aktivan', '2025-03-15', '2025-04-15', 11, NULL),
+('zavrsen', '2025-04-01', '2025-05-01', 12, 6),
+('otkazan', '2025-02-01', '2025-02-10', 13, NULL);
 
 INSERT INTO Rezultat (ugovor_id, naziv, datoteka_put) VALUES
 (1, 'Završna verzija stranice', 'uploads/stranica_final.zip'),
