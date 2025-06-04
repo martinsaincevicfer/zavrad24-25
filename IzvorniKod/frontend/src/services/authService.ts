@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { LoginRequest, LoginResponse } from '../types/Auth.ts';
+import {LoginRequest, LoginResponse} from '../types/Auth.ts';
 import {jwtDecode} from 'jwt-decode';
 
-const API_URL = 'http://localhost:8080/api/auth';
+const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
+
+const API_URL = backendUrl + '/api/auth';
 
 export const authService = {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
