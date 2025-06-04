@@ -23,15 +23,33 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'yarn'
-          cache-dependency-path: 'IzvorniKod/frontend/yarn.lock'
 
-      - name: Yarn install
-        run: yarn install
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: IzvorniKod/frontend/node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('IzvorniKod/frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm install
         working-directory: IzvorniKod/frontend
 
-      - name: Yarn build
-        run: yarn run build
+      - name: Install Vite manually
+        run: npm install vite --save-dev
+        working-directory: IzvorniKod/frontend
+
+      - name: Install React plugin for Vite
+        run: npm install @vitejs/plugin-react --save-dev
+        working-directory: IzvorniKod/frontend
+
+      - name: Set executable permissions for Vite
+        run: chmod +x node_modules/.bin/vite
+        working-directory: IzvorniKod/frontend
+
+      - name: Build frontend
+        run: npm run build
         working-directory: IzvorniKod/frontend
 
       - name: Set up Docker Buildx
