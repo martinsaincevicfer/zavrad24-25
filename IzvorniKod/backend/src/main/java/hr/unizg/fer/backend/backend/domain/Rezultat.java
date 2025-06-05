@@ -23,8 +23,8 @@ public class Rezultat {
     @Column(name = "naziv")
     private String naziv;
 
-    @Column(name = "datoteka_put", nullable = false, length = Integer.MAX_VALUE)
-    private String datotekaPut;
+    @Column(name = "datoteka_url", nullable = false, length = Integer.MAX_VALUE)
+    private String datotekaUrl;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_uploada", nullable = false)
@@ -54,12 +54,12 @@ public class Rezultat {
         this.naziv = naziv;
     }
 
-    public String getDatotekaPut() {
-        return datotekaPut;
+    public String getDatotekaUrl() {
+        return datotekaUrl;
     }
 
-    public void setDatotekaPut(String datotekaPut) {
-        this.datotekaPut = datotekaPut;
+    public void setDatotekaUrl(String datotekaUrl) {
+        this.datotekaUrl = datotekaUrl;
     }
 
     public Instant getDatumUploada() {

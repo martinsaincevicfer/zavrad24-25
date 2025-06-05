@@ -21,8 +21,8 @@ export interface ProjektDTO {
 
 export interface HonoraracDTO {
   id: number;
-  ime: string;
-  prezime: string;
+  ime?: string;
+  prezime?: string;
   email: string;
   tvrtka?: string;
 }

@@ -111,7 +111,7 @@ CREATE TABLE Rezultat (
   rezultat_id SERIAL PRIMARY KEY,
   ugovor_id INT NOT NULL,
   naziv VARCHAR(255),
-  datoteka_put TEXT NOT NULL,
+  datoteka_url TEXT NOT NULL,
   datum_uploada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
 );

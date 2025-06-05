@@ -243,7 +243,8 @@ export const DetaljiProjekta: React.FC = () => {
                 {prijave.map((prijava) => (
                   <li key={prijava.id} className="border rounded-lg p-4 shadow-md">
                     <p>
-                      <strong>Honorarac:</strong> {prijava.honorarac.ime} {prijava.honorarac.prezime} ({prijava.honorarac.email})
+                      <strong>Honorarac:</strong>
+                      {prijava.honorarac.ime} {prijava.honorarac.prezime} {prijava.honorarac.tvrtka} ({prijava.honorarac.email})
                     </p>
                     <p>
                       <strong>Iznos:</strong> {prijava.iznos} €

@@ -9,15 +9,21 @@ import {Vjestina} from '../types/Projekt';
 
 
 const projektSchema = z.object({
-  naziv: z.string().min(2, 'Naziv projekta mora sadržavati najmanje 2 znaka.'),
-  opis: z.string().min(10, 'Opis projekta mora sadržavati najmanje 10 znakova.'),
+  naziv: z
+    .string()
+    .min(2, 'Naziv projekta mora sadržavati najmanje 2 znaka.')
+    .max(100, 'Naziv projekta može imati najviše 100 znakova.'),
+  opis: z
+    .string()
+    .min(10, 'Opis projekta mora sadržavati najmanje 10 znakova.')
+    .max(2147483647, 'Opis projekta je predugačak.'),
   budzet: z
     .number({invalid_type_error: 'Budžet mora biti broj.'})
-    .min(1, 'Budžet mora biti veći od 0.'),
-  rok: z.string().refine(
-    (value) => !isNaN(Date.parse(value)),
-    {message: 'Datum roka mora biti ispravan.'}
-  ),
+    .min(1, 'Budžet mora biti veći od 0.')
+    .max(9999999999.99, 'Budžet prelazi maksimalnu dozvoljenu vrijednost.'),
+  rok: z
+    .string()
+    .refine((value) => !isNaN(Date.parse(value)), {message: 'Datum roka mora biti ispravan.'}),
   vjestine: z.array(z.number()).nonempty('Morate odabrati barem jednu vještinu.')
 });
 
