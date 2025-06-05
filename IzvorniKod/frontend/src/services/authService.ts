@@ -3,7 +3,7 @@ import {LoginRequest, LoginResponse} from '../types/Auth.ts';
 import {jwtDecode} from 'jwt-decode';
 
 const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
-
+console.log('Iz authService.ts: ' + backendUrl);
 const API_URL: string = backendUrl + '/api/auth';
 
 type DecodedToken = {
