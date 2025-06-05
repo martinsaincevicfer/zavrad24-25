@@ -4,7 +4,12 @@ import {jwtDecode} from 'jwt-decode';
 
 const backendUrl: string = import.meta.env.VITE_BACKEND_URL;
 
-const API_URL = backendUrl + '/api/auth';
+const API_URL: string = backendUrl + '/api/auth';
+
+type DecodedToken = {
+  roles?: string[];
+  [key: string]: unknown;
+};
 
 export const authService = {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
@@ -32,8 +37,8 @@ export const authService = {
   getRoles(): string[] | null {
     const token = localStorage.getItem('token');
     if (token) {
-      const decodedToken: any = jwtDecode(token);
-      return decodedToken.roles || []; // Uloge su spremljene u claim "roles"
+      const decodedToken = jwtDecode<DecodedToken>(token);
+      return decodedToken.roles || [];
     }
     return null;
   },
