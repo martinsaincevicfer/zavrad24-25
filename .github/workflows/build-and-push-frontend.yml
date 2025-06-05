@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FRONTEND_DEPLOY_HOOK: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
+      VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
 
     steps:
       - name: Clone the repository
