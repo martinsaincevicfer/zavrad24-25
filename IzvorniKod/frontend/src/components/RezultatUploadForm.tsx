@@ -53,7 +53,7 @@ const RezultatUploadForm: React.FC<{ ugovorId: number }> = ({ugovorId}) => {
         disabled={isSubmitting}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
-        {isSubmitting ? "Slanje..." : "Uploadaj rezultat"}
+        {isSubmitting ? "Slanje..." : "Prenesi rezultat"}
       </button>
     </form>
   );

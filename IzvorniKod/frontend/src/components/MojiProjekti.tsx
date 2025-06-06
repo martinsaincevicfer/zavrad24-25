@@ -29,17 +29,16 @@ export const MojiProjekti: React.FC = () => {
   if (ucitavanje) return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto px-4 py-6">
+      <div className="flex justify-center items-center min-h-screen">
         Učitavanje...
       </div>
     </>
   );
-
   if (greska) return (
     <>
       <Header/>
-      <div className="text-center p-4 text-red-500">
-        Dogodila se greška tokom učitavanja.
+      <div className="flex justify-center items-center min-h-screen text-red-500">
+        {greska}
       </div>
     </>
   );
@@ -67,7 +66,7 @@ export const MojiProjekti: React.FC = () => {
             <Link
               to={`/projekti/${projekt.id}`}
               key={projekt.id}
-              className="p-4 border rounded-lg bg-gray-200 dark:bg-gray-900 shadow-md hover:shadow-lg hover:border-blue-500 transition"
+              className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
             >
               <h2 className="text-xl font-semibold mb-2">{projekt.naziv}</h2>
               <p className="truncate mb-4">{projekt.opis}</p>

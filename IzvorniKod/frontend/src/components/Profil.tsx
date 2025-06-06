@@ -60,24 +60,29 @@ const Profil = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-xl">Učitavanje...</div>
-      </div>
+      <>
+        <Header/>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-xl">Učitavanje...</div>
+        </div>
+      </>
     );
   }
-
   if (userError) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-red-500">{userError}</div>
-      </div>
+      <>
+        <Header/>
+        <div className="flex justify-center items-center min-h-screen">
+          <div className="text-red-500">{userError}</div>
+        </div>
+      </>
     );
   }
 
   return (
     <>
       <Header/>
-      <div className="max-w-7xl mx-auto rounded-lg shadow-xl flex flex-col items-center">
+      <div className="max-w-7xl mx-auto rounded-lg flex flex-col items-center">
         <h1 className="text-3xl mt-3 font-bold mb-6">Moj Profil</h1>
         <div className="space-y-4 grid grid-cols-2 gap-4">
           {userProfile && (
@@ -145,11 +150,15 @@ const Profil = () => {
                 </div>
                 <div className="p-4 rounded-lg">
                   <p className="text-gray-600">Vještine</p>
-                  <ul className="list-disc list-inside">
+                  <div className="flex flex-wrap gap-2 mt-1">
                     {freelancerProfile.vjestine.map((vjestina) => (
-                      <li key={vjestina.id}>{vjestina.naziv}</li>
+                      <span
+                        key={vjestina.id}
+                        className="text-black bg-blue-300 text-xs px-2 py-1 roundedbg-blue-300 rounded-full"
+                      >{vjestina.naziv}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               </div>
             ) : (

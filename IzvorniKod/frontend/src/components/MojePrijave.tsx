@@ -38,16 +38,15 @@ const MojePrijave: React.FC = () => {
     return (
       <>
         <Header/>
-        <div className="text-center p-4">Učitavanje...</div>
+        <div className="flex justify-center items-center min-h-screen">Učitavanje...</div>
       </>
     );
   }
-
   if (error) {
     return (
       <>
         <Header/>
-        <div className="text-red-500 text-center p-4">{error}</div>
+        <div className="text-red-500 flex justify-center items-center min-h-screen">{error}</div>
       </>
     );
   }
@@ -64,7 +63,7 @@ const MojePrijave: React.FC = () => {
             {prijave.map((prijava) => (
               <li
                 key={prijava.id}
-                className="border rounded-lg shadow p-4"
+                className="p-4 bg-gray-200 dark:bg-gray-700"
               >
                 <h2 className="text-lg font-semibold">
                   Projekt: {prijava.projekt.naziv}

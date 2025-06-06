@@ -29,19 +29,21 @@ const MojiUgovori: React.FC = () => {
     fetchUgovori();
   }, []);
 
-  if (ucitavanje) return (<>
-    <Header/>
-    <div>Učitavanje ugovora...</div>
-  </>);
-  if (greska) return (<>
-    <Header/>
-    <div className="text-red-500">{greska}</div>
-  </>);
+  if (ucitavanje) return (
+    <>
+      <Header/>
+      <div className="flex justify-center items-center min-h-screen">Učitavanje ugovora...</div>
+    </>);
+  if (greska) return (
+    <>
+      <Header/>
+      <div className="text-red-500 flex justify-center items-center min-h-screen">{greska}</div>
+    </>);
 
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto py-6">
+      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-4">Moji ugovori</h1>
         {ugovori.length === 0 ? (
           <p>Nemate nijedan ugovor.</p>
@@ -51,7 +53,7 @@ const MojiUgovori: React.FC = () => {
               <Link
                 to={`/ugovori/${ugovor.id}`}
                 key={ugovor.id}
-                className="p-4 border rounded-lg shadow-md hover:shadow-lg hover:border-blue-500 transition"
+                className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
               >
                 <p>
                   <strong>Projekt: </strong>{ugovor.nazivProjekta}

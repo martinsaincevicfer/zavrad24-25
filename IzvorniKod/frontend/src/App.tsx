@@ -8,7 +8,6 @@ import PrivateRoute from "./components/PrivateRoute.tsx";
 import Login from "./components/Login.tsx";
 import Profil from "./components/Profil.tsx";
 import RegistracijaOsoba from "./components/RegistracijaOsoba.tsx";
-import TipRegistracije from "./components/TipRegistracije.tsx";
 import RegistracijaTvrtka from "./components/RegistracijaTvrtka.tsx";
 import RegistracijaHonorarac from "./components/RegistracijaHonorarac.tsx";
 import KreiranjeProjekta from "./components/KreiranjeProjekta.tsx";
@@ -24,7 +23,6 @@ function App() {
         <Route path="/homepage" element={<Homepage/>}/>
         <Route path="/" element={<Navigate to="/homepage"/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/registracija" element={<TipRegistracije/>}/>
         <Route path="/registracija/osoba" element={<RegistracijaOsoba/>}/>
         <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka/>}/>
         <Route
@@ -42,12 +40,7 @@ function App() {
         }
         />
         <Route path="/projekti" element={<ProjektPopis/>}/>
-        <Route path="/projekti/:id" element={
-          <PrivateRoute>
-            <DetaljiProjekta/>
-          </PrivateRoute>
-        }
-        />
+        <Route path="/projekti/:id" element={<DetaljiProjekta/>}/>
         <Route path="/honorarci" element={<HonoraracPopis/>}/>
         <Route path="/honorarci/:id" element={
           <PrivateRoute>

@@ -48,9 +48,10 @@ const RegistracijaTvrtka = () => {
   return (
     <>
       <Header/>
-      <div className="max-w-7xl mx-auto shadow-md rounded">
+      <div className="max-w-7xl mx-auto px-3 shadow-md rounded">
         <h1 className="text-xl font-bold mb-6 text-center">Registracija Tvrtke</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 px-3 sm:px-6 lg:px-9 max-w-1/2 mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-4 px-3 sm:px-6 lg:px-9 md:max-w-1/3 mx-auto">
           <div className="flex flex-col gap-2">
             <input
               type="email"

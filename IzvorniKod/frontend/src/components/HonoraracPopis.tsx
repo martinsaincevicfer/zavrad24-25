@@ -33,21 +33,22 @@ const HonoraracPopis: React.FC = () => {
     return honorarac.nazivTvrtke;
   };
 
-  if (isLoading) {
-    return (
+  if (isLoading) return (
+    <>
+      <Header/>
       <div className="flex justify-center items-center min-h-screen">
-        <div className="text-xl">Učitavanje...</div>
+        Učitavanje...
       </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-xl text-red-600">{error}</div>
+    </>
+  );
+  if (error) return (
+    <>
+      <Header/>
+      <div className="flex justify-center items-center min-h-screen text-red-500">
+        {error}
       </div>
-    );
-  }
+    </>
+  );
 
   return (
     <>
@@ -59,19 +60,14 @@ const HonoraracPopis: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {honorarci.map((honorarac) => (
-              <div
+              <Link
+                to={`/honorarci/${honorarac.id}`}
                 key={honorarac.id}
-                className="border rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+                className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
               >
                 <h2 className="text-xl font-bold mb-2">{getPrikazanoIme(honorarac)}</h2>
                 <p className="mb-4">{honorarac.kratkiOpis}</p>
-                <Link
-                  to={`/honorarci/${honorarac.id}`}
-                  className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white"
-                >
-                  Više informacija
-                </Link>
-              </div>
+              </Link>
             ))}
           </div>
         )}

@@ -66,14 +66,35 @@ const RezultatiList: React.FC<RezultatiListProps> = ({ugovorId, ugovorStatus}) =
     }
   };
 
-  if (loading) return <div>Učitavanje rezultata...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
-  if (rezultati.length === 0) return <div>Nema rezultata za ovaj ugovor.</div>;
+  if (loading) {
+    return (
+      <>
+        <div className="flex justify-center items-center min-h-screen">Učitavanje...</div>
+      </>
+    );
+  }
+  if (error) {
+    return (
+      <>
+        <div className="text-red-500 flex justify-center items-center min-h-screen">{error}</div>
+      </>
+    );
+  }
+  if (rezultati.length === 0) {
+    return (
+      <>
+        <h2 className="text-lg font-bold mb-2">Rezultati</h2>
+        <div className="flex justify-center items-center">
+          Nema rezultata za ovaj ugovor.
+        </div>
+      </>
+    );
+  }
 
   return (
     <div className="mt-6">
       <h2 className="text-lg font-bold mb-2">Rezultati</h2>
-      <ul className="space-y-2 flex flex-wrap">
+      <ul className="flex flex-wrap px-1">
         {rezultati.map((rezultat) => (
           <li key={rezultat.id} className="flex items-center space-x-2">
             <button

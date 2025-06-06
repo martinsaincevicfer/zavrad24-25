@@ -1,6 +1,6 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {ArrowUpFromLine, FileText, FileUser, House, LogIn, LogOut, Menu, Plus, User, UserPlus, X} from "lucide-react";
+import {ArrowUpFromLine, FileText, FileUser, House, LogIn, LogOut, Menu, User, UserPlus, X} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -55,21 +55,13 @@ const Header = () => {
 
           <div className={`md:flex gap-4 justify-between items-center hidden`}>
             {isLoggedIn && (
-              <div className="flex gap-2">
-                <Link
-                  to="/korisnik/projekti"
-                  className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
-                >
-                  <FileText/>
-                  Moji projekti
-                </Link>
-                <Link
-                  to="/ugovori"
-                  className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
-                  <FileUser/>
-                  Moji ugovori
-                </Link>
-              </div>
+              <Link
+                to="/korisnik/projekti"
+                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+              >
+                <FileText/>
+                Moji projekti
+              </Link>
             )}
 
             {jeHonorarac && (
@@ -80,6 +72,15 @@ const Header = () => {
                   Moje prijave
                 </Link>
               </div>
+            )}
+
+            {isLoggedIn && (
+              <Link
+                to="/ugovori"
+                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                <FileUser/>
+                Moji ugovori
+              </Link>
             )}
           </div>
         </div>
@@ -92,15 +93,6 @@ const Header = () => {
         </button>
 
         <div className={`md:flex gap-4 justify-between items-center hidden`}>
-          {isLoggedIn && (
-            <Link
-              to="/projekti/stvori"
-              className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
-            >
-              <Plus/>
-              Napravi projekt
-            </Link>
-          )}
           {isLoggedIn && userEmail && (
             <Link
               to="/profil"
@@ -110,6 +102,7 @@ const Header = () => {
               {userEmail}
             </Link>
           )}
+
           <button
             className="px-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
             onClick={isLoggedIn ? handleLogout : handleLoginClick}
@@ -128,7 +121,7 @@ const Header = () => {
           </button>
           {!isLoggedIn && (
             <Link
-              to="/registracija"
+              to="/registracija/osoba"
               className="px-4 py-2.5 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300 flex items-center gap-1"
             >
               <UserPlus/>
@@ -153,7 +146,7 @@ const Header = () => {
             {jeHonorarac && (
               <div className="flex flex-col items-start gap-2">
                 <Link to="/honorarac/prijave"
-                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                      className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
                   <ArrowUpFromLine/>
                   Moje prijave
                 </Link>
@@ -162,11 +155,10 @@ const Header = () => {
 
             {isLoggedIn && (
               <Link
-                to="/projekti/stvori"
-                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
-              >
-                <Plus/>
-                Napravi projekt
+                to="/ugovori"
+                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                <FileUser/>
+                Moji ugovori
               </Link>
             )}
 
@@ -200,7 +192,7 @@ const Header = () => {
 
             {!isLoggedIn && (
               <Link
-                to="/registracija"
+                to="/registracija/osoba"
                 className="bg-green-500 text-white px-5 py-3 rounded hover:bg-green-600 flex items-center gap-1 transition duration-300"
               >
                 <UserPlus/>

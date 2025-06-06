@@ -35,6 +35,8 @@ public class SecurityConfig {
                                 .requestMatchers("/actuator/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/projekti").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/projekti/{id}").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/korisnici/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/honorarci").permitAll()
                                 .anyRequest().authenticated()
                 )

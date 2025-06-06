@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -12,8 +12,13 @@ import {PrijavaDTO} from "../types/PrijavaDTO.ts";
 
 
 const prijavaSchema = z.object({
-  iznos: z.number().positive('Iznos mora biti pozitivan broj.').min(1, 'Minimalni iznos je 1€.'),
-  poruka: z.string().min(5, 'Poruka mora imati barem 5 znakova.').max(500, 'Poruka ne smije imati više od 500 znakova.'),
+  iznos: z.number()
+    .positive('Iznos mora biti pozitivan broj.')
+    .min(1, 'Minimalni iznos je 1€.')
+    .max(9999999999.99, 'Budžet prelazi maksimalnu dozvoljenu vrijednost.'),
+  poruka: z.string()
+    .min(5, 'Poruka mora imati barem 5 znakova.')
+    .max(500, 'Poruka ne smije imati više od 500 znakova.'),
 });
 
 type PrijavaForm = z.infer<typeof prijavaSchema>;
@@ -80,9 +85,24 @@ export const DetaljiProjekta: React.FC = () => {
     }
   };
 
-  if (ucitavanje) return <div className="text-center p-4">Učitavanje...</div>;
-  if (greska) return <div className="text-red-500 p-4">{greska}</div>;
-  if (!projekt) return <div className="text-center p-4">Projekt nije pronađen.</div>;
+  if (ucitavanje) return <>
+    <Header/>
+    <div className="flex justify-center items-center min-h-screen">
+      Učitavanje...
+    </div>
+  </>;
+  if (greska) return <>
+    <Header/>
+    <div className="flex justify-center items-center min-h-screen text-red-500 p-4">
+      {greska}
+    </div>
+  </>;
+  if (!projekt) return <>
+    <Header/>
+    <div className="flex justify-center items-center min-h-screen p-4">
+      Projekt nije pronađen.
+    </div>
+  </>;
 
   const formatDatum = (datum: string) =>
     new Date(datum).toLocaleDateString('hr-HR', {
@@ -111,15 +131,30 @@ export const DetaljiProjekta: React.FC = () => {
     return 'Nepoznati korisnik';
   };
 
-  if (ucitavanje) return <div className="text-center p-4">Učitavanje...</div>;
-  if (greska) return <div className="text-red-500 p-4">{greska}</div>;
-  if (!projekt) return <div className="text-center p-4">Projekt nije pronađen.</div>;
+  if (ucitavanje) return <>
+    <Header/>
+    <div className="container max-w-7xl mx-auto text-center">
+      Učitavanje...
+    </div>
+  </>;
+  if (greska) return <>
+    <Header/>
+    <div className="container max-w-7xl mx-auto text-center text-red-500 p-4">
+      {greska}
+    </div>
+  </>;
+  if (!projekt) return <>
+    <Header/>
+    <div className="container max-w-7xl mx-auto text-center p-4">
+      Projekt nije pronađen.
+    </div>
+  </>;
 
   return (
     <>
       <Header/>
 
-      <div className="container max-w-7xl mx-auto rounded-lg shadow-lg px-3 sm:px-6 lg:px-9">
+      <div className="container max-w-7xl mx-auto rounded-lg px-3 sm:px-6 lg:px-9">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{projekt.naziv}</h1>
           <span className="text-gray-500">ID: {projekt.id}</span>
@@ -164,19 +199,28 @@ export const DetaljiProjekta: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {!ulogiraniKorisnik && (
+            <Link
+              to={"/login"}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 w-1/3"
+            >
+              Kreiraj novu prijavu
+            </Link>
+          )}
         </div>
 
         {jeHonorarac && (
           <div className="mt-6">
             <button
               onClick={() => setPrikaziFormu(true)}
-              className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
               Kreiraj novu prijavu
             </button>
 
             {prikaziFormu && (
-              <div className="mt-4 p-4 border rounded-lg shadow">
+              <div className="mt-4 p-4 border rounded-lg">
                 <h2 className="text-xl font-bold mb-2">Nova Prijava</h2>
 
                 <form onSubmit={handleSubmit(podnesiPrijavu)}>
@@ -190,7 +234,7 @@ export const DetaljiProjekta: React.FC = () => {
                       {...register('iznos', {valueAsNumber: true})}
                       className={`mt-1 block w-full ${
                         errors.iznos ? 'border-red-500' : 'border-gray-300'
-                      } rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500`}
+                      } rounded-md focus:ring-blue-500 focus:border-blue-500`}
                     />
                     {errors.iznos && (
                       <p className="text-red-500 text-sm">{errors.iznos.message}</p>
@@ -205,7 +249,7 @@ export const DetaljiProjekta: React.FC = () => {
                       rows={3}
                       className={`mt-1 block w-full ${
                         errors.poruka ? 'border-red-500' : 'border-gray-300'
-                      } rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500`}
+                      } rounded-md focus:ring-blue-500 focus:border-blue-500`}
                     ></textarea>
                     {errors.poruka && (
                       <p className="text-red-500 text-sm">{errors.poruka.message}</p>
@@ -241,7 +285,7 @@ export const DetaljiProjekta: React.FC = () => {
             ) : (
               <ul className="space-y-4">
                 {prijave.map((prijava) => (
-                  <li key={prijava.id} className="border rounded-lg p-4 shadow-md">
+                  <li key={prijava.id} className="border rounded-lg p-4">
                     <p>
                       <strong>Honorarac:</strong>
                       {prijava.honorarac.ime} {prijava.honorarac.prezime} {prijava.honorarac.tvrtka} ({prijava.honorarac.email})

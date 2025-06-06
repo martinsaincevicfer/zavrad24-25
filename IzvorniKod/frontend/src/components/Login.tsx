@@ -1,9 +1,9 @@
 import React from 'react';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { authService } from '../services/authService';
+import {z} from 'zod';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useNavigate} from 'react-router-dom';
+import {authService} from '../services/authService';
 import Header from './Header';
 
 const loginSchema = z.object({
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: {errors}
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     mode: 'all'
@@ -29,22 +29,23 @@ const Login: React.FC = () => {
       await authService.login(data);
       navigate('/homepage');
     } catch (error: unknown) {
-      console.error('Greška prilikom prijave: ' ,error)
+      console.error('Greška prilikom prijave: ', error)
       alert('Neuspješna prijava. Provjerite email i lozinku.');
     }
   };
 
   return (
     <>
-      <Header />
+      <Header/>
       <div className="container max-w-7xl mx-auto flex flex-col items-center">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
             Prijava
           </h2>
         </div>
-        <form className="mt-8 space-y-6 min-w-1/3" onSubmit={handleSubmit(onSubmit)}>
-          <div className="rounded-md shadow-sm flex flex-col gap-4">
+        <form className="mt-8 space-y-6 min-w-1/3 "
+              onSubmit={handleSubmit(onSubmit)}>
+          <div className="rounded-md flex flex-col gap-4">
             <div>
               <input
                 type="email"

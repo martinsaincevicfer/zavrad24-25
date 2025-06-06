@@ -1,7 +1,7 @@
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
 
@@ -28,7 +28,7 @@ const RegistracijaOsoba = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: {errors}
   } = useForm<RegistracijaForm>({
     resolver: zodResolver(registracijaSchema),
     mode: 'all'
@@ -47,10 +47,11 @@ const RegistracijaOsoba = () => {
 
   return (
     <>
-      <Header />
-      <div className="max-w-7xl mx-auto shadow-md rounded px-3 sm:px-6 lg:px-9">
+      <Header/>
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6 text-center">Registracija</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-1/2 mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col px-3 sm:px-6 lg:px-9 md:max-w-1/3 gap-4 mx-auto">
           <div className="flex flex-col gap-2">
             <input
               type="email"
@@ -119,6 +120,18 @@ const RegistracijaOsoba = () => {
           >
             Registriraj se
           </button>
+
+          <div className="text-center">
+            <span className="mr-1">
+              Želim se registrirati kao
+            </span>
+            <Link
+              to="/registracija/tvrtka"
+              className="text-blue-500 hover:text-blue-600 hover:underline"
+            >
+              tvrtka.
+            </Link>
+          </div>
         </form>
       </div>
     </>

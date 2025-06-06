@@ -19,6 +19,7 @@ const projektSchema = z.object({
     .max(2147483647, 'Opis projekta je predugačak.'),
   budzet: z
     .number({invalid_type_error: 'Budžet mora biti broj.'})
+    .positive('Iznos mora biti pozitivan broj.')
     .min(1, 'Budžet mora biti veći od 0.')
     .max(9999999999.99, 'Budžet prelazi maksimalnu dozvoljenu vrijednost.'),
   rok: z

@@ -26,8 +26,18 @@ export const ProjektPopis: React.FC = () => {
     dohvatiProjekte();
   }, []);
 
-  if (ucitavanje) return <div className="text-center p-4">Učitavanje...</div>;
-  if (greska) return <div className="text-red-500 p-4">{greska}</div>;
+  if (ucitavanje) return <>
+    <Header/>
+    <div className="flex justify-center items-center min-h-screen">
+      Učitavanje...
+    </div>
+  </>;
+  if (greska) return <>
+    <Header/>
+    <div className="flex justify-center items-center min-h-screen text-red-500 p-4">
+      {greska}
+    </div>
+  </>;
 
   return (
     <>
@@ -36,7 +46,11 @@ export const ProjektPopis: React.FC = () => {
         <h1 className="text-2xl font-bold mb-6">Popis projekata</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projekti.map((projekt) => (
-            <div key={projekt.id} className="border rounded-lg p-4 shadow-sm">
+            <Link
+              to={`/projekti/${projekt.id}`}
+              key={projekt.id}
+              className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
+            >
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
               <p className="text-black dark:text-white mb-2 line-clamp-2">{projekt.opis}</p>
               <p className="text-sm mb-2">
@@ -56,13 +70,7 @@ export const ProjektPopis: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <Link
-                to={`/projekti/${projekt.id}`}
-                className="inline-block bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white"
-              >
-                Više detalja →
-              </Link>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

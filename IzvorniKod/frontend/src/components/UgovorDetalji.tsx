@@ -79,16 +79,39 @@ const UgovorDetalji: React.FC = () => {
     }
   };
 
-  if (loading) return <div className="text-center p-4">Učitavanje...</div>;
-  if (error) return <div className="text-red-500 p-4">{error}</div>;
-  if (!ugovor) return <div className="text-center p-4">Ugovor nije pronađen.</div>;
+  if (loading) {
+    return (
+      <>
+        <Header/>
+        <div className="flex justify-center items-center min-h-screen">Učitavanje...</div>
+      </>
+    );
+  }
+  if (error) {
+    return (
+      <>
+        <Header/>
+        <div className="text-red-500 flex justify-center items-center min-h-screen">{error}</div>
+      </>
+    );
+  }
+  if (!ugovor) {
+    return (
+      <>
+        <Header/>
+        <div className="flex justify-center items-center min-h-screen">
+          Ugovor nije pronađen.
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto py-6">
+      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6">Detalji ugovora</h1>
-        <div className="p-6 border rounded-lg shadow-lg">
+        <div className="p-6">
           <p><strong>ID Ugovora:</strong> {ugovor.id}</p>
           <p><strong>Status:</strong> {ugovor.status}</p>
           <p>
@@ -103,7 +126,7 @@ const UgovorDetalji: React.FC = () => {
           </p>
           <p><strong>ID Prijave:</strong> {ugovor.prijavaId}</p>
         </div>
-        <div className="p-6 border-t mt-4">
+        <div className="p-6">
           <h2 className="text-xl font-bold">Informacije o projektu</h2>
           <p><strong>Naziv:</strong> {ugovor.projekt.naziv}</p>
           <p><strong>Opis:</strong> {ugovor.projekt.opis}</p>
@@ -111,11 +134,14 @@ const UgovorDetalji: React.FC = () => {
           <p><strong>Rok:</strong> {new Date(ugovor.projekt.rok).toLocaleDateString()}</p>
           <p><strong>Datum stvaranja:</strong> {new Date(ugovor.projekt.datumStvaranja).toLocaleDateString()}</p>
         </div>
-        
+
         <RezultatiList ugovorId={ugovor.id} ugovorStatus={ugovor.status}/>
 
         {jeHonorarac && ugovor.status !== "zavrsen" && (
-          <RezultatUploadForm ugovorId={ugovor.id}/>
+          <div className="border rounded-lg p-4 mt-4">
+            <h2 className="text-lg font-bold mb-2">Kreiraj novi rezultat:</h2>
+            <RezultatUploadForm ugovorId={ugovor.id}/>
+          </div>
         )}
 
         {jeHonorarac && ugovor.status !== "zavrsen" && (
@@ -130,7 +156,7 @@ const UgovorDetalji: React.FC = () => {
         )}
 
         {ugovor.status === "zavrsen" && !ugovor.recenzija && !jeHonorarac && (
-          <div className="p-6 border-t mt-4">
+          <div className="p-6 mt-4">
             <h2 className="text-xl font-bold mb-2">Dodaj recenziju</h2>
             <form onSubmit={handleSubmit(onSubmitRecenzija)} className="space-y-4 max-w-md">
               <div>
