@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -17,15 +19,23 @@ public class Korisnik {
     @Column(name = "korisnik_id", nullable = false)
     private Integer id;
 
+    @Size(max = 255)
+    @NotNull
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Size(max = 255)
+    @NotNull
     @Column(name = "lozinka", nullable = false)
     private String lozinka;
 
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "datum_stvaranja", nullable = false, insertable = false, updatable = false)
+    @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
+
+    @OneToOne(mappedBy = "korisnik")
+    private Honorarac honorarac;
 
     @ManyToMany
     @JoinTable(name = "korisnikuloga",
@@ -38,18 +48,8 @@ public class Korisnik {
             orphanRemoval = true)
     private Osoba osoba;
 
-
-    @OneToMany(mappedBy = "posiljatelj")
-    private Set<Poruka> poslanePoruke = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "primatelj")
-    private Set<Poruka> primljenePoruke = new LinkedHashSet<>();
-
     @OneToMany(mappedBy = "korisnik")
     private Set<Projekt> projekti = new LinkedHashSet<>();
-
-    @OneToOne(mappedBy = "korisnik")
-    private Honorarac honorarac;
 
     @OneToOne(mappedBy = "korisnik",
             cascade = CascadeType.ALL,
@@ -88,6 +88,14 @@ public class Korisnik {
         this.datumStvaranja = datumStvaranja;
     }
 
+    public Honorarac getHonorarac() {
+        return honorarac;
+    }
+
+    public void setHonorarac(Honorarac honorarac) {
+        this.honorarac = honorarac;
+    }
+
     public Set<Uloga> getUloge() {
         return uloge;
     }
@@ -104,37 +112,12 @@ public class Korisnik {
         this.osoba = osoba;
     }
 
-
-    public Set<Poruka> getPoslanePoruke() {
-        return poslanePoruke;
-    }
-
-    public void setPoslanePoruke(Set<Poruka> poslanePoruke) {
-        this.poslanePoruke = poslanePoruke;
-    }
-
-    public Set<Poruka> getPrimljenePoruke() {
-        return primljenePoruke;
-    }
-
-    public void setPrimljenePoruke(Set<Poruka> primljenePoruke) {
-        this.primljenePoruke = primljenePoruke;
-    }
-
     public Set<Projekt> getProjekti() {
         return projekti;
     }
 
     public void setProjekti(Set<Projekt> projekti) {
         this.projekti = projekti;
-    }
-
-    public Honorarac getHonorarac() {
-        return honorarac;
-    }
-
-    public void setHonorarac(Honorarac honorarac) {
-        this.honorarac = honorarac;
     }
 
     public Tvrtka getTvrtka() {

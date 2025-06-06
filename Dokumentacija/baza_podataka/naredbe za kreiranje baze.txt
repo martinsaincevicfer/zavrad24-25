@@ -107,25 +107,10 @@ CREATE TABLE Ugovor (
   FOREIGN KEY (recenzija_id) REFERENCES Recenzija(recenzija_id) ON DELETE SET NULL
 );
 
-CREATE TABLE Rezultat (
-  rezultat_id SERIAL PRIMARY KEY,
+CREATE TABLE DnevnikRada (
+  dnevnik_id SERIAL PRIMARY KEY,
   ugovor_id INT NOT NULL,
-  naziv VARCHAR(255),
-  datoteka_url TEXT NOT NULL,
-  datum_uploada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  opis TEXT NOT NULL,
+  datum_unosa TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
 );
-
-CREATE TABLE Poruka (
-  poruka_id SERIAL PRIMARY KEY,
-  posiljatelj_id INT NOT NULL,
-  primatelj_id INT NOT NULL,
-  sadrzaj TEXT NOT NULL,
-  procitana BOOLEAN NOT NULL DEFAULT FALSE,
-  datum_slanja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (posiljatelj_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE,
-  FOREIGN KEY (primatelj_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE
-);
-
-
-

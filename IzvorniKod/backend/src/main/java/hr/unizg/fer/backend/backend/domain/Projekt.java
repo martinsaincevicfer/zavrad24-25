@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -19,22 +21,28 @@ public class Projekt {
     @Column(name = "projekt_id", nullable = false)
     private Integer id;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
 
     @Column(name = "opis", length = Integer.MAX_VALUE)
     private String opis;
 
+    @NotNull
     @Column(name = "budzet", nullable = false, precision = 12, scale = 2)
     private BigDecimal budzet;
 
+    @NotNull
     @Column(name = "rok", nullable = false)
     private LocalDate rok;
 
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnik_id", nullable = false)

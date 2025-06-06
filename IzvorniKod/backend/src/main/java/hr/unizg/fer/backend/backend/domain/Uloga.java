@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -15,6 +17,8 @@ public class Uloga {
     @Column(name = "uloga_id", nullable = false)
     private Integer id;
 
+    @Size(max = 50)
+    @NotNull
     @Column(name = "naziv", nullable = false, length = 50)
     private String naziv;
 

@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -15,17 +17,20 @@ public class Vjestina {
     @Column(name = "vjestina_id", nullable = false)
     private Integer id;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
 
+    @Size(max = 100)
     @Column(name = "kategorija", length = 100)
     private String kategorija;
 
     @ManyToMany(mappedBy = "vjestine")
-    private Set<Projekt> projekti = new LinkedHashSet<>();
+    private Set<Honorarac> honoraraci = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "vjestine")
-    private Set<Honorarac> honorarci = new LinkedHashSet<>();
+    private Set<Projekt> projekti = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -51,20 +56,20 @@ public class Vjestina {
         this.kategorija = kategorija;
     }
 
+    public Set<Honorarac> getHonoraraci() {
+        return honoraraci;
+    }
+
+    public void setHonoraraci(Set<Honorarac> honoraraci) {
+        this.honoraraci = honoraraci;
+    }
+
     public Set<Projekt> getProjekti() {
         return projekti;
     }
 
     public void setProjekti(Set<Projekt> projekti) {
         this.projekti = projekti;
-    }
-
-    public Set<Honorarac> getHonorarci() {
-        return honorarci;
-    }
-
-    public void setHonorarci(Set<Honorarac> slobodnjaci) {
-        this.honorarci = slobodnjaci;
     }
 
 }

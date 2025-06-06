@@ -2,6 +2,7 @@ package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
@@ -10,9 +11,11 @@ import java.util.Objects;
 @Embeddable
 public class KorisnikulogaId implements Serializable {
     private static final long serialVersionUID = 4251024954191901432L;
+    @NotNull
     @Column(name = "korisnik_id", nullable = false)
     private Integer korisnikId;
 
+    @NotNull
     @Column(name = "uloga_id", nullable = false)
     private Integer ulogaId;
 

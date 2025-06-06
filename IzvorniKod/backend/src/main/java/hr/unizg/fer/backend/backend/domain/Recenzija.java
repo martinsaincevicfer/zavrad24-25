@@ -1,6 +1,7 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -13,12 +14,14 @@ public class Recenzija {
     @Column(name = "recenzija_id", nullable = false)
     private Integer id;
 
+    @NotNull
     @Column(name = "ocjena", nullable = false)
     private Integer ocjena;
 
     @Column(name = "komentar", length = Integer.MAX_VALUE)
     private String komentar;
 
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
@@ -65,4 +68,5 @@ public class Recenzija {
     public void setUgovor(Ugovor ugovor) {
         this.ugovor = ugovor;
     }
+
 }

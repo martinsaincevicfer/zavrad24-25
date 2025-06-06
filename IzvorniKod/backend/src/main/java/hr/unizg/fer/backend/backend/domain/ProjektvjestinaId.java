@@ -2,17 +2,22 @@ package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.Hibernate;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class ProjektvjestinaId implements Serializable {
+    @Serial
     private static final long serialVersionUID = -1424637783673817746L;
+    @NotNull
     @Column(name = "vjestina_id", nullable = false)
     private Integer vjestinaId;
 
+    @NotNull
     @Column(name = "projekt_id", nullable = false)
     private Integer projektId;
 

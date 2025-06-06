@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,8 +11,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "ugovor", uniqueConstraints = {
-        @UniqueConstraint(name = "ugovor_prijava_id_key", columnNames = {"prijava_id"})
+@Table(name = "ugovor", schema = "public", uniqueConstraints = {
+        @UniqueConstraint(name = "ugovor_prijava_id_key", columnNames = {"prijava_id"}),
+        @UniqueConstraint(name = "ugovor_recenzija_id_key", columnNames = {"recenzija_id"})
 })
 public class Ugovor {
     @Id
@@ -18,27 +21,31 @@ public class Ugovor {
     @Column(name = "ugovor_id", nullable = false)
     private Integer id;
 
+    @Size(max = 20)
+    @NotNull
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
+    @NotNull
     @Column(name = "datum_pocetka", nullable = false)
     private LocalDate datumPocetka;
 
     @Column(name = "datum_zavrsetka")
     private LocalDate datumZavrsetka;
 
+    @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "prijava_id", nullable = false)
     private Prijava prijava;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "recenzija_id")
     private Recenzija recenzija;
 
     @OneToMany(mappedBy = "ugovor")
-    private Set<Rezultat> rezultati = new LinkedHashSet<>();
+    private Set<Dnevnikrada> dnevnicirada = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -80,14 +87,6 @@ public class Ugovor {
         this.prijava = prijava;
     }
 
-    public Set<Rezultat> getRezultati() {
-        return rezultati;
-    }
-
-    public void setRezultati(Set<Rezultat> rezultati) {
-        this.rezultati = rezultati;
-    }
-
     public Recenzija getRecenzija() {
         return recenzija;
     }
@@ -95,4 +94,13 @@ public class Ugovor {
     public void setRecenzija(Recenzija recenzija) {
         this.recenzija = recenzija;
     }
+
+    public Set<Dnevnikrada> getDnevnicirada() {
+        return dnevnicirada;
+    }
+
+    public void setDnevnicirada(Set<Dnevnikrada> dnevnicirada) {
+        this.dnevnicirada = dnevnicirada;
+    }
+
 }

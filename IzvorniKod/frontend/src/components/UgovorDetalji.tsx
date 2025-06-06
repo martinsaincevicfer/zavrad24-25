@@ -7,8 +7,6 @@ import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {authService} from "../services/authService.ts";
-import RezultatUploadForm from "./RezultatUploadForm.tsx";
-import RezultatiList from "./RezultatiList.tsx";
 
 const recenzijaSchema = z.object({
   ocjena: z.number().min(1).max(5, "Ocjena mora biti između 1 i 5"),
@@ -134,15 +132,6 @@ const UgovorDetalji: React.FC = () => {
           <p><strong>Rok:</strong> {new Date(ugovor.projekt.rok).toLocaleDateString()}</p>
           <p><strong>Datum stvaranja:</strong> {new Date(ugovor.projekt.datumStvaranja).toLocaleDateString()}</p>
         </div>
-
-        <RezultatiList ugovorId={ugovor.id} ugovorStatus={ugovor.status}/>
-
-        {jeHonorarac && ugovor.status !== "zavrsen" && (
-          <div className="border rounded-lg p-4 mt-4">
-            <h2 className="text-lg font-bold mb-2">Kreiraj novi rezultat:</h2>
-            <RezultatUploadForm ugovorId={ugovor.id}/>
-          </div>
-        )}
 
         {jeHonorarac && ugovor.status !== "zavrsen" && (
           <div className="mt-4">

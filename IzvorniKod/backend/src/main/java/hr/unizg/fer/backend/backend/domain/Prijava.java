@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -16,25 +18,31 @@ public class Prijava {
     @Column(name = "prijava_id", nullable = false)
     private Integer id;
 
+    @Size(max = 20)
+    @NotNull
     @ColumnDefault("'aktivna'")
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
+    @NotNull
     @Column(name = "iznos", nullable = false, precision = 12, scale = 2)
     private BigDecimal iznos;
 
     @Column(name = "poruka", length = Integer.MAX_VALUE)
     private String poruka;
 
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "projekt_id", nullable = false)
     private Projekt projekt;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "korisnik_id", nullable = false)

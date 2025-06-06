@@ -1,6 +1,8 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,9 +19,13 @@ public class Osoba {
     @JoinColumn(name = "korisnik_id", nullable = false)
     private Korisnik korisnik;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "ime", nullable = false, length = 100)
     private String ime;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "prezime", nullable = false, length = 100)
     private String prezime;
 

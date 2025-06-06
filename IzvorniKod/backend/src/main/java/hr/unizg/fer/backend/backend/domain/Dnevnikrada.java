@@ -1,6 +1,7 @@
 package hr.unizg.fer.backend.backend.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -8,27 +9,27 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.Instant;
 
 @Entity
-@Table(name = "rezultat")
-public class Rezultat {
+@Table(name = "dnevnikrada")
+public class Dnevnikrada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rezultat_id", nullable = false)
+    @Column(name = "dnevnik_id", nullable = false)
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ugovor_id", nullable = false)
     private Ugovor ugovor;
 
-    @Column(name = "naziv")
-    private String naziv;
+    @NotNull
+    @Column(name = "opis", nullable = false, length = Integer.MAX_VALUE)
+    private String opis;
 
-    @Column(name = "datoteka_url", nullable = false, length = Integer.MAX_VALUE)
-    private String datotekaUrl;
-
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "datum_uploada", nullable = false)
-    private Instant datumUploada;
+    @Column(name = "datum_unosa", nullable = false)
+    private Instant datumUnosa;
 
     public Integer getId() {
         return id;
@@ -46,28 +47,20 @@ public class Rezultat {
         this.ugovor = ugovor;
     }
 
-    public String getNaziv() {
-        return naziv;
+    public String getOpis() {
+        return opis;
     }
 
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
 
-    public String getDatotekaUrl() {
-        return datotekaUrl;
+    public Instant getDatumUnosa() {
+        return datumUnosa;
     }
 
-    public void setDatotekaUrl(String datotekaUrl) {
-        this.datotekaUrl = datotekaUrl;
-    }
-
-    public Instant getDatumUploada() {
-        return datumUploada;
-    }
-
-    public void setDatumUploada(Instant datumUploada) {
-        this.datumUploada = datumUploada;
+    public void setDatumUnosa(Instant datumUnosa) {
+        this.datumUnosa = datumUnosa;
     }
 
 }
