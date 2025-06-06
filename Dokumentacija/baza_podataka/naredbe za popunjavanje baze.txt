@@ -1,5 +1,5 @@
 INSERT INTO Uloga (naziv) VALUES
-('honorarac'),
+('ponuditelj'),
 ('klijent'),
 ('administrator');
 
@@ -99,14 +99,25 @@ INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
 (26, 2), (27, 2), (28, 2), (29, 2);
 
 INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
-(1, 1),  -- Ivan
-(3, 1),  -- Marko
-(6, 1),  -- Maja
-(11, 1), -- Filip
-(13, 1), -- Karla
-(17, 1), -- Jure
-(21, 1), -- Klijent2
-(28, 1); -- Klijent9
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1);
 
 INSERT INTO Osoba (korisnik_id, ime, prezime, adresa) VALUES
 (1, 'Ivan', 'Horvat', 'Zagreb'),
@@ -139,7 +150,7 @@ INSERT INTO Osoba (korisnik_id, ime, prezime, adresa) VALUES
 (28, 'Petra', 'Božić', 'Pula'),
 (29, 'Ivan', 'Krpan', 'Vinkovci');
 
-INSERT INTO Honorarac (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
+INSERT INTO Ponuditelj (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
 (1, 'Stručnjak za web development', 'Fakultet računarstva', '5 godina iskustva u front-end razvoju'),
 (2, 'UI/UX dizajner', 'Fakultet likovnih umjetnosti', '3 godine iskustva u dizajnu sučelja'),
 (3, 'Data analyst', 'Ekonomija', '2 godine iskustva u analizi podataka'),
@@ -160,23 +171,23 @@ INSERT INTO Honorarac (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
 (18, 'Poslovni analitičar', 'Poslovna informatika', '3 godine iskustva u poslovnoj analizi'),
 (19, 'Tester softverskih aplikacija', 'Fakultet računarstva', '2 godine iskustva u testiranju aplikacija');
 
-INSERT INTO Projekt (naziv, opis, budzet, rok, korisnik_id) VALUES
-('Web stranica za tvrtku', 'Izrada profesionalne web stranice za tvrtku.', 5000.00, '2025-06-01', 1),
+INSERT INTO Projekt (naziv, opis, budzet, rok_izrade, narucitelj_id) VALUES
+('Web stranica za tvrtku', 'Izrada profesionalne web stranice za tvrtku.', 5000.00, '2025-06-028', 1),
 ('Mobilna aplikacija', 'Razvoj mobilne aplikacije za online trgovinu.', 10000.00, '2025-07-01', 2),
-('SEO optimizacija', 'Optimizacija postojećih web stranica za bolji SEO ranking.', 2000.00, '2025-05-15', 3),
+('SEO optimizacija', 'Optimizacija postojećih web stranica za bolji SEO ranking.', 2000.00, '2025-07-15', 3),
 ('Razvoj baze podataka', 'Projektiranje i razvoj baze podataka za poslovnu aplikaciju.', 3000.00, '2025-08-01', 4),
 ('Marketing kampanja', 'Kreiranje digitalne marketinške kampanje za novu uslugu.', 4000.00, '2025-09-01', 5),
 ('Razvoj u Pythonu', 'Izrada aplikacije u Pythonu za analizu podataka.', 7000.00, '2025-10-01', 6),
 ('DevOps implementacija', 'Implementacija DevOps alata i sustava za razvoj.', 12000.00, '2025-12-01', 7),
 ('Cloud migracija', 'Migracija postojećeg sustava na cloud.', 15000.00, '2025-11-01', 8),
-('Kreiranje grafičkih materijala', 'Izrada promotivnih materijala za novi proizvod.', 1500.00, '2025-06-15', 9),
-('Blockchain rješenje', 'Razvoj blockchain aplikacije za praćenje transakcija.', 8000.00, '2025-07-15', 10),
+('Kreiranje grafičkih materijala', 'Izrada promotivnih materijala za novi proizvod.', 1500.00, '2025-08-13', 9),
+('Blockchain rješenje', 'Razvoj blockchain aplikacije za praćenje transakcija.', 8000.00, '2025-07-18', 10),
 ('AI chat bot', 'Razvoj chat bota temeljenog na umjetnoj inteligenciji.', 9000.00, '2025-08-30', 11),
 ('Sistemska arhitektura', 'Projektiranje sustava za upravljanje podacima u velikim tvrtkama.', 20000.00, '2025-09-30', 12),
 ('Cybersecurity analiza', 'Analiza sigurnosti postojećeg IT sustava.', 5000.00, '2025-10-15', 13),
 ('Poslovna analiza', 'Izrada poslovne analize za optimizaciju troškova.', 3000.00, '2025-12-15', 14),
-('Razvoj aplikacije za e-commerce', 'Izrada aplikacije za online trgovinu.', 10000.00, '2025-05-30', 15),
-('Razvoj platforme za e-učenje', 'Izrada platforme za e-učenje s ugrađenim testovima.', 11000.00, '2025-06-30', 16),
+('Razvoj aplikacije za e-commerce', 'Izrada aplikacije za online trgovinu.', 10000.00, '2025-09-30', 15),
+('Razvoj platforme za e-učenje', 'Izrada platforme za e-učenje s ugrađenim testovima.', 11000.00, '2025-07-30', 16),
 ('Stranica za restorane', 'Izrada web stranice za restoran s online narudžbama.', 6000.00, '2025-07-10', 17),
 ('Cloud-based rješenje za pohranu', 'Razvoj cloud-based rješenja za pohranu podataka.', 13000.00, '2025-08-01', 18),
 ('Sistemski dizajn za banku', 'Projektiranje sustava za online bankarstvo.', 22000.00, '2025-10-01', 19);
@@ -203,7 +214,7 @@ INSERT INTO Vjestina (naziv, kategorija) VALUES
 ('Software Testing', 'QA'),
 ('System Architecture', 'Architecture');
 
-INSERT INTO HonoraracVjestina (korisnik_id, vjestina_id) VALUES
+INSERT INTO PonuditeljVjestina (ponuditelj_id, vjestina_id) VALUES
 (1, 1), (1, 9), (1, 10),
 (2, 2), (2, 12), (2, 13),
 (3, 3), (3, 15), (3, 17),
@@ -222,20 +233,20 @@ INSERT INTO ProjektVjestina (vjestina_id, projekt_id) VALUES
 (8, 6), (9, 6), (3, 6),
 (10, 7), (11, 7), (2, 7);
 
-INSERT INTO Prijava (status, iznos, poruka, projekt_id, korisnik_id) VALUES
-('aktivna', 4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', 1, 1),
-('prihvacena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', 2, 7),
-('aktivna', 1800.00, 'SEO optimizaciju mogu završiti brzo i učinkovito.', 3, 4),
-('prihvacena', 2900.00, 'Radim baze podataka već 7 godina.', 4, 10),
-('odbijena', 3900.00, 'Digitalni marketing je moja specijalnost.', 5, 6),
-('prihvacena', 6900.00, 'Python koristim svakodnevno, odlična prilika.', 6, 8),
-('aktivna', 11500.00, 'DevOps alatima se bavim profesionalno.', 7, 13),
-('aktivna', 14000.00, 'Imam iskustvo s migracijama na cloud.', 8, 11),
-('odbijena', 1300.00, 'Brzo i kvalitetno izrađujem grafičke materijale.', 9, 14),
-('aktivna', 7800.00, 'Blockchain rješenja su moja specijalnost.', 10, 15),
-('aktivna', 8500.00, 'Razvijao sam AI chatbot ranije.', 11, 16),
-('aktivna', 4500.00, 'Analizirao sam sigurnost za brojne klijente.', 13, 17),
-('povucena', 2800.00, 'Nudim preciznu poslovnu analizu.', 14, 18);
+INSERT INTO Ponuda (status, iznos, poruka, rok_za_prihvacanje, projekt_id, ponuditelj_id) VALUES
+('aktivna', 4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', '2025-06-14 12:00:00', 1, 1),
+('prihvacena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', '2025-06-10 12:00:00', 2, 7),
+('prihvacena', 1800.00, 'SEO optimizaciju mogu završiti brzo i učinkovito.', '2025-06-15 12:00:00', 3, 4),
+('prihvacena', 2900.00, 'Radim baze podataka već 7 godina.', '2025-06-09 12:00:00', 4, 10),
+('prihvacena', 3900.00, 'Digitalni marketing je moja specijalnost.', '2025-06-12 12:00:00', 5, 6),
+('prihvacena', 6900.00, 'Python koristim svakodnevno, odlična prilika.', '2025-06-11 12:00:00', 6, 8),
+('prihvacena', 11500.00, 'DevOps alatima se bavim profesionalno.', '2025-06-16 12:00:00', 7, 13),
+('prihvacena', 14000.00, 'Imam iskustvo s migracijama na cloud.', '2025-06-17 12:00:00', 8, 11),
+('prihvacena', 1300.00, 'Brzo i kvalitetno izrađujem grafičke materijale.', '2025-06-13 12:00:00', 9, 14),
+('prihvacena', 7800.00, 'Blockchain rješenja su moja specijalnost.', '2025-06-18 12:00:00', 10, 15),
+('prihvacena', 8500.00, 'Razvijao sam AI chatbot ranije.', '2025-06-19 12:00:00', 11, 16),
+('prihvacena', 4500.00, 'Analizirao sam sigurnost za brojne klijente.', '2025-06-20 12:00:00', 13, 17),
+('prihvacena', 2800.00, 'Nudim preciznu poslovnu analizu.', '2025-06-21 12:00:00', 14, 18);
 
 INSERT INTO Recenzija (ocjena, komentar) VALUES
 (5, 'Odlična suradnja!'),
@@ -251,7 +262,7 @@ INSERT INTO Recenzija (ocjena, komentar) VALUES
 (5, 'Sve prema dogovoru.'),
 (5, 'Vrlo brz i učinkovit.');
 
-INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, prijava_id, recenzija_id) VALUES
+INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, ponuda_id, recenzija_id) VALUES
 ('aktivan', '2025-06-01', '2025-07-01', 2, NULL),
 ('zavrsen', '2025-04-01', '2025-05-01', 4, 1),
 ('zavrsen', '2025-04-15', '2025-05-15', 6, 2),
