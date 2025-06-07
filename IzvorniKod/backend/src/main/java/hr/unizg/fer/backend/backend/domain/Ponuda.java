@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "prijava")
-public class Prijava {
+@Table(name = "ponuda")
+public class Ponuda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prijava_id", nullable = false)
+    @Column(name = "ponuda_id", nullable = false)
     private Integer id;
 
     @Size(max = 20)
@@ -32,6 +32,10 @@ public class Prijava {
     private String poruka;
 
     @NotNull
+    @Column(name = "rok_za_prihvacanje", nullable = false)
+    private Instant rokZaPrihvacanje;
+
+    @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
@@ -45,10 +49,10 @@ public class Prijava {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "korisnik_id", nullable = false)
-    private Honorarac korisnik;
+    @JoinColumn(name = "ponuditelj_id", nullable = false)
+    private Ponuditelj ponuditelj;
 
-    @OneToOne(mappedBy = "prijava")
+    @OneToOne(mappedBy = "ponuda")
     private Ugovor ugovor;
 
     public Integer getId() {
@@ -83,6 +87,14 @@ public class Prijava {
         this.poruka = poruka;
     }
 
+    public Instant getRokZaPrihvacanje() {
+        return rokZaPrihvacanje;
+    }
+
+    public void setRokZaPrihvacanje(Instant rokZaPrihvacanje) {
+        this.rokZaPrihvacanje = rokZaPrihvacanje;
+    }
+
     public Instant getDatumStvaranja() {
         return datumStvaranja;
     }
@@ -99,12 +111,12 @@ public class Prijava {
         this.projekt = projekt;
     }
 
-    public Honorarac getKorisnik() {
-        return korisnik;
+    public Ponuditelj getPonuditelj() {
+        return ponuditelj;
     }
 
-    public void setKorisnik(Honorarac korisnik) {
-        this.korisnik = korisnik;
+    public void setPonuditelj(Ponuditelj ponuditelj) {
+        this.ponuditelj = ponuditelj;
     }
 
     public Ugovor getUgovor() {

@@ -27,7 +27,7 @@ public class Vjestina {
     private String kategorija;
 
     @ManyToMany(mappedBy = "vjestine")
-    private Set<Honorarac> honoraraci = new LinkedHashSet<>();
+    private Set<Ponuditelj> ponuditelji = new LinkedHashSet<>();
 
     @ManyToMany(mappedBy = "vjestine")
     private Set<Projekt> projekti = new LinkedHashSet<>();
@@ -56,12 +56,12 @@ public class Vjestina {
         this.kategorija = kategorija;
     }
 
-    public Set<Honorarac> getHonoraraci() {
-        return honoraraci;
+    public Set<Ponuditelj> getPonuditelji() {
+        return ponuditelji;
     }
 
-    public void setHonoraraci(Set<Honorarac> honoraraci) {
-        this.honoraraci = honoraraci;
+    public void setPonuditelji(Set<Ponuditelj> ponuditelji) {
+        this.ponuditelji = ponuditelji;
     }
 
     public Set<Projekt> getProjekti() {

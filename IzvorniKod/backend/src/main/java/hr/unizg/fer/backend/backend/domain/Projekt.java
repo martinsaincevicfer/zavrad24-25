@@ -26,7 +26,8 @@ public class Projekt {
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
 
-    @Column(name = "opis", length = Integer.MAX_VALUE)
+    @NotNull
+    @Column(name = "opis", nullable = false, length = Integer.MAX_VALUE)
     private String opis;
 
     @NotNull
@@ -34,8 +35,8 @@ public class Projekt {
     private BigDecimal budzet;
 
     @NotNull
-    @Column(name = "rok", nullable = false)
-    private LocalDate rok;
+    @Column(name = "rok_izrade", nullable = false)
+    private LocalDate rokIzrade;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
@@ -45,11 +46,11 @@ public class Projekt {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "korisnik_id", nullable = false)
-    private Korisnik korisnik;
+    @JoinColumn(name = "narucitelj_id", nullable = false)
+    private Korisnik narucitelj;
 
     @OneToMany(mappedBy = "projekt")
-    private Set<Prijava> prijave = new LinkedHashSet<>();
+    private Set<Ponuda> ponude = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -91,12 +92,12 @@ public class Projekt {
         this.budzet = budzet;
     }
 
-    public LocalDate getRok() {
-        return rok;
+    public LocalDate getRokIzrade() {
+        return rokIzrade;
     }
 
-    public void setRok(LocalDate rok) {
-        this.rok = rok;
+    public void setRokIzrade(LocalDate rokIzrade) {
+        this.rokIzrade = rokIzrade;
     }
 
     public Instant getDatumStvaranja() {
@@ -107,20 +108,20 @@ public class Projekt {
         this.datumStvaranja = datumStvaranja;
     }
 
-    public Korisnik getKorisnik() {
-        return korisnik;
+    public Korisnik getNarucitelj() {
+        return narucitelj;
     }
 
-    public void setKorisnik(Korisnik korisnik) {
-        this.korisnik = korisnik;
+    public void setNarucitelj(Korisnik narucitelj) {
+        this.narucitelj = narucitelj;
     }
 
-    public Set<Prijava> getPrijave() {
-        return prijave;
+    public Set<Ponuda> getPonude() {
+        return ponude;
     }
 
-    public void setPrijave(Set<Prijava> prijave) {
-        this.prijave = prijave;
+    public void setPonude(Set<Ponuda> ponude) {
+        this.ponude = ponude;
     }
 
     public Set<Vjestina> getVjestine() {

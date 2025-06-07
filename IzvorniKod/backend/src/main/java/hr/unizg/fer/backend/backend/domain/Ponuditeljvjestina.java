@@ -5,16 +5,16 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "honoraracvjestina")
-public class Honoraracvjestina {
+@Table(name = "ponuditeljvjestina")
+public class Ponuditeljvjestina {
     @EmbeddedId
-    private HonoraracvjestinaId id;
+    private PonuditeljvjestinaId id;
 
-    @MapsId("korisnikId")
+    @MapsId("ponuditeljId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "korisnik_id", nullable = false)
-    private Honorarac korisnik;
+    @JoinColumn(name = "ponuditelj_id", nullable = false)
+    private Ponuditelj ponuditelj;
 
     @MapsId("vjestinaId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -22,20 +22,20 @@ public class Honoraracvjestina {
     @JoinColumn(name = "vjestina_id", nullable = false)
     private Vjestina vjestina;
 
-    public HonoraracvjestinaId getId() {
+    public PonuditeljvjestinaId getId() {
         return id;
     }
 
-    public void setId(HonoraracvjestinaId id) {
+    public void setId(PonuditeljvjestinaId id) {
         this.id = id;
     }
 
-    public Honorarac getKorisnik() {
-        return korisnik;
+    public Ponuditelj getPonuditelj() {
+        return ponuditelj;
     }
 
-    public void setKorisnik(Honorarac korisnik) {
-        this.korisnik = korisnik;
+    public void setPonuditelj(Ponuditelj ponuditelj) {
+        this.ponuditelj = ponuditelj;
     }
 
     public Vjestina getVjestina() {

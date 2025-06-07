@@ -11,8 +11,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "ugovor", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "ugovor_prijava_id_key", columnNames = {"prijava_id"}),
+@Table(name = "ugovor", uniqueConstraints = {
+        @UniqueConstraint(name = "ugovor_ponuda_id_key", columnNames = {"ponuda_id"}),
         @UniqueConstraint(name = "ugovor_recenzija_id_key", columnNames = {"recenzija_id"})
 })
 public class Ugovor {
@@ -36,8 +36,8 @@ public class Ugovor {
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "prijava_id", nullable = false)
-    private Prijava prijava;
+    @JoinColumn(name = "ponuda_id", nullable = false)
+    private Ponuda ponuda;
 
     @OneToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
@@ -79,12 +79,12 @@ public class Ugovor {
         this.datumZavrsetka = datumZavrsetka;
     }
 
-    public Prijava getPrijava() {
-        return prijava;
+    public Ponuda getPonuda() {
+        return ponuda;
     }
 
-    public void setPrijava(Prijava prijava) {
-        this.prijava = prijava;
+    public void setPonuda(Ponuda ponuda) {
+        this.ponuda = ponuda;
     }
 
     public Recenzija getRecenzija() {

@@ -34,9 +34,6 @@ public class Korisnik {
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
-    @OneToOne(mappedBy = "korisnik")
-    private Honorarac honorarac;
-
     @ManyToMany
     @JoinTable(name = "korisnikuloga",
             joinColumns = @JoinColumn(name = "korisnik_id"),
@@ -48,7 +45,10 @@ public class Korisnik {
             orphanRemoval = true)
     private Osoba osoba;
 
-    @OneToMany(mappedBy = "korisnik")
+    @OneToOne(mappedBy = "korisnik")
+    private Ponuditelj ponuditelj;
+
+    @OneToMany(mappedBy = "narucitelj")
     private Set<Projekt> projekti = new LinkedHashSet<>();
 
     @OneToOne(mappedBy = "korisnik",
@@ -88,14 +88,6 @@ public class Korisnik {
         this.datumStvaranja = datumStvaranja;
     }
 
-    public Honorarac getHonorarac() {
-        return honorarac;
-    }
-
-    public void setHonorarac(Honorarac honorarac) {
-        this.honorarac = honorarac;
-    }
-
     public Set<Uloga> getUloge() {
         return uloge;
     }
@@ -110,6 +102,14 @@ public class Korisnik {
 
     public void setOsoba(Osoba osoba) {
         this.osoba = osoba;
+    }
+
+    public Ponuditelj getPonuditelj() {
+        return ponuditelj;
+    }
+
+    public void setPonuditelj(Ponuditelj ponuditelj) {
+        this.ponuditelj = ponuditelj;
     }
 
     public Set<Projekt> getProjekti() {

@@ -10,23 +10,23 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class HonoraracvjestinaId implements Serializable {
+public class PonuditeljvjestinaId implements Serializable {
     @Serial
-    private static final long serialVersionUID = 4875260667716901650L;
+    private static final long serialVersionUID = -8817268335601956436L;
     @NotNull
-    @Column(name = "korisnik_id", nullable = false)
-    private Integer korisnikId;
+    @Column(name = "ponuditelj_id", nullable = false)
+    private Integer ponuditeljId;
 
     @NotNull
     @Column(name = "vjestina_id", nullable = false)
     private Integer vjestinaId;
 
-    public Integer getKorisnikId() {
-        return korisnikId;
+    public Integer getPonuditeljId() {
+        return ponuditeljId;
     }
 
-    public void setKorisnikId(Integer korisnikId) {
-        this.korisnikId = korisnikId;
+    public void setPonuditeljId(Integer ponuditeljId) {
+        this.ponuditeljId = ponuditeljId;
     }
 
     public Integer getVjestinaId() {
@@ -41,14 +41,14 @@ public class HonoraracvjestinaId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        HonoraracvjestinaId entity = (HonoraracvjestinaId) o;
+        PonuditeljvjestinaId entity = (PonuditeljvjestinaId) o;
         return Objects.equals(this.vjestinaId, entity.vjestinaId) &&
-                Objects.equals(this.korisnikId, entity.korisnikId);
+                Objects.equals(this.ponuditeljId, entity.ponuditeljId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vjestinaId, korisnikId);
+        return Objects.hash(vjestinaId, ponuditeljId);
     }
 
 }

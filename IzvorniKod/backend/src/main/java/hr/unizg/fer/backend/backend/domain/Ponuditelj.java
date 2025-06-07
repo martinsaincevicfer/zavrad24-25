@@ -12,8 +12,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "honorarac")
-public class Honorarac {
+@Table(name = "ponuditelj")
+public class Ponuditelj {
     @Id
     @Column(name = "korisnik_id", nullable = false)
     private Integer id;
@@ -25,13 +25,16 @@ public class Honorarac {
     private Korisnik korisnik;
 
     @Size(max = 500)
-    @Column(name = "kratki_opis", length = 500)
+    @NotNull
+    @Column(name = "kratki_opis", nullable = false, length = 500)
     private String kratkiOpis;
 
-    @Column(name = "edukacija", length = Integer.MAX_VALUE)
+    @NotNull
+    @Column(name = "edukacija", nullable = false, length = Integer.MAX_VALUE)
     private String edukacija;
 
-    @Column(name = "iskustvo", length = Integer.MAX_VALUE)
+    @NotNull
+    @Column(name = "iskustvo", nullable = false, length = Integer.MAX_VALUE)
     private String iskustvo;
 
     @NotNull
@@ -39,14 +42,14 @@ public class Honorarac {
     @Column(name = "datum_stvaranja", nullable = false)
     private Instant datumStvaranja;
 
+    @OneToMany(mappedBy = "ponuditelj")
+    private Set<Ponuda> ponude = new LinkedHashSet<>();
+
     @ManyToMany
-    @JoinTable(name = "honoraracvjestina",
-            joinColumns = @JoinColumn(name = "korisnik_id"),
+    @JoinTable(name = "ponuditeljvjestina",
+            joinColumns = @JoinColumn(name = "ponuditelj_id"),
             inverseJoinColumns = @JoinColumn(name = "vjestina_id"))
     private Set<Vjestina> vjestine = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "korisnik")
-    private Set<Prijava> prijave = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -96,12 +99,12 @@ public class Honorarac {
         this.datumStvaranja = datumStvaranja;
     }
 
-    public Set<Prijava> getPrijave() {
-        return prijave;
+    public Set<Ponuda> getPonude() {
+        return ponude;
     }
 
-    public void setPrijave(Set<Prijava> prijave) {
-        this.prijave = prijave;
+    public void setPonude(Set<Ponuda> ponude) {
+        this.ponude = ponude;
     }
 
     public Set<Vjestina> getVjestine() {
@@ -112,17 +115,4 @@ public class Honorarac {
         this.vjestine = vjestine;
     }
 
-    @Override
-    public String toString() {
-        return "Honorarac{" +
-                "id=" + id +
-                ", korisnik=" + korisnik +
-                ", kratkiOpis='" + kratkiOpis + '\'' +
-                ", edukacija='" + edukacija + '\'' +
-                ", iskustvo='" + iskustvo + '\'' +
-                ", datumStvaranja=" + datumStvaranja +
-                ", prijave=" + prijave +
-                ", vjestine=" + vjestine +
-                '}';
-    }
 }
