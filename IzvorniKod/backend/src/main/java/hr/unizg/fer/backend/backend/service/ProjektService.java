@@ -9,28 +9,25 @@ import hr.unizg.fer.backend.backend.domain.Vjestina;
 import hr.unizg.fer.backend.backend.dto.ProjektDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class ProjektService {
-    @Autowired
     private final ProjektRepository projektRepository;
-    @Autowired
-    private KorisnikRepository korisnikRepository;
-    @Autowired
-    private VjestinaRepository vjestinaRepository;
+    private final KorisnikRepository korisnikRepository;
+    private final VjestinaRepository vjestinaRepository;
 
-    public ProjektService(ProjektRepository projektRepository) {
+    public ProjektService(ProjektRepository projektRepository, KorisnikRepository korisnikRepository, VjestinaRepository vjestinaRepository) {
         this.projektRepository = projektRepository;
+        this.korisnikRepository = korisnikRepository;
+        this.vjestinaRepository = vjestinaRepository;
     }
 
     @Transactional
@@ -65,9 +62,9 @@ public class ProjektService {
         projekt.setNaziv(projektDTO.getNaziv());
         projekt.setOpis(projektDTO.getOpis());
         projekt.setBudzet(projektDTO.getBudzet());
-        projekt.setRok(projektDTO.getRok());
+        projekt.setRokIzrade(projektDTO.getRok());
         projekt.setDatumStvaranja(Instant.now());
-        projekt.setKorisnik(korisnik);
+        projekt.setNarucitelj(korisnik);
 
         if (projektDTO.getVjestine() != null && !projektDTO.getVjestine().isEmpty()) {
             Set<Vjestina> vjestine = projektDTO.getVjestine().stream()

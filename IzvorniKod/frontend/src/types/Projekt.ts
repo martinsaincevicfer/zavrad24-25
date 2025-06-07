@@ -1,8 +1,4 @@
-export interface Vjestina {
-  id: number;
-  naziv: string;
-  kategorija: string;
-}
+import {Vjestina} from "./Vjestina.ts";
 
 export interface Projekt {
   id: number;
@@ -11,6 +7,6 @@ export interface Projekt {
   budzet: number;
   rok: string;
   datumStvaranja: string;
-  korisnikId: number;
+  naruciteljId: number;
   vjestine: Vjestina[];
 }

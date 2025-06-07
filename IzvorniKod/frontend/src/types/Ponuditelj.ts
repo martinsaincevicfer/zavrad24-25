@@ -1,9 +1,6 @@
-export interface VjestinaDTO {
-  id: number;
-  naziv: string;
-}
+import {Vjestina} from "./Vjestina.ts";
 
-export interface HonoraracDTO {
+export interface Ponuditelj {
   id: number;
   tip: "OSOBA" | "TVRTKA";
   email: string;
@@ -11,7 +8,7 @@ export interface HonoraracDTO {
   edukacija: string;
   iskustvo: string;
   datumStvaranja: string;
-  vjestine: VjestinaDTO[];
+  vjestine: Vjestina[];
 
   ime?: string;
   prezime?: string;

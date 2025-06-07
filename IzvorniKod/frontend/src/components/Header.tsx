@@ -8,7 +8,7 @@ const Header = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const jeHonorarac = authService.isUserInRole('honorarac');
+  const jePonuditelj = authService.isUserInRole('ponuditelj');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -64,12 +64,12 @@ const Header = () => {
               </Link>
             )}
 
-            {jeHonorarac && (
+            {jePonuditelj && (
               <div className="flex gap-2">
-                <Link to="/honorarac/prijave"
+                <Link to="/ponuditelj/ponude"
                       className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
                   <ArrowUpFromLine/>
-                  Moje prijave
+                  Moje ponude
                 </Link>
               </div>
             )}
@@ -143,12 +143,12 @@ const Header = () => {
               </Link>
             )}
 
-            {jeHonorarac && (
+            {jePonuditelj && (
               <div className="flex flex-col items-start gap-2">
-                <Link to="/honorarac/prijave"
+                <Link to="/ponuditelj/ponude"
                       className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
                   <ArrowUpFromLine/>
-                  Moje prijave
+                  Moje ponude
                 </Link>
               </div>
             )}

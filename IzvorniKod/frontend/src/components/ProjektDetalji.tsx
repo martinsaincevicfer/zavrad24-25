@@ -4,14 +4,14 @@ import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Projekt} from '../types/Projekt';
-import {KorisnikDTO, OsobaDTO, TvrtkaDTO} from '../types/Korisnik';
 import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
-import {PrijavaDTO} from "../types/PrijavaDTO.ts";
+import {Ponuda} from "../types/Ponuda.ts";
+import {Korisnik, Osoba, Tvrtka} from "../types/Korisnik.ts";
 
 
-const prijavaSchema = z.object({
+const ponudaSchema = z.object({
   iznos: z.number()
     .positive('Iznos mora biti pozitivan broj.')
     .min(1, 'Minimalni iznos je 1€.')
@@ -21,17 +21,17 @@ const prijavaSchema = z.object({
     .max(500, 'Poruka ne smije imati više od 500 znakova.'),
 });
 
-type PrijavaForm = z.infer<typeof prijavaSchema>;
+type PonudaForm = z.infer<typeof ponudaSchema>;
 
-export const DetaljiProjekta: React.FC = () => {
+export const ProjektDetalji: React.FC = () => {
   const {id} = useParams<{ id: string }>();
   const [projekt, setProjekt] = useState<Projekt | null>(null);
-  const [korisnik, setKorisnik] = useState<KorisnikDTO | null>(null);
+  const [korisnik, setKorisnik] = useState<Korisnik | null>(null);
   const [ucitavanje, setUcitavanje] = useState(true);
   const [greska, setGreska] = useState<string | null>(null);
   const [prikaziFormu, setPrikaziFormu] = useState(false);
-  const jeHonorarac = authService.isUserInRole('honorarac');
-  const [prijave, setPrijave] = useState<PrijavaDTO[] | null>(null);
+  const jePonuditelj = authService.isUserInRole('ponuditelj');
+  const [ponude, setPonude] = useState<Ponuda[] | null>(null);
 
   const ulogiraniKorisnik = authService.getCurrentUser();
 
@@ -40,24 +40,26 @@ export const DetaljiProjekta: React.FC = () => {
     handleSubmit,
     reset,
     formState: {errors, isSubmitting},
-  } = useForm<PrijavaForm>({
-    resolver: zodResolver(prijavaSchema),
+  } = useForm<PonudaForm>({
+    resolver: zodResolver(ponudaSchema),
     mode: 'onSubmit',
   });
 
   useEffect(() => {
     const dohvatiProjekt = async () => {
       try {
-        if (!id) throw new Error('ID projekta nije definiran');
+        if (!id) {
+          console.error("Projekt ID nije definiran.")
+        }
         const response = await axiosInstance.get<Projekt>(`/projekti/${id}`);
         setProjekt(response.data);
 
-        const korisnikResponse = await axiosInstance.get<KorisnikDTO>(`/korisnici/${response.data.korisnikId}`);
+        const korisnikResponse = await axiosInstance.get<Korisnik>(`/korisnici/${response.data.naruciteljId}`);
         setKorisnik(korisnikResponse.data);
 
         if (ulogiraniKorisnik === korisnikResponse.data.email) {
-          const prijaveResponse = await axiosInstance.get<PrijavaDTO[]>(`/prijave/projekt/${id}`);
-          setPrijave(prijaveResponse.data);
+          const ponudeResponse = await axiosInstance.get<Ponuda[]>(`/ponude/projekt/${id}`);
+          setPonude(ponudeResponse.data);
         }
       } catch (error) {
         console.error('Greška pri dohvaćanju podataka:', error);
@@ -70,18 +72,18 @@ export const DetaljiProjekta: React.FC = () => {
     dohvatiProjekt();
   }, [id, ulogiraniKorisnik]);
 
-  const podnesiPrijavu = async (data: PrijavaForm) => {
+  const posaljiPonudu = async (data: PonudaForm) => {
     try {
-      await axiosInstance.post('/prijave/stvori', {
+      await axiosInstance.post('/ponude/stvori', {
         ...data,
         projektId: Number(id),
       });
-      alert('Prijava je uspješno kreirana!');
+      alert('Ponuda je uspješno kreirana!');
       reset();
       setPrikaziFormu(false);
     } catch (error) {
-      console.error('Greška pri slanju prijave:', error);
-      alert('Došlo je do pogreške prilikom kreiranja prijave.');
+      console.error('Greška pri slanju ponude:', error);
+      alert('Došlo je do pogreške prilikom kreiranja ponude.');
     }
   };
 
@@ -120,12 +122,12 @@ export const DetaljiProjekta: React.FC = () => {
       minimumFractionDigits: 2,
     }).format(iznos);
 
-  const formatKorisnikPodaci = (korisnik: KorisnikDTO) => {
+  const formatKorisnikPodaci = (korisnik: Korisnik) => {
     if (korisnik.tip === 'OSOBA') {
-      const osoba = korisnik as OsobaDTO;
+      const osoba = korisnik as Osoba;
       return `${osoba.ime} ${osoba.prezime}`;
     } else if (korisnik.tip === 'TVRTKA') {
-      const tvrtka = korisnik as TvrtkaDTO;
+      const tvrtka = korisnik as Tvrtka;
       return tvrtka.nazivTvrtke || 'Nepoznati korisnik';
     }
     return 'Nepoznati korisnik';
@@ -205,25 +207,25 @@ export const DetaljiProjekta: React.FC = () => {
               to={"/login"}
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 w-1/3"
             >
-              Kreiraj novu prijavu
+              Kreiraj novu ponudu
             </Link>
           )}
         </div>
 
-        {jeHonorarac && (
+        {jePonuditelj && (
           <div className="mt-6">
             <button
               onClick={() => setPrikaziFormu(true)}
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
-              Kreiraj novu prijavu
+              Kreiraj novu ponudu
             </button>
 
             {prikaziFormu && (
               <div className="mt-4 p-4 border rounded-lg">
-                <h2 className="text-xl font-bold mb-2">Nova Prijava</h2>
+                <h2 className="text-xl font-bold mb-2">Nova ponuda</h2>
 
-                <form onSubmit={handleSubmit(podnesiPrijavu)}>
+                <form onSubmit={handleSubmit(posaljiPonudu)}>
                   <div className="mb-4">
                     <label htmlFor="iznos" className="block text-sm font-medium">
                       Iznos (€)
@@ -277,34 +279,37 @@ export const DetaljiProjekta: React.FC = () => {
           </div>
         )}
 
-        {ulogiraniKorisnik === korisnik?.email && prijave && (
+        {ulogiraniKorisnik === korisnik?.email && ponude && (
           <div className="mt-6">
-            <h2 className="text-xl font-bold mb-4">Prijave za projekt</h2>
-            {prijave.length === 0 ? (
-              <p>Trenutno nema prijava za ovaj projekt.</p>
+            <h2 className="text-xl font-bold mb-4">Ponude za projekt</h2>
+            {ponude.length === 0 ? (
+              <p>Trenutno nema ponuda za ovaj projekt.</p>
             ) : (
               <ul className="space-y-4">
-                {prijave.map((prijava) => (
-                  <li key={prijava.id} className="border rounded-lg p-4">
+                {ponude.map((ponuda) => (
+                  <li key={ponuda.id} className="border rounded-lg p-4">
                     <p>
-                      <strong>Honorarac:</strong>
-                      {prijava.honorarac.ime} {prijava.honorarac.prezime} {prijava.honorarac.tvrtka} ({prijava.honorarac.email})
+                      <strong>Ponuditelj:</strong>
+                      {ponuda.ponuditelj.ime} {ponuda.ponuditelj.prezime} {ponuda.ponuditelj.nazivTvrtke} ({ponuda.ponuditelj.email})
                     </p>
                     <p>
-                      <strong>Iznos:</strong> {prijava.iznos} €
+                      <strong>Iznos:</strong> {ponuda.iznos} €
                     </p>
                     <p>
-                      <strong>Poruka:</strong> {prijava.poruka}
+                      <strong>Poruka:</strong> {ponuda.poruka}
                     </p>
                     <p>
-                      <strong>Datum prijave:</strong> {formatDatum(prijava.datumStvaranja)}
+                      <strong>Rok za prihvaćanje ponude:</strong> {formatDatum(ponuda.rokZaPrihvacanje)}
+                    </p>
+                    <p>
+                      <strong>Datum slanja ponude:</strong> {formatDatum(ponuda.datumStvaranja)}
                     </p>
 
-                    {prijava.status === 'aktivna' && (<button
+                    {ponuda.status === 'aktivna' && (<button
                       onClick={async () => {
                         try {
                           await axiosInstance.post('/ugovori/korisnik/stvori', {
-                            prijavaId: prijava.id,
+                            ponudaId: ponuda.id,
                             datumPocetka: new Date().toISOString().split('T')[0],
                             datumZavrsetka: new Date(
                               new Date().setMonth(new Date().getMonth() + 1)
@@ -314,13 +319,13 @@ export const DetaljiProjekta: React.FC = () => {
                           location.reload();
                           setPrikaziFormu(false);
                         } catch (error) {
-                          console.error('Greška pri prihvaćanju prijave:', error);
-                          alert('Dogodila se pogreška prilikom prihvaćanja prijave.');
+                          console.error('Greška pri prihvaćanju ponude:', error);
+                          alert('Dogodila se pogreška prilikom prihvaćanja ponude.');
                         }
                       }}
                       className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                     >
-                      Prihvati prijavu
+                      Prihvati ponudu
                     </button>)}
                   </li>
                 ))}

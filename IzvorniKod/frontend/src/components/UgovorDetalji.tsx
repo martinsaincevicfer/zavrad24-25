@@ -20,7 +20,7 @@ const UgovorDetalji: React.FC = () => {
   const [ugovor, setUgovor] = useState<Ugovor | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const jeHonorarac = authService.isUserInRole('honorarac');
+  const jePonuditelj = authService.isUserInRole('ponuditelj');
   const [recenzijaStatus, setRecenzijaStatus] = useState<null | "success" | "error">(null);
   const {
     register,
@@ -69,7 +69,7 @@ const UgovorDetalji: React.FC = () => {
 
   const zavrsiUgovor = async () => {
     try {
-      await axiosInstance.patch(`/ugovori/honorarac/zavrsi/${ugovor?.id}`);
+      await axiosInstance.patch(`/ugovori/ponuditelji/zavrsi/${ugovor?.id}`);
       location.reload();
     } catch (err) {
       console.error(err);
@@ -122,7 +122,7 @@ const UgovorDetalji: React.FC = () => {
               ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
               : "N/A"}
           </p>
-          <p><strong>ID Prijave:</strong> {ugovor.prijavaId}</p>
+          <p><strong>ID Ponude:</strong> {ugovor.ponudaId}</p>
         </div>
         <div className="p-6">
           <h2 className="text-xl font-bold">Informacije o projektu</h2>
@@ -133,7 +133,7 @@ const UgovorDetalji: React.FC = () => {
           <p><strong>Datum stvaranja:</strong> {new Date(ugovor.projekt.datumStvaranja).toLocaleDateString()}</p>
         </div>
 
-        {jeHonorarac && ugovor.status !== "zavrsen" && (
+        {jePonuditelj && ugovor.status !== "zavrsen" && (
           <div className="mt-4">
             <button
               onClick={zavrsiUgovor}
@@ -144,7 +144,7 @@ const UgovorDetalji: React.FC = () => {
           </div>
         )}
 
-        {ugovor.status === "zavrsen" && !ugovor.recenzija && !jeHonorarac && (
+        {ugovor.status === "zavrsen" && !ugovor.recenzija && !jePonuditelj && (
           <div className="p-6 mt-4">
             <h2 className="text-xl font-bold mb-2">Dodaj recenziju</h2>
             <form onSubmit={handleSubmit(onSubmitRecenzija)} className="space-y-4 max-w-md">

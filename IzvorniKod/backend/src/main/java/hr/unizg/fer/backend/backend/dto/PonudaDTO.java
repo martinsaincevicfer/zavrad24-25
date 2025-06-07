@@ -3,26 +3,28 @@ package hr.unizg.fer.backend.backend.dto;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class PrijavaDTO {
+public class PonudaDTO {
     private Integer id;
     private String status;
     private BigDecimal iznos;
     private String poruka;
+    private Instant rokZaPrihvacanje;
     private Instant datumStvaranja;
     private ProjektDTO projekt;
-    private HonoraracDTO honorarac;
+    private PonuditeljDTO ponuditelj;
 
-    public PrijavaDTO() {
+    public PonudaDTO() {
     }
 
-    public PrijavaDTO(Integer id, String status, BigDecimal iznos, String poruka, Instant datumStvaranja, ProjektDTO projekt, HonoraracDTO honorarac) {
+    public PonudaDTO(Integer id, String status, BigDecimal iznos, String poruka, Instant rokZaPrihvacanje, Instant datumStvaranja, ProjektDTO projekt, PonuditeljDTO ponuditelj) {
         this.id = id;
         this.status = status;
         this.iznos = iznos;
         this.poruka = poruka;
+        this.rokZaPrihvacanje = rokZaPrihvacanje;
         this.datumStvaranja = datumStvaranja;
         this.projekt = projekt;
-        this.honorarac = honorarac;
+        this.ponuditelj = ponuditelj;
     }
 
     public Integer getId() {
@@ -57,6 +59,14 @@ public class PrijavaDTO {
         this.poruka = poruka;
     }
 
+    public Instant getRokZaPrihvacanje() {
+        return rokZaPrihvacanje;
+    }
+
+    public void setRokZaPrihvacanje(Instant rokZaPrihvacanje) {
+        this.rokZaPrihvacanje = rokZaPrihvacanje;
+    }
+
     public Instant getDatumStvaranja() {
         return datumStvaranja;
     }
@@ -73,11 +83,11 @@ public class PrijavaDTO {
         this.projekt = projekt;
     }
 
-    public HonoraracDTO getHonorarac() {
-        return honorarac;
+    public PonuditeljDTO getPonuditelj() {
+        return ponuditelj;
     }
 
-    public void setHonorarac(HonoraracDTO honorarac) {
-        this.honorarac = honorarac;
+    public void setPonuditelj(PonuditeljDTO ponuditelj) {
+        this.ponuditelj = ponuditelj;
     }
 }

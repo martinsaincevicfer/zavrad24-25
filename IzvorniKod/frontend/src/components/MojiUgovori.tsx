@@ -9,12 +9,12 @@ const MojiUgovori: React.FC = () => {
   const [ugovori, setUgovori] = useState<Ugovor[]>([]);
   const [ucitavanje, setUcitavanje] = useState<boolean>(true);
   const [greska, setGreska] = useState<string | null>(null);
-  const jeHonorarac = authService.isUserInRole("honorarac");
+  const jePonuditelj = authService.isUserInRole("ponuditelj");
 
   const fetchUgovori = async () => {
     try {
       const response = await axiosInstance.get<Ugovor[]>(
-        jeHonorarac ? "/ugovori/honorarac" : "/ugovori/korisnik"
+        jePonuditelj ? "/ugovori/ponuditelj" : "/ugovori/korisnik"
       );
       setUgovori(response.data);
     } catch (error) {

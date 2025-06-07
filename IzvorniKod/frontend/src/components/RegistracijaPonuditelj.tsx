@@ -5,19 +5,19 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useNavigate} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
-import {Vjestina} from "../types/Projekt.ts";
+import {Vjestina} from "../types/Vjestina.ts";
 
 
-const honoraracSchema = z.object({
+const ponuditeljSchema = z.object({
   kratkiOpis: z.string().min(10, 'Kratki opis mora imati najmanje 10 znakova.'),
   edukacija: z.string().min(2, 'Edukacija mora imati najmanje 2 znaka.'),
   iskustvo: z.string().min(10, 'Iskustvo mora imati najmanje 10 znakova.'),
   vjestine: z.array(z.number()).nonempty('Morate odabrati barem jednu vještinu.')
 });
 
-type HonoraracForm = z.infer<typeof honoraracSchema>;
+type PonuditeljForm = z.infer<typeof ponuditeljSchema>;
 
-const RegistracijaHonorarac: React.FC = () => {
+const RegistracijaPonuditelj: React.FC = () => {
   const [vjestine, setVjestine] = useState<{ id: number; naziv: string; kategorija: string }[]>([]);
   const navigate = useNavigate();
 
@@ -39,22 +39,22 @@ const RegistracijaHonorarac: React.FC = () => {
     handleSubmit,
     control,
     formState: {errors}
-  } = useForm<HonoraracForm>({
-    resolver: zodResolver(honoraracSchema),
+  } = useForm<PonuditeljForm>({
+    resolver: zodResolver(ponuditeljSchema),
     mode: 'all',
     defaultValues: {
       vjestine: []
     }
   });
 
-  const onSubmit = async (data: HonoraracForm) => {
+  const onSubmit = async (data: PonuditeljForm) => {
     try {
-      await axiosInstance.post('/honorarci/register', data);
-      alert('Uspješna registracija kao honorarac!');
+      await axiosInstance.post('/ponuditelji/register', data);
+      alert('Uspješna registracija kao ponuditelj!');
       navigate('/homepage');
     } catch (err) {
       console.error('Greška prilikom registracije:', err);
-      alert('Registracija honorarca nije uspjela.');
+      alert('Registracija ponuditelja nije uspjela.');
     }
   };
 
@@ -62,7 +62,7 @@ const RegistracijaHonorarac: React.FC = () => {
     <>
       <Header/>
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
-        <h2 className="text-center text-3xl font-extrabold">Registriraj se kao honorarac</h2>
+        <h2 className="text-center text-3xl font-extrabold">Registriraj se kao ponuditelj</h2>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
@@ -161,4 +161,4 @@ const RegistracijaHonorarac: React.FC = () => {
   );
 };
 
-export default RegistracijaHonorarac;
+export default RegistracijaPonuditelj;

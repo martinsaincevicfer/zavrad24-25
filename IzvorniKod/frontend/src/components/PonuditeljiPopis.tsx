@@ -1,20 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {HonoraracDTO} from '../types/Honorarac.ts';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
+import {Ponuditelj} from "../types/Ponuditelj.ts";
 
 
-const HonoraracPopis: React.FC = () => {
-  const [honorarci, setHonorarci] = React.useState<HonoraracDTO[]>([]);
+const PonuditeljiPopis: React.FC = () => {
+  const [ponuditelji, setPonuditelji] = React.useState<Ponuditelj[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    const fetchHonorarci = async () => {
+    const fetchPonuditelji = async () => {
       try {
-        const response = await axiosInstance.get<HonoraracDTO[]>('/honorarci');
-        setHonorarci(response.data);
+        const response = await axiosInstance.get<Ponuditelj[]>('/ponuditelji');
+        setPonuditelji(response.data);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);
         setError("Greška pri dohvaćanju profila.");
@@ -23,14 +23,14 @@ const HonoraracPopis: React.FC = () => {
       }
     };
 
-    fetchHonorarci();
+    fetchPonuditelji();
   }, []);
 
-  const getPrikazanoIme = (honorarac: HonoraracDTO) => {
-    if (honorarac.tip === 'OSOBA') {
-      return `${honorarac.ime} ${honorarac.prezime}`;
+  const getPrikazanoIme = (ponuditelj: Ponuditelj) => {
+    if (ponuditelj.tip === 'OSOBA') {
+      return `${ponuditelj.ime} ${ponuditelj.prezime}`;
     }
-    return honorarac.nazivTvrtke;
+    return ponuditelj.nazivTvrtke;
   };
 
   if (isLoading) return (
@@ -54,19 +54,19 @@ const HonoraracPopis: React.FC = () => {
     <>
       <Header/>
       <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-3xl font-bold mb-8">Popis honoraraca</h1>
-        {honorarci.length === 0 ? (
-          <p className="text-center">Nema dostupnih honoraraca.</p>
+        <h1 className="text-3xl font-bold mb-8">Popis ponuditelja</h1>
+        {ponuditelji.length === 0 ? (
+          <p className="text-center">Nema dostupnih ponuditelja.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {honorarci.map((honorarac) => (
+            {ponuditelji.map((ponuditelj) => (
               <Link
-                to={`/honorarci/${honorarac.id}`}
-                key={honorarac.id}
+                to={`/ponuditelji/${ponuditelj.id}`}
+                key={ponuditelj.id}
                 className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
               >
-                <h2 className="text-xl font-bold mb-2">{getPrikazanoIme(honorarac)}</h2>
-                <p className="mb-4">{honorarac.kratkiOpis}</p>
+                <h2 className="text-xl font-bold mb-2">{getPrikazanoIme(ponuditelj)}</h2>
+                <p className="mb-4">{ponuditelj.kratkiOpis}</p>
               </Link>
             ))}
           </div>
@@ -76,4 +76,4 @@ const HonoraracPopis: React.FC = () => {
   );
 };
 
-export default HonoraracPopis;
+export default PonuditeljiPopis;

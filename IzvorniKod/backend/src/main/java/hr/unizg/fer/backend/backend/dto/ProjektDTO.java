@@ -1,15 +1,16 @@
 package hr.unizg.fer.backend.backend.dto;
 
 import hr.unizg.fer.backend.backend.domain.Projekt;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 
 public class ProjektDTO {
     private Integer id;
@@ -28,7 +29,7 @@ public class ProjektDTO {
 
     private Instant datumStvaranja;
 
-    private Integer korisnikId;
+    private Integer naruciteljId;
 
     private Set<@Valid VjestinaDTO> vjestine;
 
@@ -40,14 +41,14 @@ public class ProjektDTO {
         this.naziv = naziv;
     }
 
-    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, Integer korisnikId, Set<VjestinaDTO> vjestine) {
+    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, Integer naruciteljId, Set<VjestinaDTO> vjestine) {
         this.id = id;
         this.naziv = naziv;
         this.opis = opis;
         this.budzet = budzet;
         this.rok = rok;
         this.datumStvaranja = datumStvaranja;
-        this.korisnikId = korisnikId;
+        this.naruciteljId = naruciteljId;
         this.vjestine = vjestine;
     }
 
@@ -56,9 +57,9 @@ public class ProjektDTO {
         this.naziv = projekt.getNaziv();
         this.opis = projekt.getOpis();
         this.budzet = projekt.getBudzet();
-        this.rok = projekt.getRok();
+        this.rok = projekt.getRokIzrade();
         this.datumStvaranja = projekt.getDatumStvaranja();
-        this.korisnikId = projekt.getKorisnik().getId();
+        this.naruciteljId = projekt.getNarucitelj().getId();
         this.vjestine = projekt.getVjestine().stream()
                 .map(VjestinaDTO::new)
                 .collect(Collectors.toSet());
@@ -112,12 +113,12 @@ public class ProjektDTO {
         this.datumStvaranja = datumStvaranja;
     }
 
-    public Integer getKorisnikId() {
-        return korisnikId;
+    public Integer getNaruciteljId() {
+        return naruciteljId;
     }
 
-    public void setKorisnikId(Integer korisnikId) {
-        this.korisnikId = korisnikId;
+    public void setNaruciteljId(Integer naruciteljId) {
+        this.naruciteljId = naruciteljId;
     }
 
     public Set<VjestinaDTO> getVjestine() {

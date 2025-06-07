@@ -6,17 +6,17 @@ import java.time.LocalDate;
 
 public class UgovorRequestDTO {
     @NotNull
-    private Integer prijavaId;
+    private Integer ponudaId;
 
     @NotNull
     private LocalDate datumPocetka;
 
-    public Integer getPrijavaId() {
-        return prijavaId;
+    public Integer getPonudaId() {
+        return ponudaId;
     }
 
-    public void setPrijavaId(Integer prijavaId) {
-        this.prijavaId = prijavaId;
+    public void setPonudaId(Integer ponudaId) {
+        this.ponudaId = ponudaId;
     }
 
     public LocalDate getDatumPocetka() {

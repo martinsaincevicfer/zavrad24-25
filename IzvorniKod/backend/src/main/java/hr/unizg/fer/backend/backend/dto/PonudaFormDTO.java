@@ -2,7 +2,7 @@ package hr.unizg.fer.backend.backend.dto;
 
 import java.math.BigDecimal;
 
-public class PrijavaFormDTO {
+public class PonudaFormDTO {
     private BigDecimal iznos;
     private String poruka;
     private Integer projektId;

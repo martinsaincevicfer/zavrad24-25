@@ -1,24 +1,24 @@
 import {useEffect, useState} from 'react';
-import {KorisnikDTO} from '../types/Korisnik';
-import {HonoraracDTO} from '../types/Honorarac.ts';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
 import Header from './Header';
 import {useNavigate} from 'react-router-dom';
+import {Korisnik} from "../types/Korisnik.ts";
+import {Ponuditelj} from "../types/Ponuditelj.ts";
 
 
 const Profil = () => {
-  const [userProfile, setUserProfile] = useState<KorisnikDTO | null>(null);
-  const [freelancerProfile, setFreelancerProfile] = useState<HonoraracDTO | null>(null);
+  const [userProfile, setUserProfile] = useState<Korisnik | null>(null);
+  const [freelancerProfile, setFreelancerProfile] = useState<Ponuditelj | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [userError, setUserError] = useState<string>('');
   const [freelancerError, setFreelancerError] = useState<string>('');
-  const jeHonorarac = authService.isUserInRole('honorarac');
+  const jePonuditelj = authService.isUserInRole('ponuditelj');
   const navigate = useNavigate();
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axiosInstance.get<KorisnikDTO>('/korisnici/profil');
+      const response = await axiosInstance.get<Korisnik>('/korisnici/profil');
       return response.data;
     } catch (error) {
       console.error('Greška pri dohvaćanju korisničkog profila:', error);
@@ -28,11 +28,11 @@ const Profil = () => {
 
   const fetchFreelancerProfile = async () => {
     try {
-      const response = await axiosInstance.get<HonoraracDTO>('/honorarci/current');
+      const response = await axiosInstance.get<Ponuditelj>('/ponuditelji/current');
       return response.data;
     } catch (error) {
-      console.error('Greška pri dohvaćanju profila honoraraca:', error);
-      setFreelancerError('Došlo je do pogreške pri dohvaćanju profila honoraraca.');
+      console.error('Greška pri dohvaćanju profila ponuditelja:', error);
+      setFreelancerError('Došlo je do pogreške pri dohvaćanju profila ponuditelja.');
       throw error;
     }
   };
@@ -43,12 +43,12 @@ const Profil = () => {
         const userData = await fetchUserProfile();
         setUserProfile(userData);
 
-        if (jeHonorarac) {
+        if (jePonuditelj) {
           const freelancerData = await fetchFreelancerProfile();
           setFreelancerProfile(freelancerData);
         }
       } catch (error) {
-        console.error('Greška pri dohvaćanju profila honorarca:', error);
+        console.error('Greška pri dohvaćanju profila ponuditelja:', error);
         setUserError('Došlo je do pogreške pri dohvaćanju podataka korisničkog profila.');
       } finally {
         setLoading(false);
@@ -56,7 +56,7 @@ const Profil = () => {
     };
 
     loadProfiles();
-  }, [jeHonorarac]);
+  }, [jePonuditelj]);
 
   if (loading) {
     return (
@@ -129,7 +129,7 @@ const Profil = () => {
             </div>
           )}
 
-          {jeHonorarac ? (
+          {jePonuditelj ? (
             freelancerProfile ? (
               <div className="space-y-4">
                 <div className="p-4 rounded-lg">
@@ -162,16 +162,16 @@ const Profil = () => {
                 </div>
               </div>
             ) : (
-              <div className="text-red-500">{freelancerError || 'Podaci o honorarcu nisu dostupni.'}</div>
+              <div className="text-red-500">{freelancerError || 'Podaci o ponuditelju nisu dostupni.'}</div>
             )
           ) : (
             <div className="flex flex-col items-center">
-              <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao honorarac.</p>
+              <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao ponuditelj.</p>
               <button
-                onClick={() => navigate('/registracija/honorarac')}
+                onClick={() => navigate('/registracija/ponuditelj')}
                 className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
               >
-                Registriraj se kao honorarac
+                Registriraj se kao ponuditelj
               </button>
             </div>
           )}

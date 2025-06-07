@@ -5,8 +5,7 @@ import {z} from 'zod';
 import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
 import {useNavigate} from 'react-router-dom';
-import {Vjestina} from '../types/Projekt';
-
+import {Vjestina} from "../types/Vjestina.ts";
 
 const projektSchema = z.object({
   naziv: z
@@ -125,7 +124,7 @@ const KreiranjeProjekta: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="rok">
-              Rok projekta
+              Rok za izradu projekta
             </label>
             <input
               type="date"

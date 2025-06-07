@@ -6,7 +6,7 @@ export interface Ugovor {
   status: string;
   datumPocetka: string;
   datumZavrsetka: string | null;
-  prijavaId: number;
+  ponudaId: number;
   nazivProjekta: string;
   nazivKorisnika: string;
   projekt: Projekt;

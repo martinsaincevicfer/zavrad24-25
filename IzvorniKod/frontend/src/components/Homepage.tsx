@@ -15,9 +15,9 @@ const Homepage = () => {
         </h2>
         <div className="flex flex-col md:flex-row align-baseline justify-between gap-10">
           {/*
-          <Link to="/honorarci"
+          <Link to="/ponuditelji"
                 className="bg-blue-500 px-4 py-2 text-2xl font-medium dark:text-white dark:hover:text-gray-300">
-            Zaposli honorarca
+            Zaposli ponuditelje
           </Link>
           */}
 

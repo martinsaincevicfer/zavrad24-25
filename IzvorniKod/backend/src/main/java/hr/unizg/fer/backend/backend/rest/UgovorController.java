@@ -5,7 +5,6 @@ import hr.unizg.fer.backend.backend.dto.UgovorDetaljiDTO;
 import hr.unizg.fer.backend.backend.dto.UgovorRequestDTO;
 import hr.unizg.fer.backend.backend.service.UgovorService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -14,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/ugovori")
 public class UgovorController {
-    @Autowired
     private final UgovorService ugovorService;
 
     public UgovorController(UgovorService ugovorService) {
@@ -32,23 +30,23 @@ public class UgovorController {
         return ugovorService.findAllByKorisnikEmail(korisnikEmail);
     }
 
-    @GetMapping("/honorarac")
-    public List<UgovorDTO> getUgovoriForHonorarac(Principal principal) {
-        String honoraracEmail = principal.getName();
-        return ugovorService.findAllByHonoraracEmail(honoraracEmail);
+    @GetMapping("/ponuditelj")
+    public List<UgovorDTO> getUgovoriForPonuditelj(Principal principal) {
+        String ponuditeljEmail = principal.getName();
+        return ugovorService.findAllByPonuditeljEmail(ponuditeljEmail);
     }
 
     @PostMapping("/korisnik/stvori")
     public UgovorDTO korisnikPrihvatiPrijavu(
             @Valid @RequestBody UgovorRequestDTO ugovorRequestDTO) {
         return ugovorService.createUgovorForKorisnik(
-                ugovorRequestDTO.getPrijavaId(),
+                ugovorRequestDTO.getPonudaId(),
                 ugovorRequestDTO.getDatumPocetka()
         );
     }
 
-    @PatchMapping("/honorarac/zavrsi/{ugovorId}")
-    public UgovorDTO honoraracZavrsiUgovor(@PathVariable Integer ugovorId) {
+    @PatchMapping("/ponuditelj/zavrsi/{ugovorId}")
+    public UgovorDTO ponuditeljZavrsiUgovor(@PathVariable Integer ugovorId) {
         return ugovorService.markUgovorAsFinished(ugovorId);
     }
 }

@@ -9,7 +9,6 @@ import hr.unizg.fer.backend.backend.domain.Ugovor;
 import hr.unizg.fer.backend.backend.dto.RecenzijaDTO;
 import hr.unizg.fer.backend.backend.dto.RecenzijaFormDTO;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +19,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class RecenzijaService {
-    @Autowired
     private final RecenzijaRepository recenzijaRepository;
-    @Autowired
-    private UgovorRepository ugovorRepository;
-    @Autowired
-    private KorisnikRepository korisnikRepository;
+    private final UgovorRepository ugovorRepository;
+    private final KorisnikRepository korisnikRepository;
 
-    public RecenzijaService(RecenzijaRepository recenzijaRepository) {
+    public RecenzijaService(RecenzijaRepository recenzijaRepository, UgovorRepository ugovorRepository, KorisnikRepository korisnikRepository) {
         this.recenzijaRepository = recenzijaRepository;
+        this.ugovorRepository = ugovorRepository;
+        this.korisnikRepository = korisnikRepository;
     }
 
     @Transactional
@@ -38,8 +36,10 @@ public class RecenzijaService {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Korisnik not found"));
 
-        Ugovor ugovor = ugovorRepository.findById(recenzijaFormDTO.getUgovorId()).get();
-        if (!ugovor.getPrijava().getProjekt().getKorisnik().equals(korisnik)) {
+        Ugovor ugovor = ugovorRepository.findById(recenzijaFormDTO.getUgovorId())
+                .orElseThrow(() -> new IllegalArgumentException("Ugovor not found"));
+
+        if (!ugovor.getPonuda().getProjekt().getNarucitelj().equals(korisnik)) {
             throw new IllegalArgumentException("Ulogirani korisnik nije vlasnik projekta!");
         }
 
@@ -55,8 +55,8 @@ public class RecenzijaService {
     }
 
     @Transactional
-    public List<RecenzijaDTO> getRecenzijeForHonorarac(Integer honoraracId) {
-        List<Ugovor> ugovori = ugovorRepository.findByPrijava_Korisnik_Id(honoraracId);
+    public List<RecenzijaDTO> getRecenzijeForPonuditelj(Integer ponuditeljId) {
+        List<Ugovor> ugovori = ugovorRepository.findByPonuda_Ponuditelj_Id(ponuditeljId);
         return ugovori.stream()
                 .map(Ugovor::getRecenzija)
                 .filter(Objects::nonNull)

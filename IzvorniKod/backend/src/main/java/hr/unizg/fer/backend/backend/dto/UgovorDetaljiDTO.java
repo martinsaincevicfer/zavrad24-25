@@ -7,19 +7,19 @@ public class UgovorDetaljiDTO {
     private String status;
     private LocalDate datumPocetka;
     private LocalDate datumZavrsetka;
-    private Integer prijavaId;
+    private Integer ponudaId;
     private ProjektDTO projekt;
     private RecenzijaDTO recenzija;
 
     public UgovorDetaljiDTO() {
     }
 
-    public UgovorDetaljiDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka, Integer prijavaId, ProjektDTO projekt, RecenzijaDTO recenzija) {
+    public UgovorDetaljiDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka, Integer ponudaId, ProjektDTO projekt, RecenzijaDTO recenzija) {
         this.id = id;
         this.status = status;
         this.datumPocetka = datumPocetka;
         this.datumZavrsetka = datumZavrsetka;
-        this.prijavaId = prijavaId;
+        this.ponudaId = ponudaId;
         this.projekt = projekt;
         this.recenzija = recenzija;
     }
@@ -56,12 +56,12 @@ public class UgovorDetaljiDTO {
         this.datumZavrsetka = datumZavrsetka;
     }
 
-    public Integer getPrijavaId() {
-        return prijavaId;
+    public Integer getPonudaId() {
+        return ponudaId;
     }
 
-    public void setPrijavaId(Integer prijavaId) {
-        this.prijavaId = prijavaId;
+    public void setPonudaId(Integer ponudaId) {
+        this.ponudaId = ponudaId;
     }
 
     public ProjektDTO getProjekt() {

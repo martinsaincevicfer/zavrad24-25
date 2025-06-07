@@ -1,15 +1,14 @@
 import React from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {HonoraracDTO} from '../types/Honorarac';
 import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
 import {Recenzija} from "../types/Recenzija.ts";
+import {Ponuditelj} from "../types/Ponuditelj.ts";
 
-
-const HonoraracDetalji: React.FC = () => {
+const PonuditeljDetalji: React.FC = () => {
   const {id} = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [honorarac, setHonorarac] = React.useState<HonoraracDTO | null>(null);
+  const [ponuditelj, setPonuditelj] = React.useState<Ponuditelj | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
@@ -17,11 +16,11 @@ const HonoraracDetalji: React.FC = () => {
   const [recenzijeLoading, setRecenzijeLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const fetchHonorarac = async () => {
+    const fetchPonuditelj = async () => {
       try {
-        if (!id) throw new Error('ID honorarca nije definiran');
-        const response = await axiosInstance.get<HonoraracDTO>(`/honorarci/${id}`);
-        setHonorarac(response.data);
+        if (!id) throw new Error('ID ponuditelj nije definiran');
+        const response = await axiosInstance.get<Ponuditelj>(`/ponuditelji/${id}`);
+        setPonuditelj(response.data);
         setError(null);
       } catch (error) {
         console.error('Greška pri dohvaćanju profila:', error);
@@ -31,7 +30,7 @@ const HonoraracDetalji: React.FC = () => {
       }
     };
 
-    fetchHonorarac();
+    fetchPonuditelj();
   }, [id]);
 
   React.useEffect(() => {
@@ -39,7 +38,7 @@ const HonoraracDetalji: React.FC = () => {
       if (!id) return;
       try {
         setRecenzijeLoading(true);
-        const response = await axiosInstance.get<Recenzija[]>(`/recenzije/honorarac/${id}`);
+        const response = await axiosInstance.get<Recenzija[]>(`/recenzije/ponuditelj/${id}`);
         setRecenzije(response.data);
       } catch (e) {
         setRecenzije([]);
@@ -59,13 +58,13 @@ const HonoraracDetalji: React.FC = () => {
     );
   }
 
-  if (error || !honorarac) {
+  if (error || !ponuditelj) {
     return (
       <div className="max-w-4xl mx-auto">
         <div className="text-center">
-          <p className="text-red-600 mb-4">{error || 'Honorarac nije pronađen.'}</p>
+          <p className="text-red-600 mb-4">{error || 'Ponuditelj nije pronađen.'}</p>
           <button
-            onClick={() => navigate('/honorarci')}
+            onClick={() => navigate('/ponuditelji')}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Povratak na popis
@@ -80,49 +79,49 @@ const HonoraracDetalji: React.FC = () => {
       <Header/>
       <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-3xl font-bold mb-6">
-          {honorarac.tip === 'TVRTKA' ? honorarac.nazivTvrtke : `${honorarac.ime} ${honorarac.prezime}`}
+          {ponuditelj.tip === 'TVRTKA' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
         </h1>
 
         <div className="rounded-lg shadow-md p-8 space-y-8">
           <div>
             <h2 className="text-2xl font-semibold mb-4">
-              {honorarac.tip === 'TVRTKA' ? 'Podaci o tvrtki' : 'Osobni podaci'}
+              {ponuditelj.tip === 'TVRTKA' ? 'Podaci o tvrtki' : 'Osobni podaci'}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {honorarac.tip === 'TVRTKA' ? (
+              {ponuditelj.tip === 'TVRTKA' ? (
                 <>
                   <div>
                     <p className="font-medium">Naziv tvrtke:</p>
-                    <p>{honorarac.nazivTvrtke}</p>
+                    <p>{ponuditelj.nazivTvrtke}</p>
                   </div>
                   <div>
                     <p className="font-medium">OIB:</p>
-                    <p>{honorarac.oib}</p>
+                    <p>{ponuditelj.oib}</p>
                   </div>
                   <div>
                     <p className="font-medium">Adresa tvrtke:</p>
-                    <p>{honorarac.adresaTvrtke}</p>
+                    <p>{ponuditelj.adresaTvrtke}</p>
                   </div>
                 </>
               ) : (
                 <>
                   <div>
                     <p className="font-medium">Ime:</p>
-                    <p>{honorarac.ime}</p>
+                    <p>{ponuditelj.ime}</p>
                   </div>
                   <div>
                     <p className="font-medium">Prezime:</p>
-                    <p>{honorarac.prezime}</p>
+                    <p>{ponuditelj.prezime}</p>
                   </div>
                   <div>
                     <p className="font-medium">Adresa:</p>
-                    <p>{honorarac.adresa}</p>
+                    <p>{ponuditelj.adresa}</p>
                   </div>
                 </>
               )}
               <div>
                 <p className="font-medium">Email:</p>
-                <p>{honorarac.email}</p>
+                <p>{ponuditelj.email}</p>
               </div>
             </div>
           </div>
@@ -132,15 +131,15 @@ const HonoraracDetalji: React.FC = () => {
             <div className="space-y-6">
               <div>
                 <p className="font-medium mb-2">Opis:</p>
-                <p>{honorarac.kratkiOpis}</p>
+                <p>{ponuditelj.kratkiOpis}</p>
               </div>
               <div>
                 <p className="font-medium mb-2">Edukacija:</p>
-                <p>{honorarac.edukacija}</p>
+                <p>{ponuditelj.edukacija}</p>
               </div>
               <div>
                 <p className="font-medium mb-2">Iskustvo:</p>
-                <p>{honorarac.iskustvo}</p>
+                <p>{ponuditelj.iskustvo}</p>
               </div>
             </div>
           </div>
@@ -148,7 +147,7 @@ const HonoraracDetalji: React.FC = () => {
           <div>
             <h2 className="text-2xl font-semibold mb-4">Vještine</h2>
             <div className="flex flex-wrap gap-2">
-              {honorarac.vjestine.map((vjestina) => (
+              {ponuditelj.vjestine.map((vjestina) => (
                 <span
                   key={vjestina.id}
                   className="bg-blue-300 text-blue-800 px-3 py-1 rounded-full"
@@ -161,7 +160,7 @@ const HonoraracDetalji: React.FC = () => {
 
           <div>
             <p className="font-medium">Član od:</p>
-            <p>{new Date(honorarac.datumStvaranja).toLocaleDateString('hr-HR')}</p>
+            <p>{new Date(ponuditelj.datumStvaranja).toLocaleDateString('hr-HR')}</p>
           </div>
         </div>
 
@@ -170,7 +169,7 @@ const HonoraracDetalji: React.FC = () => {
           {recenzijeLoading ? (
             <div>Učitavanje recenzija...</div>
           ) : recenzije.length === 0 ? (
-            <div>Još nema recenzija za ovog honorarca.</div>
+            <div>Još nema recenzija za ovog ponuditelja.</div>
           ) : (
             <div className="space-y-4">
               {recenzije.map((recenzija, idx) => (
@@ -196,4 +195,4 @@ const HonoraracDetalji: React.FC = () => {
   );
 };
 
-export default HonoraracDetalji;
+export default PonuditeljDetalji;

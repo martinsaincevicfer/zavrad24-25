@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       await authService.login(data);
       navigate('/homepage');
     } catch (error: unknown) {
-      console.error('Greška prilikom prijave: ', error)
+      console.error('Greška prilikom ponude: ', error)
       alert('Neuspješna prijava. Provjerite email i lozinku.');
     }
   };

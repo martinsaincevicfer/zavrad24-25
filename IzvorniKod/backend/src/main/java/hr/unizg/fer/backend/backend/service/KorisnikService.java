@@ -1,8 +1,6 @@
 package hr.unizg.fer.backend.backend.service;
 
 import hr.unizg.fer.backend.backend.dao.KorisnikRepository;
-import hr.unizg.fer.backend.backend.dao.OsobaRepository;
-import hr.unizg.fer.backend.backend.dao.TvrtkaRepository;
 import hr.unizg.fer.backend.backend.dao.UlogaRepository;
 import hr.unizg.fer.backend.backend.domain.Korisnik;
 import hr.unizg.fer.backend.backend.domain.Osoba;
@@ -13,7 +11,6 @@ import hr.unizg.fer.backend.backend.dto.TvrtkaDTO;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,23 +20,16 @@ import java.time.Instant;
 @Transactional
 public class KorisnikService {
 
-    @Autowired
-    private KorisnikRepository korisnikRepository;
+    private final KorisnikRepository korisnikRepository;
 
-    @Autowired
-    private OsobaRepository osobaRepository;
+    private final UlogaRepository ulogaRepository;
 
-    @Autowired
-    private TvrtkaRepository tvrtkaRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UlogaRepository ulogaRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public KorisnikService(KorisnikRepository korisnikRepository) {
+    public KorisnikService(KorisnikRepository korisnikRepository, UlogaRepository ulogaRepository, PasswordEncoder passwordEncoder) {
         this.korisnikRepository = korisnikRepository;
+        this.ulogaRepository = ulogaRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Korisnik findKorisnikById(Integer id) {

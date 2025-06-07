@@ -4,16 +4,16 @@ interface BaseKorisnik {
   tip: 'TVRTKA' | 'OSOBA';
 }
 
-export interface TvrtkaDTO extends BaseKorisnik {
+export interface Tvrtka extends BaseKorisnik {
   oib: string;
   nazivTvrtke: string;
   adresa: string;
 }
 
-export interface OsobaDTO extends BaseKorisnik {
+export interface Osoba extends BaseKorisnik {
   ime: string;
   prezime: string;
   adresa: string;
 }
 
-export type KorisnikDTO = TvrtkaDTO | OsobaDTO;
+export type Korisnik = Tvrtka | Osoba;
