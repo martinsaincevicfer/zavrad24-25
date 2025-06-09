@@ -1,6 +1,7 @@
 package hr.unizg.fer.backend.backend.rest;
 
 import hr.unizg.fer.backend.backend.dto.ProjektDTO;
+import hr.unizg.fer.backend.backend.dto.ProjektFormDTO;
 import hr.unizg.fer.backend.backend.service.ProjektService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class ProjektController {
     }
 
     @PostMapping("/stvori")
-    public ResponseEntity<ProjektDTO> createProjekt(@Valid @RequestBody ProjektDTO projektDTO) {
-        ProjektDTO createdProjekt = projektService.createProjekt(projektDTO);
+    public ResponseEntity<ProjektFormDTO> createProjekt(@Valid @RequestBody ProjektDTO projektDTO) {
+        ProjektFormDTO createdProjekt = projektService.createProjekt(projektDTO);
         return ResponseEntity.ok(createdProjekt);
     }
 

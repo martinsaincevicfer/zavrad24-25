@@ -7,6 +7,7 @@ import hr.unizg.fer.backend.backend.domain.Korisnik;
 import hr.unizg.fer.backend.backend.domain.Projekt;
 import hr.unizg.fer.backend.backend.domain.Vjestina;
 import hr.unizg.fer.backend.backend.dto.ProjektDTO;
+import hr.unizg.fer.backend.backend.dto.ProjektFormDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.Authentication;
@@ -44,7 +45,7 @@ public class ProjektService {
     }
 
     @Transactional
-    public ProjektDTO createProjekt(ProjektDTO projektDTO) {
+    public ProjektFormDTO createProjekt(ProjektDTO projektDTO) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
 
@@ -75,7 +76,7 @@ public class ProjektService {
         }
 
         Projekt savedProjekt = projektRepository.save(projekt);
-        return new ProjektDTO(savedProjekt);
+        return new ProjektFormDTO(savedProjekt);
     }
 
     @Transactional

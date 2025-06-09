@@ -11,23 +11,23 @@ const MojiUgovori: React.FC = () => {
   const [greska, setGreska] = useState<string | null>(null);
   const jePonuditelj = authService.isUserInRole("ponuditelj");
 
-  const fetchUgovori = async () => {
-    try {
-      const response = await axiosInstance.get<Ugovor[]>(
-        jePonuditelj ? "/ugovori/ponuditelj" : "/ugovori/korisnik"
-      );
-      setUgovori(response.data);
-    } catch (error) {
-      console.error("Greška pri dohvaćanju ugovora:", error);
-      setGreska("Došlo je do pogreške prilikom dohvaćanja ugovora.");
-    } finally {
-      setUcitavanje(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchUgovori = async () => {
+      try {
+        const response = await axiosInstance.get<Ugovor[]>(
+          jePonuditelj ? "/ugovori/ponuditelj" : "/ugovori/korisnik"
+        );
+        setUgovori(response.data);
+      } catch (error) {
+        console.error("Greška pri dohvaćanju ugovora:", error);
+        setGreska("Došlo je do pogreške prilikom dohvaćanja ugovora.");
+      } finally {
+        setUcitavanje(false);
+      }
+    };
+
     fetchUgovori();
-  }, []);
+  }, [jePonuditelj]);
 
   if (ucitavanje) return (
     <>
@@ -56,12 +56,20 @@ const MojiUgovori: React.FC = () => {
                 className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
               >
                 <p>
-                  <strong>Projekt: </strong>{ugovor.nazivProjekta}
+                  <strong>Projekt: </strong>{ugovor.projekt.naziv}
                 </p>
-                <p>
-                  <strong>Korisnik: </strong>
-                  {ugovor.nazivKorisnika}
-                </p>
+                {jePonuditelj && (
+                  <p>
+                    <strong>Narucitelj: </strong>
+                    {ugovor.projekt.narucitelj.id}
+                  </p>
+                )}
+                {!jePonuditelj && (
+                  <p>
+                    <strong>Ponuditelj: </strong>
+                    {ugovor.ponuda.ponuditelj.ime} {ugovor.ponuda.ponuditelj.prezime} {ugovor.ponuda.ponuditelj.nazivTvrtke}
+                  </p>
+                )}
                 <p>
                   <strong>Status: </strong>{ugovor.status}
                 </p>

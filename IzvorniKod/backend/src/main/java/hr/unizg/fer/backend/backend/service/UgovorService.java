@@ -25,7 +25,7 @@ public class UgovorService {
     }
 
     @Transactional
-    public UgovorDetaljiDTO getUgovorById(Integer ugovorId) {
+    public UgovorDTO getUgovorById(Integer ugovorId) {
         Ugovor ugovor = ugovorRepository.findById(ugovorId)
                 .orElseThrow(() -> new IllegalArgumentException("Ugovor ne postoji za ID: " + ugovorId));
 
@@ -33,18 +33,9 @@ public class UgovorService {
         Recenzija recenzija = ugovor.getRecenzija();
         Projekt projekt = ponuda.getProjekt();
 
-        ProjektDTO projektDTO = new ProjektDTO(
-                projekt.getId(),
-                projekt.getNaziv(),
-                projekt.getOpis(),
-                projekt.getBudzet(),
-                projekt.getRokIzrade(),
-                projekt.getDatumStvaranja(),
-                projekt.getNarucitelj().getId(),
-                projekt.getVjestine().stream()
-                        .map(VjestinaDTO::new)
-                        .collect(Collectors.toSet())
-        );
+        PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
+
+        ProjektDTO projektDTO = new ProjektDTO(projekt);
 
         RecenzijaDTO recenzijaDTO = null;
         if (recenzija != null) {
@@ -55,12 +46,12 @@ public class UgovorService {
             );
         }
 
-        return new UgovorDetaljiDTO(
+        return new UgovorDTO(
                 ugovor.getId(),
                 ugovor.getStatus(),
                 ugovor.getDatumPocetka(),
                 ugovor.getDatumZavrsetka(),
-                ponuda.getId(),
+                ponudaDTO,
                 projektDTO,
                 recenzijaDTO
         );
@@ -73,22 +64,18 @@ public class UgovorService {
 
         return ugovorRepository.findByPonuda_Projekt_Narucitelj_Id(korisnik.getId()).stream()
                 .map(ugovor -> {
-                    Ponuda ponuda = ugovor.getPonuda();
-                    Projekt projekt = ponuda.getProjekt();
-
-                    String nazivProjekta = (projekt != null) ? projekt.getNaziv() : "Nepoznat projekt";
-                    String nazivKorisnika = (projekt != null && projekt.getNarucitelj() != null)
-                            ? getNazivKorisnik(projekt.getNarucitelj())
-                            : "Nepoznat korisnik";
+                    PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
+                    ProjektDTO projektDTO = convertProjektToDTO(ugovor.getPonuda().getProjekt());
+                    RecenzijaDTO recenzijaDTO = convertRecenzijaToDTO(ugovor.getRecenzija());
 
                     return new UgovorDTO(
                             ugovor.getId(),
                             ugovor.getStatus(),
                             ugovor.getDatumPocetka(),
                             ugovor.getDatumZavrsetka(),
-                            ponuda.getId(),
-                            nazivProjekta,
-                            nazivKorisnika
+                            ponudaDTO,
+                            projektDTO,
+                            recenzijaDTO
                     );
                 })
                 .collect(Collectors.toList());
@@ -101,22 +88,18 @@ public class UgovorService {
 
         return ugovorRepository.findByPonuda_Ponuditelj_Id(korisnik.getId()).stream()
                 .map(ugovor -> {
-                    Ponuda ponuda = ugovor.getPonuda();
-                    Projekt projekt = ponuda.getProjekt();
-
-                    String nazivProjekta = (projekt != null) ? projekt.getNaziv() : "Nepoznat projekt";
-                    String nazivKorisnika = (projekt != null && projekt.getNarucitelj() != null)
-                            ? getNazivKorisnik(projekt.getNarucitelj())
-                            : "Nepoznat korisnik";
+                    PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
+                    ProjektDTO projektDTO = convertProjektToDTO(ugovor.getPonuda().getProjekt());
+                    RecenzijaDTO recenzijaDTO = convertRecenzijaToDTO(ugovor.getRecenzija());
 
                     return new UgovorDTO(
                             ugovor.getId(),
                             ugovor.getStatus(),
                             ugovor.getDatumPocetka(),
                             ugovor.getDatumZavrsetka(),
-                            ponuda.getId(),
-                            nazivProjekta,
-                            nazivKorisnika
+                            ponudaDTO,
+                            projektDTO,
+                            recenzijaDTO
                     );
                 })
                 .collect(Collectors.toList());
@@ -149,12 +132,19 @@ public class UgovorService {
 
         Ugovor savedUgovor = ugovorRepository.save(ugovor);
 
+        PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
+        ProjektDTO projektDTO = convertProjektToDTO(ugovor.getPonuda().getProjekt());
+        RecenzijaDTO recenzijaDTO = convertRecenzijaToDTO(ugovor.getRecenzija());
+
+
         return new UgovorDTO(
                 savedUgovor.getId(),
                 savedUgovor.getStatus(),
                 savedUgovor.getDatumPocetka(),
                 savedUgovor.getDatumZavrsetka(),
-                savedUgovor.getPonuda().getId()
+                ponudaDTO,
+                projektDTO,
+                recenzijaDTO
         );
     }
 
@@ -168,12 +158,47 @@ public class UgovorService {
 
         Ugovor savedUgovor = ugovorRepository.save(ugovor);
 
+        PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
+        ProjektDTO projektDTO = convertProjektToDTO(ugovor.getPonuda().getProjekt());
+        RecenzijaDTO recenzijaDTO = convertRecenzijaToDTO(ugovor.getRecenzija());
+
         return new UgovorDTO(
                 savedUgovor.getId(),
                 savedUgovor.getStatus(),
                 savedUgovor.getDatumPocetka(),
                 savedUgovor.getDatumZavrsetka(),
-                savedUgovor.getPonuda().getId()
+                ponudaDTO,
+                projektDTO,
+                recenzijaDTO
+        );
+    }
+
+    private PonudaDTO convertPonudaToDTO(Ponuda ponuda) {
+        if (ponuda == null) return null;
+        return new PonudaDTO(
+                ponuda.getId(),
+                ponuda.getStatus(),
+                ponuda.getIznos(),
+                ponuda.getPoruka(),
+                ponuda.getRokZaPrihvacanje(),
+                ponuda.getDatumStvaranja(),
+                convertProjektToDTO(ponuda.getProjekt()),
+                ponuda.getPonuditelj().getKorisnik().getOsoba() != null ? PonuditeljDTO.fromPonuditeljOsoba(ponuda.getPonuditelj())
+                        : PonuditeljDTO.fromPonuditeljTvrtka(ponuda.getPonuditelj())
+        );
+    }
+
+    private ProjektDTO convertProjektToDTO(Projekt projekt) {
+        if (projekt == null) return null;
+        return new ProjektDTO(projekt);
+    }
+
+    private RecenzijaDTO convertRecenzijaToDTO(Recenzija recenzija) {
+        if (recenzija == null) return null;
+        return new RecenzijaDTO(
+                recenzija.getOcjena(),
+                recenzija.getKomentar(),
+                recenzija.getDatumStvaranja()
         );
     }
 }

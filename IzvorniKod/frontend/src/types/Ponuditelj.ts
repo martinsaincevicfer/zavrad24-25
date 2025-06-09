@@ -2,7 +2,7 @@ import {Vjestina} from "./Vjestina.ts";
 
 export interface Ponuditelj {
   id: number;
-  tip: "OSOBA" | "TVRTKA";
+  tip: "osoba" | "tvrtka";
   email: string;
   kratkiOpis: string;
   edukacija: string;

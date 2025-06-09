@@ -54,7 +54,7 @@ export const ProjektDetalji: React.FC = () => {
         const response = await axiosInstance.get<Projekt>(`/projekti/${id}`);
         setProjekt(response.data);
 
-        const korisnikResponse = await axiosInstance.get<Korisnik>(`/korisnici/${response.data.naruciteljId}`);
+        const korisnikResponse = await axiosInstance.get<Korisnik>(`/korisnici/${response.data.narucitelj.id}`);
         setKorisnik(korisnikResponse.data);
 
         if (ulogiraniKorisnik === korisnikResponse.data.email) {
@@ -123,10 +123,10 @@ export const ProjektDetalji: React.FC = () => {
     }).format(iznos);
 
   const formatKorisnikPodaci = (korisnik: Korisnik) => {
-    if (korisnik.tip === 'OSOBA') {
+    if (korisnik.tip === 'osoba') {
       const osoba = korisnik as Osoba;
       return `${osoba.ime} ${osoba.prezime}`;
-    } else if (korisnik.tip === 'TVRTKA') {
+    } else if (korisnik.tip === 'tvrtka') {
       const tvrtka = korisnik as Tvrtka;
       return tvrtka.nazivTvrtke || 'Nepoznati korisnik';
     }
@@ -289,8 +289,13 @@ export const ProjektDetalji: React.FC = () => {
                 {ponude.map((ponuda) => (
                   <li key={ponuda.id} className="border rounded-lg p-4">
                     <p>
-                      <strong>Ponuditelj:</strong>
-                      {ponuda.ponuditelj.ime} {ponuda.ponuditelj.prezime} {ponuda.ponuditelj.nazivTvrtke} ({ponuda.ponuditelj.email})
+                      Ponuditelj:
+                      <Link
+                        to={`/ponuditelji/${ponuda.ponuditelj.id}`}
+                        className="text-blue-500 hover:text-blue-600"
+                      >
+                        {ponuda.ponuditelj.ime} {ponuda.ponuditelj.prezime} {ponuda.ponuditelj.nazivTvrtke} ({ponuda.ponuditelj.email})
+                      </Link>
                     </p>
                     <p>
                       <strong>Iznos:</strong> {ponuda.iznos} €

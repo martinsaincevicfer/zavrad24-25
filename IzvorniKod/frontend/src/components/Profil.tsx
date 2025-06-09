@@ -91,7 +91,7 @@ const Profil = () => {
                 <p className="text-gray-600">Email</p>
                 <p className="font-semibold">{userProfile.email}</p>
               </div>
-              {userProfile.tip === 'TVRTKA' ? (
+              {userProfile.tip === 'tvrtka' ? (
                 <>
                   {'nazivTvrtke' in userProfile && (
                     <div className="p-4 rounded-lg">

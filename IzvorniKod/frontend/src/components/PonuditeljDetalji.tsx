@@ -79,16 +79,16 @@ const PonuditeljDetalji: React.FC = () => {
       <Header/>
       <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-3xl font-bold mb-6">
-          {ponuditelj.tip === 'TVRTKA' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
+          {ponuditelj.tip === 'tvrtka' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
         </h1>
 
         <div className="rounded-lg shadow-md p-8 space-y-8">
           <div>
             <h2 className="text-2xl font-semibold mb-4">
-              {ponuditelj.tip === 'TVRTKA' ? 'Podaci o tvrtki' : 'Osobni podaci'}
+              {ponuditelj.tip === 'tvrtka' ? 'Podaci o tvrtki' : 'Osobni podaci'}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ponuditelj.tip === 'TVRTKA' ? (
+              {ponuditelj.tip === 'tvrtka' ? (
                 <>
                   <div>
                     <p className="font-medium">Naziv tvrtke:</p>

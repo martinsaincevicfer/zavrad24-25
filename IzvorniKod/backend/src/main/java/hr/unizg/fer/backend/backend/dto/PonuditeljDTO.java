@@ -24,10 +24,16 @@ public class PonuditeljDTO {
     private String oib;
     private String adresaTvrtke;
 
+    public PonuditeljDTO() {
+    }
+
+    public PonuditeljDTO(Integer id, String email) {
+    }
+
     public static PonuditeljDTO fromPonuditeljOsoba(Ponuditelj ponuditelj) {
         PonuditeljDTO dto = new PonuditeljDTO();
         dto.setId(ponuditelj.getId());
-        dto.setTip("OSOBA");
+        dto.setTip("osoba");
         dto.setEmail(ponuditelj.getKorisnik().getEmail());
         dto.setKratkiOpis(ponuditelj.getKratkiOpis());
         dto.setEdukacija(ponuditelj.getEdukacija());
@@ -47,7 +53,7 @@ public class PonuditeljDTO {
     public static PonuditeljDTO fromPonuditeljTvrtka(Ponuditelj ponuditelj) {
         PonuditeljDTO dto = new PonuditeljDTO();
         dto.setId(ponuditelj.getId());
-        dto.setTip("TVRTKA");
+        dto.setTip("tvrtka");
         dto.setEmail(ponuditelj.getKorisnik().getEmail());
         dto.setKratkiOpis(ponuditelj.getKratkiOpis());
         dto.setEdukacija(ponuditelj.getEdukacija());

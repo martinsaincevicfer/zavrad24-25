@@ -1,4 +1,5 @@
 import {Vjestina} from "./Vjestina.ts";
+import {Korisnik} from "./Korisnik.ts";
 
 export interface Projekt {
   id: number;
@@ -7,6 +8,6 @@ export interface Projekt {
   budzet: number;
   rok: string;
   datumStvaranja: string;
-  naruciteljId: number;
+  narucitelj: Korisnik;
   vjestine: Vjestina[];
 }

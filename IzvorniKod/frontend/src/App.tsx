@@ -2,7 +2,6 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import Homepage from "./components/Homepage.tsx";
 import {ProjektPopis} from "./components/ProjektPopis.tsx";
 import {ProjektDetalji} from "./components/ProjektDetalji.tsx";
-import PonuditeljiPopis from "./components/PonuditeljiPopis.tsx";
 import PonuditeljDetalji from "./components/PonuditeljDetalji.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import Login from "./components/Login.tsx";
@@ -41,7 +40,6 @@ function App() {
         />
         <Route path="/projekti" element={<ProjektPopis/>}/>
         <Route path="/projekti/:id" element={<ProjektDetalji/>}/>
-        <Route path="/ponuditelji" element={<PonuditeljiPopis/>}/>
         <Route path="/ponuditelji/:id" element={
           <PrivateRoute>
             <PonuditeljDetalji/>

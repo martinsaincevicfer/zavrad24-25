@@ -7,30 +7,21 @@ public class UgovorDTO {
     private String status;
     private LocalDate datumPocetka;
     private LocalDate datumZavrsetka;
-    private Integer ponudaId;
-    private String nazivProjekta;
-    private String nazivKorisnika;
+    private PonudaDTO ponuda;
+    private ProjektDTO projekt;
+    private RecenzijaDTO recenzija;
 
     public UgovorDTO() {
     }
 
-    public UgovorDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka,
-                     Integer ponudaId, String nazivProjekta, String korisnikImePrezimeTvrtka) {
+    public UgovorDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka, PonudaDTO ponuda, ProjektDTO projekt, RecenzijaDTO recenzija) {
         this.id = id;
         this.status = status;
         this.datumPocetka = datumPocetka;
         this.datumZavrsetka = datumZavrsetka;
-        this.ponudaId = ponudaId;
-        this.nazivProjekta = nazivProjekta;
-        this.nazivKorisnika = korisnikImePrezimeTvrtka;
-    }
-
-    public UgovorDTO(Integer id, String status, LocalDate datumPocetka, LocalDate datumZavrsetka, Integer ponudaId) {
-        this.id = id;
-        this.status = status;
-        this.datumPocetka = datumPocetka;
-        this.datumZavrsetka = datumZavrsetka;
-        this.ponudaId = ponudaId;
+        this.ponuda = ponuda;
+        this.projekt = projekt;
+        this.recenzija = recenzija;
     }
 
     public Integer getId() {
@@ -65,27 +56,27 @@ public class UgovorDTO {
         this.datumZavrsetka = datumZavrsetka;
     }
 
-    public Integer getPonudaId() {
-        return ponudaId;
+    public PonudaDTO getPonuda() {
+        return ponuda;
     }
 
-    public void setPonudaId(Integer ponudaId) {
-        this.ponudaId = ponudaId;
+    public void setPonuda(PonudaDTO ponuda) {
+        this.ponuda = ponuda;
     }
 
-    public String getNazivProjekta() {
-        return nazivProjekta;
+    public ProjektDTO getProjekt() {
+        return projekt;
     }
 
-    public void setNazivProjekta(String nazivProjekta) {
-        this.nazivProjekta = nazivProjekta;
+    public void setProjekt(ProjektDTO projekt) {
+        this.projekt = projekt;
     }
 
-    public String getNazivKorisnika() {
-        return nazivKorisnika;
+    public RecenzijaDTO getRecenzija() {
+        return recenzija;
     }
 
-    public void setNazivKorisnika(String nazivKorisnika) {
-        this.nazivKorisnika = nazivKorisnika;
+    public void setRecenzija(RecenzijaDTO recenzija) {
+        this.recenzija = recenzija;
     }
 }

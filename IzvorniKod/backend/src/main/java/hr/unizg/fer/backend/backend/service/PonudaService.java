@@ -7,7 +7,10 @@ import hr.unizg.fer.backend.backend.domain.Korisnik;
 import hr.unizg.fer.backend.backend.domain.Ponuda;
 import hr.unizg.fer.backend.backend.domain.Ponuditelj;
 import hr.unizg.fer.backend.backend.domain.Projekt;
-import hr.unizg.fer.backend.backend.dto.*;
+import hr.unizg.fer.backend.backend.dto.PonudaDTO;
+import hr.unizg.fer.backend.backend.dto.PonudaFormDTO;
+import hr.unizg.fer.backend.backend.dto.PonuditeljDTO;
+import hr.unizg.fer.backend.backend.dto.ProjektDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PonudaService {
@@ -91,17 +93,8 @@ public class PonudaService {
         Projekt projekt = ponuda.getProjekt();
         Ponuditelj ponuditelj = ponuda.getPonuditelj();
 
-        ProjektDTO projektDTO = new ProjektDTO(
-                projekt.getId(),
-                projekt.getNaziv(),
-                projekt.getOpis(),
-                projekt.getBudzet(),
-                projekt.getRokIzrade(),
-                projekt.getDatumStvaranja(),
-                projekt.getNarucitelj().getId(),
-                projekt.getVjestine().stream().map(VjestinaDTO::new).collect(Collectors.toSet())
-        );
-
+        ProjektDTO projektDTO = new ProjektDTO(projekt);
+        
         PonuditeljDTO ponuditeljDTO;
         if (ponuditelj.getKorisnik().getOsoba() != null) {
             ponuditeljDTO = PonuditeljDTO.fromPonuditeljOsoba(ponuditelj);

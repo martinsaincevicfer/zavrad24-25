@@ -1,9 +1,6 @@
 package hr.unizg.fer.backend.backend.dto;
 
-import hr.unizg.fer.backend.backend.domain.Korisnik;
-import hr.unizg.fer.backend.backend.domain.Osoba;
 import hr.unizg.fer.backend.backend.domain.Projekt;
-import hr.unizg.fer.backend.backend.domain.Tvrtka;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ProjektDTO {
+public class ProjektFormDTO {
     private Integer id;
 
     @NotBlank(message = "Naziv ne smije biti prazan")
@@ -32,60 +29,37 @@ public class ProjektDTO {
 
     private Instant datumStvaranja;
 
-    private KorisnikDTO narucitelj;
+    private Integer naruciteljId;
 
     private Set<@Valid VjestinaDTO> vjestine;
 
-    public ProjektDTO() {
+    public ProjektFormDTO() {
     }
 
-    public ProjektDTO(Integer id, String naziv) {
+    public ProjektFormDTO(Integer id, String naziv) {
         this.id = id;
         this.naziv = naziv;
     }
 
-    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, KorisnikDTO narucitelj, Set<VjestinaDTO> vjestine) {
+    public ProjektFormDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, Integer naruciteljId, Set<VjestinaDTO> vjestine) {
         this.id = id;
         this.naziv = naziv;
         this.opis = opis;
         this.budzet = budzet;
         this.rok = rok;
         this.datumStvaranja = datumStvaranja;
-        this.narucitelj = narucitelj;
+        this.naruciteljId = naruciteljId;
         this.vjestine = vjestine;
     }
 
-    public ProjektDTO(Projekt projekt) {
+    public ProjektFormDTO(Projekt projekt) {
         this.id = projekt.getId();
         this.naziv = projekt.getNaziv();
         this.opis = projekt.getOpis();
         this.budzet = projekt.getBudzet();
         this.rok = projekt.getRokIzrade();
         this.datumStvaranja = projekt.getDatumStvaranja();
-        Korisnik naruciteljEntity = projekt.getNarucitelj();
-        if (naruciteljEntity.getOsoba() != null) {
-            Osoba osoba = naruciteljEntity.getOsoba();
-            this.narucitelj = new OsobaDTO();
-            this.narucitelj.setId(osoba.getId());
-            this.narucitelj.setEmail(naruciteljEntity.getEmail());
-            this.narucitelj.setTip("osoba");
-
-            ((OsobaDTO) this.narucitelj).setIme(osoba.getIme());
-            ((OsobaDTO) this.narucitelj).setPrezime(osoba.getPrezime());
-            ((OsobaDTO) this.narucitelj).setAdresa(osoba.getAdresa());
-        } else if (naruciteljEntity.getTvrtka() != null) {
-            Tvrtka tvrtka = naruciteljEntity.getTvrtka();
-            this.narucitelj = new TvrtkaDTO();
-            this.narucitelj.setId(tvrtka.getId());
-            this.narucitelj.setEmail(naruciteljEntity.getEmail());
-            this.narucitelj.setTip("tvrtka");
-
-            ((TvrtkaDTO) this.narucitelj).setOib(tvrtka.getOib());
-            ((TvrtkaDTO) this.narucitelj).setNazivTvrtke(tvrtka.getNazivTvrtke());
-            ((TvrtkaDTO) this.narucitelj).setAdresa(tvrtka.getAdresa());
-        } else {
-            this.narucitelj = null;
-        }
+        this.naruciteljId = projekt.getNarucitelj().getId();
         this.vjestine = projekt.getVjestine().stream()
                 .map(VjestinaDTO::new)
                 .collect(Collectors.toSet());
@@ -139,12 +113,12 @@ public class ProjektDTO {
         this.datumStvaranja = datumStvaranja;
     }
 
-    public KorisnikDTO getNarucitelj() {
-        return narucitelj;
+    public Integer getNaruciteljId() {
+        return naruciteljId;
     }
 
-    public void setNarucitelj(KorisnikDTO narucitelj) {
-        this.narucitelj = narucitelj;
+    public void setNaruciteljId(Integer naruciteljId) {
+        this.naruciteljId = naruciteljId;
     }
 
     public Set<VjestinaDTO> getVjestine() {

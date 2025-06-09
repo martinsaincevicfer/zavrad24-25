@@ -123,7 +123,7 @@ const UgovorDetalji: React.FC = () => {
               ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
               : "N/A"}
           </p>
-          <p><strong>ID Ponude:</strong> {ugovor.ponudaId}</p>
+          <p><strong>ID Ponude:</strong> {ugovor.ponuda.id}</p>
         </div>
         <div className="p-6">
           <h2 className="text-xl font-bold">Informacije o projektu</h2>

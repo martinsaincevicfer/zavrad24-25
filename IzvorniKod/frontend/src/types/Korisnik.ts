@@ -1,7 +1,7 @@
 interface BaseKorisnik {
   id: number;
   email: string;
-  tip: 'TVRTKA' | 'OSOBA';
+  tip: 'tvrtka' | 'osoba';
 }
 
 export interface Tvrtka extends BaseKorisnik {
