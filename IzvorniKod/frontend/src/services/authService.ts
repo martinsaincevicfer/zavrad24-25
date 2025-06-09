@@ -7,6 +7,7 @@ const API_URL: string = backendUrl + '/api/auth';
 
 type DecodedToken = {
   roles?: string[];
+  exp?: number;
   [key: string]: unknown;
 };
 
@@ -45,5 +46,21 @@ export const authService = {
   isUserInRole(role: string): boolean {
     const roles = this.getRoles();
     return roles ? roles.includes(role) : false;
+  },
+
+  getTokenExpiration(): number | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode<DecodedToken>(token);
+      if (typeof decoded.exp === 'number') {
+        return decoded.exp * 1000;
+      }
+    }
+    return null;
+  },
+
+  isTokenExpired(): boolean {
+    const expiration = this.getTokenExpiration();
+    return expiration ? Date.now() > expiration : true;
   }
 };

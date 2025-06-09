@@ -71,7 +71,7 @@ public class PonuditeljService {
     }
 
     @Transactional
-    public PonuditeljDTO createPonuditelj(String email, PonuditeljDTO ponuditeljDTO) {
+    public void createPonuditelj(String email, PonuditeljDTO ponuditeljDTO) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Korisnik nije pronađen s ovim emailom: " + email));
 
@@ -102,6 +102,6 @@ public class PonuditeljService {
 
         korisnikRepository.save(korisnik);
 
-        return PonuditeljDTO.basicInfo(ponuditelj);
+        PonuditeljDTO.basicInfo(ponuditelj);
     }
 }

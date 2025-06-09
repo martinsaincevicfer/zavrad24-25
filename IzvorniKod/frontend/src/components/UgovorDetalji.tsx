@@ -7,6 +7,7 @@ import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {authService} from "../services/authService.ts";
+import DnevniciRada from "./DnevniciRada.tsx";
 
 const recenzijaSchema = z.object({
   ocjena: z.number().min(1).max(5, "Ocjena mora biti između 1 i 5"),
@@ -143,6 +144,8 @@ const UgovorDetalji: React.FC = () => {
             </button>
           </div>
         )}
+
+        <DnevniciRada ugovorId={ugovor.id}/>
 
         {ugovor.status === "zavrsen" && !ugovor.recenzija && !jePonuditelj && (
           <div className="p-6 mt-4">

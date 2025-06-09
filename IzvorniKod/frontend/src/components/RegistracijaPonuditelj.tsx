@@ -6,13 +6,18 @@ import {useNavigate} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
 import Header from './Header';
 import {Vjestina} from "../types/Vjestina.ts";
-
+import {LoginResponse} from "../types/Auth.ts";
 
 const ponuditeljSchema = z.object({
-  kratkiOpis: z.string().min(10, 'Kratki opis mora imati najmanje 10 znakova.'),
-  edukacija: z.string().min(2, 'Edukacija mora imati najmanje 2 znaka.'),
-  iskustvo: z.string().min(10, 'Iskustvo mora imati najmanje 10 znakova.'),
-  vjestine: z.array(z.number()).nonempty('Morate odabrati barem jednu vještinu.')
+  kratkiOpis: z.string()
+    .min(10, 'Kratki opis mora imati najmanje 10 znakova.')
+    .max(500, 'Kratki opis može imati najviše 500 znakova.'),
+  edukacija: z.string()
+    .min(2, 'Edukacija mora imati najmanje 2 znaka.'),
+  iskustvo: z.string()
+    .min(10, 'Iskustvo mora imati najmanje 10 znakova.'),
+  vjestine: z.array(z.number())
+    .nonempty('Morate odabrati barem jednu vještinu.')
 });
 
 type PonuditeljForm = z.infer<typeof ponuditeljSchema>;
@@ -41,17 +46,22 @@ const RegistracijaPonuditelj: React.FC = () => {
     formState: {errors}
   } = useForm<PonuditeljForm>({
     resolver: zodResolver(ponuditeljSchema),
-    mode: 'all',
     defaultValues: {
       vjestine: []
-    }
+    },
+    mode: 'all'
   });
 
   const onSubmit = async (data: PonuditeljForm) => {
     try {
-      await axiosInstance.post('/ponuditelji/register', data);
+      const response = await axiosInstance.post<LoginResponse>('/ponuditelji/register', data);
+      if (response.data.token && response.data.email) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', response.data.email);
+      }
       alert('Uspješna registracija kao ponuditelj!');
-      navigate('/homepage');
+      navigate('/profil');
+      window.location.reload();
     } catch (err) {
       console.error('Greška prilikom registracije:', err);
       alert('Registracija ponuditelja nije uspjela.');

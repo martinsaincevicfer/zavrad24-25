@@ -1,10 +1,16 @@
 package hr.unizg.fer.backend.backend.rest;
 
 import hr.unizg.fer.backend.backend.dto.PonuditeljDTO;
+import hr.unizg.fer.backend.backend.security.JwtService;
+import hr.unizg.fer.backend.backend.security.KorisnikDetailsService;
+import hr.unizg.fer.backend.backend.security.LoginResponse;
 import hr.unizg.fer.backend.backend.service.PonuditeljService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +19,13 @@ import java.util.List;
 @RequestMapping("/api/ponuditelji")
 public class PonuditeljController {
     private final PonuditeljService ponuditeljService;
+    private final KorisnikDetailsService korisnikDetailsService;
+    private final JwtService jwtService;
 
-    public PonuditeljController(PonuditeljService ponuditeljService) {
+    public PonuditeljController(PonuditeljService ponuditeljService, KorisnikDetailsService korisnikDetailsService, JwtService jwtService) {
         this.ponuditeljService = ponuditeljService;
+        this.korisnikDetailsService = korisnikDetailsService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping
@@ -38,9 +48,18 @@ public class PonuditeljController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<PonuditeljDTO> createPonuditeljForCurrentUser(@Valid @RequestBody PonuditeljDTO ponuditeljDTO) {
+    public ResponseEntity<LoginResponse> createPonuditeljForCurrentUser(@Valid @RequestBody PonuditeljDTO ponuditeljDTO) {
         String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        PonuditeljDTO kreiraniPonuditelj = ponuditeljService.createPonuditelj(currentUserEmail, ponuditeljDTO);
-        return ResponseEntity.ok(kreiraniPonuditelj);
+        ponuditeljService.createPonuditelj(currentUserEmail, ponuditeljDTO);
+
+        UserDetails userDetails = korisnikDetailsService.loadUserByUsername(currentUserEmail);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtService.generateToken(authentication);
+
+        return ResponseEntity.ok(new LoginResponse(jwt, currentUserEmail));
     }
 }

@@ -4,6 +4,7 @@ import {useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
+import {authService} from "../services/authService.ts";
 
 const registracijaTvrtkaSchema = z.object({
   email: z.string().email('Unesite valjan email.'),
@@ -37,8 +38,9 @@ const RegistracijaTvrtka = () => {
   const onSubmit = async (data: RegistracijaTvrtkaForm) => {
     try {
       await axios.post('/api/auth/register/tvrtka', data);
+      await authService.login({email: data.email, lozinka: data.lozinka});
       alert('Registracija tvrtke uspješna!');
-      navigate('/login');
+      navigate('/homepage');
     } catch (error: unknown) {
       console.error('Greška prilikom registracije:', error);
       alert('Došlo je do greške. Pokušajte ponovno.');
