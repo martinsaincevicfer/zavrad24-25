@@ -82,7 +82,7 @@ const PonuditeljDetalji: React.FC = () => {
           {ponuditelj.tip === 'tvrtka' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
         </h1>
 
-        <div className="rounded-lg shadow-md p-8 space-y-8">
+        <div className="rounded-lg p-8 space-y-8">
           <div>
             <h2 className="text-2xl font-semibold mb-4">
               {ponuditelj.tip === 'tvrtka' ? 'Podaci o tvrtki' : 'Osobni podaci'}
@@ -173,7 +173,7 @@ const PonuditeljDetalji: React.FC = () => {
           ) : (
             <div className="space-y-4">
               {recenzije.map((recenzija, idx) => (
-                <div key={idx} className="border rounded p-4 shadow">
+                <div key={idx} className="border rounded p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-bold">Ocjena:</span>
                     <span>{recenzija.ocjena} / 5</span>

@@ -11,6 +11,12 @@ public class VjestinaDTO {
     public VjestinaDTO() {
     }
 
+    public VjestinaDTO(Vjestina vjestina) {
+        this.id = vjestina.getId();
+        this.naziv = vjestina.getNaziv();
+        this.kategorija = vjestina.getKategorija();
+    }
+
     public VjestinaDTO(Integer id) {
         this.id = id;
     }
@@ -19,12 +25,6 @@ public class VjestinaDTO {
         this.id = id;
         this.naziv = naziv;
         this.kategorija = kategorija;
-    }
-
-    public VjestinaDTO(Vjestina vjestina) {
-        this.id = vjestina.getId();
-        this.naziv = vjestina.getNaziv();
-        this.kategorija = vjestina.getKategorija();
     }
 
     public Integer getId() {

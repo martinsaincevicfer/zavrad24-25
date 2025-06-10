@@ -4,6 +4,7 @@ import hr.unizg.fer.backend.backend.dto.VjestinaDTO;
 import hr.unizg.fer.backend.backend.service.VjestinaService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class VjestinaController {
     }
 
     @GetMapping
-    public List<VjestinaDTO> getAllVjestine() {
-        return vjestinaService.getAllVjestine();
+    public List<VjestinaDTO> searchVjestine(
+            @RequestParam(required = false) String naziv) {
+        return vjestinaService.searchVjestine(naziv);
     }
 }

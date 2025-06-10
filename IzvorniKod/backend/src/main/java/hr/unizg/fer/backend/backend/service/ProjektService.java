@@ -63,7 +63,7 @@ public class ProjektService {
         projekt.setNaziv(projektDTO.getNaziv());
         projekt.setOpis(projektDTO.getOpis());
         projekt.setBudzet(projektDTO.getBudzet());
-        projekt.setRokIzrade(projektDTO.getRok());
+        projekt.setRokIzrade(projektDTO.getRokIzrade());
         projekt.setDatumStvaranja(Instant.now());
         projekt.setNarucitelj(korisnik);
 

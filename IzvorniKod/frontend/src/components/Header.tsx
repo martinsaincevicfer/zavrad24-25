@@ -1,6 +1,19 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
-import {ArrowUpFromLine, FileText, FileUser, House, LogIn, LogOut, Menu, User, UserPlus, X} from "lucide-react";
+import {
+  ArrowUpFromLine,
+  FileText,
+  FileUser,
+  House,
+  LogIn,
+  LogOut,
+  Menu,
+  Plus,
+  Search,
+  User,
+  UserPlus,
+  X
+} from "lucide-react";
 import {authService} from "../services/authService.ts";
 
 const Header = () => {
@@ -53,7 +66,17 @@ const Header = () => {
             Naslovnica
           </Link>
 
-          <div className={`md:flex gap-4 justify-between items-center hidden`}>
+          {jePonuditelj && (
+            <Link
+              to="/projekti"
+              className="px-4 py-2 text-white hover:text-gray-300 flex items-center gap-1"
+            >
+              <Search/>
+              Pronađi posao
+            </Link>
+          )}
+
+          <div className={`lg:flex gap-4 justify-between items-center hidden`}>
             {isLoggedIn && (
               <Link
                 to="/korisnik/projekti"
@@ -86,17 +109,27 @@ const Header = () => {
         </div>
 
         <button
-          className="text-xl dark:text-white md:hidden flex items-center"
+          className="text-xl dark:text-white lg:hidden flex items-center"
           onClick={toggleMenu}
         >
           {menuOpen ? <X/> : <Menu/>}
         </button>
 
-        <div className={`md:flex gap-4 justify-between items-center hidden`}>
+        <div className={`lg:flex gap-4 justify-between items-center hidden`}>
+          {isLoggedIn && (
+            <Link
+              to="/projekti/stvori"
+              className="px-4 py-2 hover:text-gray-300 text-white flex items-center gap-1"
+            >
+              <Plus/>
+              Napravi projekt
+            </Link>
+          )}
+
           {isLoggedIn && userEmail && (
             <Link
               to="/profil"
-              className="px-4 py-2 dark:text-white flex items-center gap-1 hover:text-gray-300 dark:hover:text-gray-300"
+              className="px-4 py-2 dark:text-white flex items-center gap-1 hover:text-gray-300"
             >
               <User/>
               {userEmail}
@@ -132,7 +165,17 @@ const Header = () => {
 
         {menuOpen && (
           <div
-            className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 md:hidden z-50">
+            className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 lg:hidden z-50">
+            {jePonuditelj && (
+              <Link
+                to="/projekti"
+                className="text-white flex items-center gap-1"
+              >
+                <Search/>
+                Pronađi posao
+              </Link>
+            )}
+
             {isLoggedIn && (
               <Link
                 to="/korisnik/projekti"
@@ -159,6 +202,16 @@ const Header = () => {
                 className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
                 <FileUser/>
                 Moji ugovori
+              </Link>
+            )}
+
+            {isLoggedIn && (
+              <Link
+                to="/projekti/stvori"
+                className="text-white flex items-center gap-1"
+              >
+                <Plus/>
+                Napravi projekt
               </Link>
             )}
 

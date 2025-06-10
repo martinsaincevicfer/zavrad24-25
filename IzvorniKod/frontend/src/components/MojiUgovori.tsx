@@ -44,7 +44,7 @@ const MojiUgovori: React.FC = () => {
     <>
       <Header/>
       <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-2xl font-bold mb-4">Moji ugovori</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Moji ugovori</h1>
         {ugovori.length === 0 ? (
           <p>Nemate nijedan ugovor.</p>
         ) : (

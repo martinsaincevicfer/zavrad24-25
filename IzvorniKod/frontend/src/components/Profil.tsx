@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
 import Header from './Header';
-import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Korisnik} from "../types/Korisnik.ts";
 import {Ponuditelj} from "../types/Ponuditelj.ts";
 
@@ -14,7 +14,6 @@ const Profil = () => {
   const [userError, setUserError] = useState<string>('');
   const [freelancerError, setFreelancerError] = useState<string>('');
   const jePonuditelj = authService.isUserInRole('ponuditelj');
-  const navigate = useNavigate();
 
   const fetchUserProfile = async () => {
     try {
@@ -82,7 +81,7 @@ const Profil = () => {
   return (
     <>
       <Header/>
-      <div className="max-w-7xl mx-auto rounded-lg flex flex-col items-center">
+      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9 flex flex-col items-center">
         <h1 className="text-3xl mt-3 font-bold mb-6">Moj Profil</h1>
         <div className="space-y-4 grid grid-cols-2 gap-4">
           {userProfile && (
@@ -167,12 +166,12 @@ const Profil = () => {
           ) : (
             <div className="flex flex-col items-center">
               <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao ponuditelj.</p>
-              <button
-                onClick={() => navigate('/registracija/ponuditelj')}
-                className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+              <Link
+                to={'/registracija/ponuditelj'}
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
                 Registriraj se kao ponuditelj
-              </button>
+              </Link>
             </div>
           )}
         </div>

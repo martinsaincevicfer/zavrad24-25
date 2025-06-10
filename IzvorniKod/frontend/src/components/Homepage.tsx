@@ -14,13 +14,6 @@ const Homepage = () => {
           Poveži se s najboljim stručnjacima. Ostvari svoje projekte.
         </h2>
         <div className="flex flex-col md:flex-row align-baseline justify-between gap-10">
-          {/*
-          <Link to="/ponuditelji"
-                className="bg-blue-500 px-4 py-2 text-2xl font-medium dark:text-white dark:hover:text-gray-300">
-            Zaposli ponuditelje
-          </Link>
-          */}
-
           <Link
             to="/projekti"
             className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xl font-medium  flex items-center gap-1"

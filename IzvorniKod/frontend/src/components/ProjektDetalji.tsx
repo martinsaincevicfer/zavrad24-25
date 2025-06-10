@@ -188,8 +188,8 @@ export const ProjektDetalji: React.FC = () => {
                 <span>{formatNovac(projekt.budzet)}</span>
               </div>
               <div className="flex justify-between border-b pb-2">
-                <span className="font-semibold">Rok:</span>
-                <span>{formatDatum(projekt.rok).split(',')[0]}</span>
+                <span className="font-semibold">Rok izrade:</span>
+                <span>{formatDatum(projekt.rokIzrade).split(',')[0]}</span>
               </div>
               <div className="flex justify-between border-b pb-2">
                 <span className="font-semibold">Datum stvaranja:</span>
@@ -277,6 +277,15 @@ export const ProjektDetalji: React.FC = () => {
               </div>
             )}
           </div>
+        )}
+
+        {ulogiraniKorisnik && !jePonuditelj && !(ulogiraniKorisnik === korisnik?.email) && (
+          <Link
+            to={'/registracija/ponuditelj'}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Registriraj se kao ponuditelj
+          </Link>
         )}
 
         {ulogiraniKorisnik === korisnik?.email && ponude && (

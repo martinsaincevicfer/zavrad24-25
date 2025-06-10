@@ -54,8 +54,8 @@ export const ProjektPopis: React.FC = () => {
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
               <p className="text-black dark:text-white mb-2 line-clamp-2">{projekt.opis}</p>
               <p className="text-sm mb-2">
-                <span className="font-semibold">Rok:</span>{' '}
-                {new Date(projekt.rok).toLocaleDateString('hr')}
+                <span className="font-semibold">Rok izrade:</span>{' '}
+                {new Date(projekt.rokIzrade).toLocaleDateString('hr')}
               </p>
               <div className="mb-3">
                 <span className="font-semibold">Potrebne vještine:</span>

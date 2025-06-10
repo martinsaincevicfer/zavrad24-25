@@ -130,7 +130,7 @@ const UgovorDetalji: React.FC = () => {
           <p><strong>Naziv:</strong> {ugovor.projekt.naziv}</p>
           <p><strong>Opis:</strong> {ugovor.projekt.opis}</p>
           <p><strong>Budžet:</strong> {ugovor.projekt.budzet}</p>
-          <p><strong>Rok:</strong> {new Date(ugovor.projekt.rok).toLocaleDateString()}</p>
+          <p><strong>Rok:</strong> {new Date(ugovor.projekt.rokIzrade).toLocaleDateString()}</p>
           <p><strong>Datum stvaranja:</strong> {new Date(ugovor.projekt.datumStvaranja).toLocaleDateString()}</p>
         </div>
 

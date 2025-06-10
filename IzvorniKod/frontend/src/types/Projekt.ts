@@ -6,7 +6,7 @@ export interface Projekt {
   naziv: string;
   opis: string;
   budzet: number;
-  rok: string;
+  rokIzrade: string;
   datumStvaranja: string;
   narucitelj: Korisnik;
   vjestine: Vjestina[];

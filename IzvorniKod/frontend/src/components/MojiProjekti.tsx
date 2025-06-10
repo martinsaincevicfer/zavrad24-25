@@ -59,8 +59,8 @@ export const MojiProjekti: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto px-4 py-6">
-        <h1 className="text-2xl font-bold mb-4">Moji projekti</h1>
+      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
+        <h1 className="text-2xl font-bold mb-4 text-center">Moji projekti</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projekti.map((projekt) => (
             <Link
@@ -75,8 +75,8 @@ export const MojiProjekti: React.FC = () => {
                   <span className="font-medium">Budžet: </span>€{projekt.budzet}
                 </div>
                 <div>
-                  <span className="font-medium">Rok: </span>
-                  {new Date(projekt.rok).toLocaleDateString("hr-HR")}
+                  <span className="font-medium">Rok izrade: </span>
+                  {new Date(projekt.rokIzrade).toLocaleDateString("hr-HR")}
                 </div>
               </div>
             </Link>

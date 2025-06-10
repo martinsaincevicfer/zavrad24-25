@@ -28,7 +28,7 @@ public class ProjektDTO {
     private BigDecimal budzet;
 
     @NotNull(message = "Rok mora biti definiran")
-    private LocalDate rok;
+    private LocalDate rokIzrade;
 
     private Instant datumStvaranja;
 
@@ -44,12 +44,12 @@ public class ProjektDTO {
         this.naziv = naziv;
     }
 
-    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rok, Instant datumStvaranja, KorisnikDTO narucitelj, Set<VjestinaDTO> vjestine) {
+    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rokIzrade, Instant datumStvaranja, KorisnikDTO narucitelj, Set<VjestinaDTO> vjestine) {
         this.id = id;
         this.naziv = naziv;
         this.opis = opis;
         this.budzet = budzet;
-        this.rok = rok;
+        this.rokIzrade = rokIzrade;
         this.datumStvaranja = datumStvaranja;
         this.narucitelj = narucitelj;
         this.vjestine = vjestine;
@@ -60,7 +60,7 @@ public class ProjektDTO {
         this.naziv = projekt.getNaziv();
         this.opis = projekt.getOpis();
         this.budzet = projekt.getBudzet();
-        this.rok = projekt.getRokIzrade();
+        this.rokIzrade = projekt.getRokIzrade();
         this.datumStvaranja = projekt.getDatumStvaranja();
         Korisnik naruciteljEntity = projekt.getNarucitelj();
         if (naruciteljEntity.getOsoba() != null) {
@@ -91,12 +91,12 @@ public class ProjektDTO {
                 .collect(Collectors.toSet());
     }
 
-    public LocalDate getRok() {
-        return rok;
+    public LocalDate getRokIzrade() {
+        return rokIzrade;
     }
 
-    public void setRok(LocalDate rok) {
-        this.rok = rok;
+    public void setRokIzrade(LocalDate rokIzrade) {
+        this.rokIzrade = rokIzrade;
     }
 
     public Integer getId() {
