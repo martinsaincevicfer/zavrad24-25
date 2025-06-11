@@ -77,7 +77,7 @@ const PonuditeljDetalji: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
+      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-3xl font-bold mb-6">
           {ponuditelj.tip === 'tvrtka' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
         </h1>

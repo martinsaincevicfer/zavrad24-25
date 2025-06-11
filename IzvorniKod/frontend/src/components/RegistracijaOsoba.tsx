@@ -50,7 +50,7 @@ const RegistracijaOsoba = () => {
   return (
     <>
       <Header/>
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-9">
+      <div className="max-w-8xl mx-auto px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6 text-center">Registracija</h1>
         <form onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col px-3 sm:px-6 lg:px-9 md:max-w-1/3 gap-4 mx-auto">

@@ -1,30 +1,76 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Projekt} from '../types/Projekt.ts';
 import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
+import {FormProvider, useForm} from "react-hook-form";
+import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
+import debounce from "lodash/debounce";
 
+type SearchForm = {
+  naziv: string;
+  budzet: number | '';
+  rokIzrade: string;
+  vjestine: number[];
+};
+
+const formatNovac = (iznos: number) =>
+  new Intl.NumberFormat('hr-HR', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 2,
+  }).format(iznos);
 
 export const ProjektPopis: React.FC = () => {
   const [projekti, setProjekti] = useState<Projekt[]>([]);
   const [ucitavanje, setUcitavanje] = useState(true);
   const [greska, setGreska] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
+
+  const methods = useForm<SearchForm>({
+    defaultValues: {
+      naziv: '',
+      budzet: '',
+      rokIzrade: '',
+      vjestine: [],
+    },
+  });
+
+  const onSubmit = useCallback(async (data: SearchForm) => {
+    setUcitavanje(true);
+    setGreska(null);
+    try {
+      const params: Record<string, string | number> = {};
+      if (data.naziv.trim() !== '') params.naziv = data.naziv;
+      if (data.budzet) params.budzet = data.budzet;
+      if (data.rokIzrade && data.rokIzrade !== '') params.rokIzrade = data.rokIzrade;
+      if (data.vjestine && data.vjestine.length > 0) params.vjestine = data.vjestine.join(',');
+
+      const res = await axiosInstance.get<Projekt[]>('/projekti/search', {params});
+      setProjekti(res.data);
+    } catch (e) {
+      console.error(e);
+      setGreska('Greška pri pretraživanju projekata.');
+    } finally {
+      setUcitavanje(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const dohvatiProjekte = async () => {
-      try {
-        const response = await axiosInstance.get<Projekt[]>('/projekti');
-        setProjekti(response.data);
-      } catch (error) {
-        console.error('Greška pri dohvaćanju profila:', error);
-        setGreska("Greška pri dohvaćanju projekata.");
-      } finally {
-        setUcitavanje(false);
-      }
-    };
+    onSubmit(methods.getValues());
+  }, [methods, onSubmit]);
 
-    dohvatiProjekte();
-  }, []);
+  const debouncedOnSubmit = React.useMemo(
+    () => debounce(onSubmit, 500),
+    [onSubmit]
+  );
+
+  useEffect(() => {
+    const subscription = methods.watch((values) => {
+      debouncedOnSubmit(values as SearchForm);
+    });
+    return () => subscription.unsubscribe();
+  }, [debouncedOnSubmit, methods]);
 
   if (ucitavanje) return <>
     <Header/>
@@ -42,8 +88,55 @@ export const ProjektPopis: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
+      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6">Popis projekata</h1>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={e => e.preventDefault()}
+            className="space-y-4 mb-8">
+            <div className="flex gap-2 items-center">
+              <input
+                {...methods.register('naziv')}
+                type="text"
+                placeholder="Naziv projekta"
+                className="w-9/10 p-2 border rounded"
+              />
+              <button
+                type="button"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                onClick={() => setShowFilters(f => !f)}
+              >
+                {showFilters ? 'Sakrij filtere' : 'Prikaži filtere'}
+              </button>
+            </div>
+            {showFilters && (
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  {...methods.register('budzet')}
+                  type="number"
+                  placeholder="Minimalni budžet"
+                  className="w-1/2 md:w-1/4 p-2 border rounded"
+                  min={0}
+                />
+                <input
+                  {...methods.register('rokIzrade')}
+                  type="date"
+                  className="w-1/2 md:w-1/4 p-2 border rounded"
+                />
+                <VjestinaAutocomplete name="vjestine"/>
+                <button
+                  type="button"
+                  className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                  onClick={() => methods.reset()}
+                  disabled={ucitavanje}
+                >
+                  Očisti filtere
+                </button>
+              </div>
+            )}
+          </form>
+        </FormProvider>
+        {greska && <div className="text-red-500 mb-4">{greska}</div>}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projekti.map((projekt) => (
             <Link
@@ -52,7 +145,11 @@ export const ProjektPopis: React.FC = () => {
               className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
             >
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
-              <p className="text-black dark:text-white mb-2 line-clamp-2">{projekt.opis}</p>
+              <p className="text-black dark:text-white mb-2">{projekt.opis}</p>
+              <p className="">
+                <span className="font-semibold">Budžet:</span>
+                <span>{formatNovac(projekt.budzet)}</span>
+              </p>
               <p className="text-sm mb-2">
                 <span className="font-semibold">Rok izrade:</span>{' '}
                 {new Date(projekt.rokIzrade).toLocaleDateString('hr')}

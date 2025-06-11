@@ -35,7 +35,7 @@ public class PonudaController {
 
     @GetMapping("/projekt/{projektId}")
     public ResponseEntity<List<PonudaDTO>> getApplicationsForProject(@PathVariable Integer projektId) {
-        List<PonudaDTO> ponude = ponudaService.findAllForProjectByLoggedUser(projektId);
+        List<PonudaDTO> ponude = ponudaService.findAllForProject(projektId);
         return ResponseEntity.ok(ponude);
     }
 

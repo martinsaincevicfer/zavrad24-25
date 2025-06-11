@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
@@ -7,7 +7,7 @@ import {authService} from "../services/authService";
 import Dnevnikrada from "../types/Dnevnikrada.ts";
 
 const dnevnikSchema = z.object({
-  opis: z.string().min(5, "Opis mora imati barem 5 znakova"),
+  poruka: z.string().min(5, "Opis mora imati barem 5 znakova"),
 });
 
 type DnevnikForm = z.infer<typeof dnevnikSchema>;
@@ -33,7 +33,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
     mode: "all",
   });
 
-  const fetchDnevnici = async () => {
+  const fetchDnevnici = useCallback(async () => {
     setLoading(true);
     try {
       const res = await axiosInstance.get<Dnevnikrada[]>(
@@ -47,11 +47,11 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [ugovorId]);
 
   useEffect(() => {
     fetchDnevnici();
-  }, [ugovorId]);
+  }, [fetchDnevnici, ugovorId]);
 
   const onSubmit = async (data: DnevnikForm) => {
     try {
@@ -98,7 +98,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
                 >
                   <div>
                     <div>
-                      <strong>Opis:</strong> {dnevnik.opis}
+                      <strong>Opis:</strong> {dnevnik.poruka}
                     </div>
                     <div className="text-sm text-gray-500">
                       <strong>Datum unosa:</strong>{" "}
@@ -122,12 +122,12 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
               <div>
                 <label className="block font-semibold">Opis:</label>
                 <textarea
-                  {...register("opis")}
+                  {...register("poruka")}
                   className="border rounded px-2 py-1 w-full"
                   rows={3}
                 />
-                {errors.opis && (
-                  <span className="text-red-500">{errors.opis.message}</span>
+                {errors.poruka && (
+                  <span className="text-red-500">{errors.poruka.message}</span>
                 )}
               </div>
               <button

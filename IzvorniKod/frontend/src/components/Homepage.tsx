@@ -6,7 +6,7 @@ const Homepage = () => {
   return (
     <>
       <Header/>
-      <div className="max-w-7xl mx-auto min-h-2/5 p-8 flex flex-col items-center justify-between gap-5">
+      <div className="max-w-8xl mx-auto min-h-2/5 p-8 flex flex-col items-center justify-between gap-5">
         <h1 className="text-4xl font-bold">
           Dobrodošli!
         </h1>

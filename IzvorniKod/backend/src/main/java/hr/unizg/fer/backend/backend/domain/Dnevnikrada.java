@@ -23,8 +23,8 @@ public class Dnevnikrada {
     private Ugovor ugovor;
 
     @NotNull
-    @Column(name = "opis", nullable = false, length = Integer.MAX_VALUE)
-    private String opis;
+    @Column(name = "poruka", nullable = false, length = Integer.MAX_VALUE)
+    private String poruka;
 
     @NotNull
     @ColumnDefault("CURRENT_TIMESTAMP")
@@ -47,12 +47,12 @@ public class Dnevnikrada {
         this.ugovor = ugovor;
     }
 
-    public String getOpis() {
-        return opis;
+    public String getPoruka() {
+        return poruka;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public void setPoruka(String poruka) {
+        this.poruka = poruka;
     }
 
     public Instant getDatumUnosa() {

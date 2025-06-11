@@ -28,7 +28,7 @@ public class DnevnikradaService {
                 .orElseThrow(() -> new IllegalArgumentException("Ugovor not found"));
         Dnevnikrada dnevnikrada = new Dnevnikrada();
         dnevnikrada.setUgovor(ugovor);
-        dnevnikrada.setOpis(dto.getOpis());
+        dnevnikrada.setPoruka(dto.getPoruka());
         dnevnikrada.setDatumUnosa(Instant.now());
         dnevnikrada = dnevnikradaRepository.save(dnevnikrada);
         dto.setId(dnevnikrada.getId());
@@ -47,7 +47,7 @@ public class DnevnikradaService {
                     DnevnikradaDTO dto = new DnevnikradaDTO();
                     dto.setId(d.getId());
                     dto.setUgovorId(ugovorId);
-                    dto.setOpis(d.getOpis());
+                    dto.setPoruka(d.getPoruka());
                     dto.setDatumUnosa(d.getDatumUnosa());
                     return dto;
                 })

@@ -108,7 +108,7 @@ const UgovorDetalji: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
+      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6">Detalji ugovora</h1>
         <div className="p-6">
           <p><strong>ID Ugovora:</strong> {ugovor.id}</p>
@@ -134,7 +134,7 @@ const UgovorDetalji: React.FC = () => {
           <p><strong>Datum stvaranja:</strong> {new Date(ugovor.projekt.datumStvaranja).toLocaleDateString()}</p>
         </div>
 
-        {jePonuditelj && ugovor.status !== "zavrsen" && (
+        {!jePonuditelj && ugovor.status !== "zavrsen" && (
           <div className="mt-4">
             <button
               onClick={zavrsiUgovor}

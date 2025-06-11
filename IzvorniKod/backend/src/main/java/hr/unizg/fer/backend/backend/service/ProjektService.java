@@ -10,14 +10,19 @@ import hr.unizg.fer.backend.backend.dto.ProjektDTO;
 import hr.unizg.fer.backend.backend.dto.ProjektFormDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static hr.unizg.fer.backend.backend.dao.ProjektSpecification.*;
 
 @Service
 public class ProjektService {
@@ -32,8 +37,14 @@ public class ProjektService {
     }
 
     @Transactional
-    public List<ProjektDTO> getAllProjekti() {
-        return projektRepository.findAll().stream()
+    public List<ProjektDTO> searchProjekti(String naziv, BigDecimal budzet, LocalDate rokIzrade, Set<Vjestina> vjestine) {
+        Specification<Projekt> spec = Specification.where(isOtvoren())
+                .and(hasNaziv(naziv))
+                .and(hasBudzet(budzet))
+                .and(hasRokIzrade(rokIzrade))
+                .and(hasVjestine(vjestine));
+        return projektRepository.findAll(spec)
+                .stream()
                 .map(ProjektDTO::new)
                 .collect(Collectors.toList());
     }
@@ -65,6 +76,7 @@ public class ProjektService {
         projekt.setBudzet(projektDTO.getBudzet());
         projekt.setRokIzrade(projektDTO.getRokIzrade());
         projekt.setDatumStvaranja(Instant.now());
+        projekt.setStatus("otvoren");
         projekt.setNarucitelj(korisnik);
 
         if (projektDTO.getVjestine() != null && !projektDTO.getVjestine().isEmpty()) {
@@ -97,5 +109,13 @@ public class ProjektService {
         return korisnik.getProjekti().stream()
                 .map(ProjektDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void zatvoriProjekt(Integer id) {
+        Projekt projekt = projektRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Nije pronađen projekt sa id: " + id));
+        projekt.setStatus("zatvoren");
+        projektRepository.save(projekt);
     }
 }

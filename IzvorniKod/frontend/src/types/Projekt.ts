@@ -8,6 +8,7 @@ export interface Projekt {
   budzet: number;
   rokIzrade: string;
   datumStvaranja: string;
+  status: string;
   narucitelj: Korisnik;
   vjestine: Vjestina[];
 }

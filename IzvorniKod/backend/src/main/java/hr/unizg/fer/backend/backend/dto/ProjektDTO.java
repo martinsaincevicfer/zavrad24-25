@@ -32,6 +32,8 @@ public class ProjektDTO {
 
     private Instant datumStvaranja;
 
+    private String status;
+
     private KorisnikDTO narucitelj;
 
     private Set<@Valid VjestinaDTO> vjestine;
@@ -44,13 +46,14 @@ public class ProjektDTO {
         this.naziv = naziv;
     }
 
-    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rokIzrade, Instant datumStvaranja, KorisnikDTO narucitelj, Set<VjestinaDTO> vjestine) {
+    public ProjektDTO(Integer id, String naziv, String opis, BigDecimal budzet, LocalDate rokIzrade, Instant datumStvaranja, String status, KorisnikDTO narucitelj, Set<VjestinaDTO> vjestine) {
         this.id = id;
         this.naziv = naziv;
         this.opis = opis;
         this.budzet = budzet;
         this.rokIzrade = rokIzrade;
         this.datumStvaranja = datumStvaranja;
+        this.status = status;
         this.narucitelj = narucitelj;
         this.vjestine = vjestine;
     }
@@ -62,6 +65,7 @@ public class ProjektDTO {
         this.budzet = projekt.getBudzet();
         this.rokIzrade = projekt.getRokIzrade();
         this.datumStvaranja = projekt.getDatumStvaranja();
+        this.status = projekt.getStatus();
         Korisnik naruciteljEntity = projekt.getNarucitelj();
         if (naruciteljEntity.getOsoba() != null) {
             Osoba osoba = naruciteljEntity.getOsoba();
@@ -137,6 +141,14 @@ public class ProjektDTO {
 
     public void setDatumStvaranja(Instant datumStvaranja) {
         this.datumStvaranja = datumStvaranja;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public KorisnikDTO getNarucitelj() {

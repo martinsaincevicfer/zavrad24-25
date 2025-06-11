@@ -5,16 +5,16 @@ import java.time.Instant;
 public class DnevnikradaDTO {
     private Integer id;
     private Integer ugovorId;
-    private String opis;
+    private String poruka;
     private Instant datumUnosa;
 
     public DnevnikradaDTO() {
     }
 
-    public DnevnikradaDTO(Integer id, Integer ugovorId, String opis, Instant datumUnosa) {
+    public DnevnikradaDTO(Integer id, Integer ugovorId, String poruka, Instant datumUnosa) {
         this.id = id;
         this.ugovorId = ugovorId;
-        this.opis = opis;
+        this.poruka = poruka;
         this.datumUnosa = datumUnosa;
     }
 
@@ -34,12 +34,12 @@ public class DnevnikradaDTO {
         this.ugovorId = ugovorId;
     }
 
-    public String getOpis() {
-        return opis;
+    public String getPoruka() {
+        return poruka;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public void setPoruka(String poruka) {
+        this.poruka = poruka;
     }
 
     public Instant getDatumUnosa() {

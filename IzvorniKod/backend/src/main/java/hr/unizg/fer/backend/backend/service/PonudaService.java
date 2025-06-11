@@ -3,7 +3,6 @@ package hr.unizg.fer.backend.backend.service;
 import hr.unizg.fer.backend.backend.dao.KorisnikRepository;
 import hr.unizg.fer.backend.backend.dao.PonudaRepository;
 import hr.unizg.fer.backend.backend.dao.ProjektRepository;
-import hr.unizg.fer.backend.backend.domain.Korisnik;
 import hr.unizg.fer.backend.backend.domain.Ponuda;
 import hr.unizg.fer.backend.backend.domain.Ponuditelj;
 import hr.unizg.fer.backend.backend.domain.Projekt;
@@ -52,17 +51,9 @@ public class PonudaService {
     }
 
     @Transactional
-    public List<PonudaDTO> findAllForProjectByLoggedUser(Integer projektId) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Korisnik korisnik = korisnikRepository.findByEmail(username)
-                .orElseThrow(() -> new IllegalArgumentException("Korisnik not found"));
-
+    public List<PonudaDTO> findAllForProject(Integer projektId) {
         Projekt projekt = projektRepository.findById(projektId)
                 .orElseThrow(() -> new IllegalArgumentException("Projekt not found"));
-
-        if (!projekt.getNarucitelj().equals(korisnik)) {
-            throw new IllegalArgumentException("You can only access applications for your own projects");
-        }
 
         return ponudaRepository.findByProjekt(projekt).stream()
                 .map(this::mapToDTO)
@@ -94,7 +85,7 @@ public class PonudaService {
         Ponuditelj ponuditelj = ponuda.getPonuditelj();
 
         ProjektDTO projektDTO = new ProjektDTO(projekt);
-        
+
         PonuditeljDTO ponuditeljDTO;
         if (ponuditelj.getKorisnik().getOsoba() != null) {
             ponuditeljDTO = PonuditeljDTO.fromPonuditeljOsoba(ponuditelj);

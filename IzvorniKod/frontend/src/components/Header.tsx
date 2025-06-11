@@ -56,7 +56,7 @@ const Header = () => {
 
   return (
     <header className="min-w-screen bg-gray-100 dark:bg-black p-4">
-      <nav className="max-w-7xl mx-auto flex justify-between items-center">
+      <nav className="max-w-8xl mx-auto flex justify-between items-center">
         <div className="flex items-center gap-4">
           <Link
             to="/"

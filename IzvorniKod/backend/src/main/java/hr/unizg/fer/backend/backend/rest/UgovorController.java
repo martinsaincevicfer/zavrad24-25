@@ -44,8 +44,8 @@ public class UgovorController {
         );
     }
 
-    @PatchMapping("/ponuditelj/zavrsi/{ugovorId}")
-    public UgovorDTO ponuditeljZavrsiUgovor(@PathVariable Integer ugovorId) {
+    @PatchMapping("/narucitelj/zavrsi/{ugovorId}")
+    public UgovorDTO naruciteljZavrsiUgovor(@PathVariable Integer ugovorId) {
         return ugovorService.markUgovorAsFinished(ugovorId);
     }
 }

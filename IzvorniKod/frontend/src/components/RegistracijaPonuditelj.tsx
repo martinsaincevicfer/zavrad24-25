@@ -54,7 +54,7 @@ const RegistracijaPonuditelj: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
+      <div className="max-w-8xl mx-auto flex flex-col items-center justify-center">
         <h2 className="text-center text-3xl font-extrabold">Registriraj se kao ponuditelj</h2>
         <FormProvider {...methods}>
           <form className="mt-8 space-y-6 w-2/3 md:w-xl" onSubmit={methods.handleSubmit(onSubmit)}>

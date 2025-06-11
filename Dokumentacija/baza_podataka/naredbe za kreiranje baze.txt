@@ -65,6 +65,7 @@ CREATE TABLE Projekt (
   rok_izrade DATE NOT NULL,
   datum_stvaranja TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   narucitelj_id INT NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'otvoren' CHECK (status IN ('otvoren', 'zatvoren')),
   CHECK (rok_izrade > datum_stvaranja::DATE),
   FOREIGN KEY (narucitelj_id) REFERENCES Korisnik(korisnik_id) ON DELETE CASCADE
 );
@@ -113,7 +114,7 @@ CREATE TABLE Ugovor (
 CREATE TABLE DnevnikRada (
   dnevnik_id SERIAL PRIMARY KEY,
   ugovor_id INT NOT NULL,
-  opis TEXT NOT NULL,
+  poruka TEXT NOT NULL,
   datum_unosa TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (ugovor_id) REFERENCES Ugovor(ugovor_id) ON DELETE CASCADE
 );

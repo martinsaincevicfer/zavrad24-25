@@ -81,7 +81,7 @@ const Profil = () => {
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto mt-8 px-3 sm:px-6 lg:px-9 flex flex-col items-center">
+      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9 flex flex-col items-center">
         <h1 className="text-3xl mt-3 font-bold mb-6">Moj Profil</h1>
         <div className="space-y-4 grid grid-cols-2 gap-4">
           {userProfile && (

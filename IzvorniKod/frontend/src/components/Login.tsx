@@ -37,7 +37,7 @@ const Login: React.FC = () => {
   return (
     <>
       <Header/>
-      <div className="container max-w-7xl mx-auto flex flex-col items-center">
+      <div className="container max-w-8xl mx-auto flex flex-col items-center">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
             Prijava

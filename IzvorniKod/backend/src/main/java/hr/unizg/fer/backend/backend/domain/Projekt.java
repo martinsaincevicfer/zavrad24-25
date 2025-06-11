@@ -49,6 +49,10 @@ public class Projekt {
     @JoinColumn(name = "narucitelj_id", nullable = false)
     private Korisnik narucitelj;
 
+    @NotNull
+    @Column(name = "status", nullable = false, length = 20)
+    private String status;
+
     @OneToMany(mappedBy = "projekt")
     private Set<Ponuda> ponude = new LinkedHashSet<>();
 
@@ -132,4 +136,11 @@ public class Projekt {
         this.vjestine = vjestine;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
