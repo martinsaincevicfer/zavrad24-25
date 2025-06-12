@@ -106,4 +106,32 @@ public class PonudaService {
                 ponuditeljDTO
         );
     }
+
+    @Transactional
+    public PonudaDTO updatePonuda(Integer ponudaId, PonudaFormDTO ponudaFormDTO) {
+        Ponuda ponuda = ponudaRepository.findById(ponudaId)
+                .orElseThrow(() -> new IllegalArgumentException("Ponuda not found"));
+
+        if ("prihvacena".equalsIgnoreCase(ponuda.getStatus())) {
+            throw new IllegalStateException("Accepted offer cannot be edited.");
+        }
+
+        ponuda.setIznos(ponudaFormDTO.getIznos());
+        ponuda.setPoruka(ponudaFormDTO.getPoruka());
+
+        ponudaRepository.save(ponuda);
+        return mapToDTO(ponuda);
+    }
+
+    @Transactional
+    public void deletePonuda(Integer ponudaId) {
+        Ponuda ponuda = ponudaRepository.findById(ponudaId)
+                .orElseThrow(() -> new IllegalArgumentException("Ponuda not found"));
+
+        if ("prihvacena".equalsIgnoreCase(ponuda.getStatus())) {
+            throw new IllegalStateException("Accepted offer cannot be deleted.");
+        }
+
+        ponudaRepository.delete(ponuda);
+    }
 }

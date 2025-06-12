@@ -20,8 +20,8 @@ export const ProjektDetalji: React.FC = () => {
   const [prikaziFormu, setPrikaziFormu] = useState(false);
   const jePonuditelj = authService.isUserInRole('ponuditelj');
   const [ponude, setPonude] = useState<Ponuda[] | null>(null);
-
   const ulogiraniKorisnik = authService.getCurrentUser();
+  const [, setPonudaZaUredi] = useState<Ponuda | null>(null);
 
   useEffect(() => {
     const dohvatiProjekt = async () => {
@@ -83,6 +83,40 @@ export const ProjektDetalji: React.FC = () => {
     }
   }
 
+
+  const onEditPonuda = (ponuda: Ponuda) => {
+    setPonudaZaUredi(ponuda);
+    setPrikaziFormu(true);
+  };
+
+  const onDeletePonuda = async (ponudaId: number) => {
+    if (!window.confirm('Jeste li sigurni da želite obrisati ovu ponudu?')) return;
+    try {
+      await axiosInstance.delete(`/ponude/${ponudaId}`);
+      const ponudeResponse = await axiosInstance.get<Ponuda[]>(`/ponude/projekt/${id}`);
+      setPonude(ponudeResponse.data);
+    } catch (error) {
+      console.error(error);
+      alert('Greška prilikom brisanja ponude.');
+    }
+  };
+
+  const obrisiProjekt = async () => {
+    if (!window.confirm('Jeste li sigurni da želite obrisati ovaj projekt?')) return;
+    try {
+      await axiosInstance.delete(`/projekti/${id}`);
+      alert('Projekt je obrisan.');
+      window.location.href = '/korisnik/projekti';
+    } catch (error) {
+      console.error(error);
+      alert('Greška prilikom brisanja projekta.');
+    }
+  };
+
+  const urediProjekt = () => {
+    window.location.href = `/projekti/${id}/uredi`;
+  };
+
   const formatDatum = (datum: string) =>
     new Date(datum).toLocaleDateString('hr-HR', {
       day: '2-digit',
@@ -110,6 +144,12 @@ export const ProjektDetalji: React.FC = () => {
     return 'Nepoznati korisnik';
   };
 
+  const ponuditeljVecPoslaoPonudu = ponude?.some(
+    (ponuda) => ponuda.ponuditelj.email === ulogiraniKorisnik
+  );
+
+  const projektImaUgovor = ponude?.some(ponuda => ponuda.status === 'prihvacena');
+
   if (ucitavanje) return <>
     <Header/>
     <div className="container max-w-8xl mx-auto text-center">
@@ -129,10 +169,6 @@ export const ProjektDetalji: React.FC = () => {
     </div>
   </>;
 
-  const ponuditeljVecPoslaoPonudu = ponude?.some(
-    (ponuda) => ponuda.ponuditelj.email === ulogiraniKorisnik
-  );
-
   return (
     <>
       <Header/>
@@ -140,7 +176,22 @@ export const ProjektDetalji: React.FC = () => {
       <div className="container max-w-8xl mx-auto rounded-lg px-3 sm:px-6 lg:px-9">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{projekt.naziv}</h1>
-          <span className="text-gray-500">ID: {projekt.id}</span>
+          {ulogiraniKorisnik === korisnik?.email && !projektImaUgovor && (
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={urediProjekt}
+                className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              >
+                Uredi projekt
+              </button>
+              <button
+                onClick={obrisiProjekt}
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Obriši projekt
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -183,6 +234,7 @@ export const ProjektDetalji: React.FC = () => {
             </div>
           </div>
 
+
           {!ulogiraniKorisnik && (
             <Link
               to={"/login"}
@@ -222,7 +274,8 @@ export const ProjektDetalji: React.FC = () => {
         )}
 
         {ponude && (
-          <PonudaPopis ponude={ponude} formatDatum={formatDatum} onPrihvatiPonudu={stvoriUgovor} korisnik={korisnik}/>
+          <PonudaPopis ponude={ponude} formatDatum={formatDatum} onPrihvatiPonudu={stvoriUgovor} korisnik={korisnik}
+                       onEditPonuda={onEditPonuda} onDeletePonuda={onDeletePonuda}/>
         )}
       </div>
     </>

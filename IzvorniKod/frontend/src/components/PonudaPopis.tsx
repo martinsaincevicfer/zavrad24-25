@@ -9,9 +9,18 @@ interface PonudaPopisProps {
   formatDatum: (datum: string) => string;
   onPrihvatiPonudu: (ponudaId: number) => Promise<void>;
   korisnik: Korisnik | null;
+  onEditPonuda: (ponuda: Ponuda) => void;
+  onDeletePonuda: (ponudaId: number) => void;
 }
 
-const PonudaPopis: React.FC<PonudaPopisProps> = ({ponude, formatDatum, onPrihvatiPonudu, korisnik}) => {
+const PonudaPopis: React.FC<PonudaPopisProps> = ({
+                                                   ponude,
+                                                   formatDatum,
+                                                   onPrihvatiPonudu,
+                                                   korisnik,
+                                                   onEditPonuda,
+                                                   onDeletePonuda,
+                                                 }) => {
   const ulogiraniKorisnik = authService.getCurrentUser();
 
   return (
@@ -52,6 +61,23 @@ const PonudaPopis: React.FC<PonudaPopisProps> = ({ponude, formatDatum, onPrihvat
                 >
                   Prihvati ponudu
                 </button>
+              )}
+
+              {ponuda.ponuditelj.email === ulogiraniKorisnik && ponuda.status !== 'prihvacena' && (
+                <div className="mt-2 flex gap-2">
+                  <button
+                    onClick={() => onEditPonuda(ponuda)}
+                    className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                  >
+                    Uredi
+                  </button>
+                  <button
+                    onClick={() => onDeletePonuda(ponuda.id)}
+                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Obriši
+                  </button>
+                </div>
               )}
             </li>
           ))}

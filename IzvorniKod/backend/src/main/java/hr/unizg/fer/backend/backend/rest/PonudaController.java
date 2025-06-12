@@ -44,4 +44,16 @@ public class PonudaController {
         ponudaService.createPonuda(ponudaFormDTO);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{ponudaId}")
+    public ResponseEntity<PonudaDTO> updatePonuda(@PathVariable Integer ponudaId, @Validated @RequestBody PonudaFormDTO ponudaFormDTO) {
+        PonudaDTO updated = ponudaService.updatePonuda(ponudaId, ponudaFormDTO);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{ponudaId}")
+    public ResponseEntity<Void> deletePonuda(@PathVariable Integer ponudaId) {
+        ponudaService.deletePonuda(ponudaId);
+        return ResponseEntity.noContent().build();
+    }
 }

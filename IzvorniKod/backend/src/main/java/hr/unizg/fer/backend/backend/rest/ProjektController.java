@@ -55,4 +55,16 @@ public class ProjektController {
         projektService.zatvoriProjekt(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProjektFormDTO> updateProjekt(@PathVariable Integer id, @Valid @RequestBody ProjektDTO projektDTO) {
+        ProjektFormDTO updatedProjekt = projektService.updateProjekt(id, projektDTO);
+        return ResponseEntity.ok(updatedProjekt);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProjekt(@PathVariable Integer id) {
+        projektService.deleteProjekt(id);
+        return ResponseEntity.noContent().build();
+    }
 }
