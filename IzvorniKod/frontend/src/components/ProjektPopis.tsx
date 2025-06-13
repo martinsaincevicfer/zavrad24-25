@@ -36,8 +36,7 @@ export const ProjektPopis: React.FC = () => {
     },
   });
 
-  const onSubmit = useCallback(async (data: SearchForm) => {
-    setUcitavanje(true);
+  const fetchData = useCallback(async (data: SearchForm) => {
     setGreska(null);
     try {
       const params: Record<string, string | number> = {};
@@ -56,21 +55,24 @@ export const ProjektPopis: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    onSubmit(methods.getValues());
-  }, [methods, onSubmit]);
+  const fetchDataRef = React.useRef(fetchData);
 
-  const debouncedOnSubmit = React.useMemo(
-    () => debounce(onSubmit, 500),
-    [onSubmit]
+  useEffect(() => {
+    fetchDataRef.current = fetchData;
+  }, [fetchData]);
+
+  const debouncedFetchDataRef = React.useRef(
+    debounce((data: SearchForm) => fetchDataRef.current(data), 500)
   );
 
   useEffect(() => {
     const subscription = methods.watch((values) => {
-      debouncedOnSubmit(values as SearchForm);
+      debouncedFetchDataRef.current(values as SearchForm);
     });
+    setUcitavanje(true);
+    fetchData(methods.getValues());
     return () => subscription.unsubscribe();
-  }, [debouncedOnSubmit, methods]);
+  }, [fetchData, methods]);
 
   if (ucitavanje) return <>
     <Header/>

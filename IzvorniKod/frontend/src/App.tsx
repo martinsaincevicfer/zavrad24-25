@@ -15,6 +15,7 @@ import MojePonude from "./components/MojePonude.tsx";
 import MojiUgovori from "./components/MojiUgovori.tsx";
 import UgovorDetalji from "./components/UgovorDetalji.tsx";
 import EditProjekt from "./components/EditProjekt.tsx";
+import ZabranjenPristup from "./components/ZabranjenPristup.tsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/homepage" element={<Homepage/>}/>
         <Route path="/" element={<Navigate to="/homepage"/>}/>
+        <Route path="/zabranjeno" element={<ZabranjenPristup/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/registracija/osoba" element={<RegistracijaOsoba/>}/>
         <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka/>}/>
@@ -65,7 +67,7 @@ function App() {
           </PrivateRoute>
         }/>
         <Route path="/ponuditelj/ponude" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'ponuditelj'}>
             <MojePonude/>
           </PrivateRoute>
         }/>

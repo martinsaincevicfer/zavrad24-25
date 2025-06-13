@@ -1,6 +1,5 @@
 package hr.unizg.fer.backend.backend.rest;
 
-import hr.unizg.fer.backend.backend.domain.Vjestina;
 import hr.unizg.fer.backend.backend.dto.ProjektDTO;
 import hr.unizg.fer.backend.backend.dto.ProjektFormDTO;
 import hr.unizg.fer.backend.backend.service.ProjektService;
@@ -45,7 +44,7 @@ public class ProjektController {
             @RequestParam(required = false) String naziv,
             @RequestParam(required = false) BigDecimal budzet,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate rokIzrade,
-            @RequestParam(required = false) Set<Vjestina> vjestine
+            @RequestParam(required = false) Set<Integer> vjestine
     ) {
         return ResponseEntity.ok(projektService.searchProjekti(naziv, budzet, rokIzrade, vjestine));
     }

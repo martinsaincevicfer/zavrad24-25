@@ -54,37 +54,45 @@ const VjestinaAutocomplete: React.FC<Props> = ({name}) => {
             <input
               type="text"
               value={input}
-              onChange={handleInputChange}
+              onChange={e => {
+                handleInputChange(e);
+                field.onChange(field.value);
+              }}
               className="w-full p-2 border rounded"
               placeholder="Pretraži vještine..."
-              onFocus={handleInputChange}
+              onFocus={e => {
+                handleInputChange(e);
+                field.onChange(field.value);
+              }}
               onBlur={() => setOptions([])}
             />
-            <div className="bg-white dark:bg-gray-700 border absolute z-10 max-h-1/5 overflow-y-scroll">
-              {options.map((v) => {
-                const isSelected = field.value.includes(v.id);
-                return (
-                  <div
-                    key={v.id}
-                    onMouseDown={() => {
-                      if (isSelected) {
-                        field.onChange(field.value.filter((vid: number) => vid !== v.id));
-                        setSelected(selected.filter((s) => s.id !== v.id));
-                      } else {
-                        field.onChange([...field.value, v.id]);
-                        setSelected([...selected, v]);
-                      }
-                      setInput('');
-                      setOptions([]);
-                    }}
-                    className="text-black dark:text-white cursor-pointer p-2 flex items-center"
-                  >
-                    {isSelected && <span className="mr-2"><Check/></span>}
-                    {v.naziv}
-                  </div>
-                );
-              })}
-            </div>
+            {options.length > 0 && (
+              <div className="bg-white dark:bg-gray-700 border absolute z-10 max-h-1/5 overflow-y-scroll">
+                {options.map((v) => {
+                  const isSelected = field.value.includes(v.id);
+                  return (
+                    <div
+                      key={v.id}
+                      onMouseDown={() => {
+                        if (isSelected) {
+                          field.onChange(field.value.filter((vid: number) => vid !== v.id));
+                          setSelected(selected.filter((s) => s.id !== v.id));
+                        } else {
+                          field.onChange([...field.value, v.id]);
+                          setSelected([...selected, v]);
+                        }
+                        setInput('');
+                        setOptions([]);
+                      }}
+                      className="text-black dark:text-white cursor-pointer p-2 flex items-center"
+                    >
+                      {isSelected && <span className="mr-2"><Check/></span>}
+                      {v.naziv}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <div className="flex flex-wrap mt-2 gap-1">
               {field.value.map((id: number) => {
                 const v = selected.find((o) => o.id === id);

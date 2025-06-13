@@ -28,16 +28,20 @@ public class ProjektSpecification {
         return (root, query, cb) -> {
             if (vjestine == null || vjestine.isEmpty()) return null;
             var join = root.joinSet("vjestine");
-            if (query != null && !Long.class.equals(query.getResultType())) {
+            if (query != null) {
                 query.groupBy(root.get("id"));
-                query.where(join.in(vjestine));
                 query.having(cb.equal(cb.countDistinct(join), vjestine.size()));
             }
-            return cb.conjunction();
+            return join.in(vjestine);
         };
     }
 
     public static Specification<Projekt> isOtvoren() {
         return (root, query, cb) -> cb.equal(root.get("status"), "otvoren");
+    }
+
+    public static Specification<Projekt> notNarucitelj(String email) {
+        return (root, query, cb) -> email == null ? null :
+                cb.notEqual(root.get("narucitelj").get("email"), email);
     }
 }

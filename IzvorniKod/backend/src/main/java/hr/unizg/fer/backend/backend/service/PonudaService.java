@@ -35,6 +35,7 @@ public class PonudaService {
     public PonudaDTO findById(Integer ponudaId) {
         Ponuda ponuda = ponudaRepository.findById(ponudaId)
                 .orElseThrow(() -> new IllegalArgumentException("Ponuda not found"));
+        updateStatusIfExpired(ponuda);
         return mapToDTO(ponuda);
     }
 
@@ -45,9 +46,9 @@ public class PonudaService {
                 .orElseThrow(() -> new IllegalArgumentException("Ponuditelj not found"))
                 .getPonuditelj();
 
-        return ponudaRepository.findByPonuditelj(ponuditelj).stream()
-                .map(this::mapToDTO)
-                .toList();
+        List<Ponuda> ponude = ponudaRepository.findByPonuditelj(ponuditelj);
+        ponude.forEach(this::updateStatusIfExpired);
+        return ponude.stream().map(this::mapToDTO).toList();
     }
 
     @Transactional
@@ -55,9 +56,9 @@ public class PonudaService {
         Projekt projekt = projektRepository.findById(projektId)
                 .orElseThrow(() -> new IllegalArgumentException("Projekt not found"));
 
-        return ponudaRepository.findByProjekt(projekt).stream()
-                .map(this::mapToDTO)
-                .toList();
+        List<Ponuda> ponude = ponudaRepository.findByProjekt(projekt);
+        ponude.forEach(this::updateStatusIfExpired);
+        return ponude.stream().map(this::mapToDTO).toList();
     }
 
     @Transactional
@@ -133,5 +134,14 @@ public class PonudaService {
         }
 
         ponudaRepository.delete(ponuda);
+    }
+
+    private void updateStatusIfExpired(Ponuda ponuda) {
+        if ("aktivna".equalsIgnoreCase(ponuda.getStatus()) &&
+                ponuda.getRokZaPrihvacanje() != null &&
+                Instant.now().isAfter(ponuda.getRokZaPrihvacanje())) {
+            ponuda.setStatus("istekla");
+            ponudaRepository.save(ponuda);
+        }
     }
 }

@@ -8,9 +8,15 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({children, requiredRole}) => {
-  if (!authService.getToken() || authService.isTokenExpired() || (requiredRole && !authService.isUserInRole(requiredRole))) {
+  const isLoggedIn = !!authService.getToken() && !authService.isTokenExpired();
+
+  if (!isLoggedIn) {
     authService.logout();
     return <Navigate to="/login"/>;
+  }
+
+  if (requiredRole && !authService.isUserInRole(requiredRole)) {
+    return <Navigate to="/zabranjeno"/>;
   }
 
   return children;

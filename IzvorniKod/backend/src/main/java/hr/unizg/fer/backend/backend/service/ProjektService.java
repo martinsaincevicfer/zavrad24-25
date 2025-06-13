@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -38,12 +39,20 @@ public class ProjektService {
     }
 
     @Transactional
-    public List<ProjektDTO> searchProjekti(String naziv, BigDecimal budzet, LocalDate rokIzrade, Set<Vjestina> vjestine) {
+    public List<ProjektDTO> searchProjekti(String naziv, BigDecimal budzet, LocalDate rokIzrade, Set<Integer> vjestine) {
+        Set<Vjestina> vjestinaEntities = vjestine == null ? null :
+                new HashSet<>(vjestinaRepository.findAllById(vjestine));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
         Specification<Projekt> spec = Specification.where(isOtvoren())
                 .and(hasNaziv(naziv))
                 .and(hasBudzet(budzet))
                 .and(hasRokIzrade(rokIzrade))
-                .and(hasVjestine(vjestine));
+                .and(hasVjestine(vjestinaEntities))
+                .and(notNarucitelj(email));
+
         return projektRepository.findAll(spec)
                 .stream()
                 .map(ProjektDTO::new)
