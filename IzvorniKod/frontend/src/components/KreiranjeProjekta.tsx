@@ -3,7 +3,6 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 import axiosInstance from '../utils/axiosConfig';
-import Header from './Header';
 import {useNavigate} from 'react-router-dom';
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
 
@@ -55,7 +54,6 @@ const KreiranjeProjekta: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="max-w-4xl mx-auto p-6 rounded">
         <h1 className="text-2xl font-bold mb-6 text-center">Kreiraj Novi Projekt</h1>
         <FormProvider {...methods}>

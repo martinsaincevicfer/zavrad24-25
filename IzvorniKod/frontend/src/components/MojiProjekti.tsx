@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {Projekt} from "../types/Projekt";
-import Header from "./Header";
 import {Link} from "react-router-dom";
 
 
@@ -28,7 +27,6 @@ export const MojiProjekti: React.FC = () => {
 
   if (ucitavanje) return (
     <>
-      <Header/>
       <div className="flex justify-center items-center min-h-screen">
         Učitavanje...
       </div>
@@ -36,7 +34,6 @@ export const MojiProjekti: React.FC = () => {
   );
   if (greska) return (
     <>
-      <Header/>
       <div className="flex justify-center items-center min-h-screen text-red-500">
         {greska}
       </div>
@@ -46,7 +43,6 @@ export const MojiProjekti: React.FC = () => {
   if (!projekti.length)
     return (
       <>
-        <Header/>
         <div className="container max-w-8xl mx-auto px-4 py-6">
           <h1 className="text-2xl font-bold mb-4">Moji projekti</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-large text-center text-gray-600">
@@ -58,7 +54,6 @@ export const MojiProjekti: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-4 text-center">Moji projekti</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

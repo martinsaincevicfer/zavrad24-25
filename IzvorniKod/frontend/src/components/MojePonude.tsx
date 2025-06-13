@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {Ponuda} from "../types/Ponuda.ts";
-import Header from "./Header";
 
 const MojePonude: React.FC = () => {
   const [ponude, setPonude] = useState<Ponuda[]>([]);
@@ -70,7 +69,6 @@ const MojePonude: React.FC = () => {
   if (loading) {
     return (
       <>
-        <Header/>
         <div className="flex justify-center items-center min-h-screen">Učitavanje...</div>
       </>
     );
@@ -78,7 +76,6 @@ const MojePonude: React.FC = () => {
   if (error) {
     return (
       <>
-        <Header/>
         <div className="text-red-500 flex justify-center items-center min-h-screen">{error}</div>
       </>
     );
@@ -86,7 +83,6 @@ const MojePonude: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="max-w-8xl mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Moje ponude</h1>
         {ponude.length === 0 ? (

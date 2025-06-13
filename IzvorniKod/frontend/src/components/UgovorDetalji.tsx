@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import Header from "./Header";
 import axiosInstance from "../utils/axiosConfig";
 import {Ugovor} from "../types/Ugovor.ts";
 import {useForm} from "react-hook-form";
@@ -81,7 +80,6 @@ const UgovorDetalji: React.FC = () => {
   if (loading) {
     return (
       <>
-        <Header/>
         <div className="flex justify-center items-center min-h-screen">Učitavanje...</div>
       </>
     );
@@ -89,7 +87,6 @@ const UgovorDetalji: React.FC = () => {
   if (error) {
     return (
       <>
-        <Header/>
         <div className="text-red-500 flex justify-center items-center min-h-screen">{error}</div>
       </>
     );
@@ -97,7 +94,6 @@ const UgovorDetalji: React.FC = () => {
   if (!ugovor) {
     return (
       <>
-        <Header/>
         <div className="flex justify-center items-center min-h-screen">
           Ugovor nije pronađen.
         </div>
@@ -107,7 +103,6 @@ const UgovorDetalji: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-6">Detalji ugovora</h1>
         <div className="p-6">

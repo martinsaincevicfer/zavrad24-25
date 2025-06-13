@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
-import Header from './Header';
 import {Link} from 'react-router-dom';
 import {Korisnik} from "../types/Korisnik.ts";
 import {Ponuditelj} from "../types/Ponuditelj.ts";
@@ -60,7 +59,6 @@ const Profil = () => {
   if (loading) {
     return (
       <>
-        <Header/>
         <div className="flex justify-center items-center min-h-screen">
           <div className="text-xl">Učitavanje...</div>
         </div>
@@ -70,7 +68,6 @@ const Profil = () => {
   if (userError) {
     return (
       <>
-        <Header/>
         <div className="flex justify-center items-center min-h-screen">
           <div className="text-red-500">{userError}</div>
         </div>
@@ -80,7 +77,6 @@ const Profil = () => {
 
   return (
     <>
-      <Header/>
       <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9 flex flex-col items-center">
         <h1 className="text-3xl mt-3 font-bold mb-6">Moj Profil</h1>
         <div className="space-y-4 grid grid-cols-2 gap-4">

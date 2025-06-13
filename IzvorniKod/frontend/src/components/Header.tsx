@@ -55,8 +55,9 @@ const Header = () => {
   };
 
   return (
-    <header className="min-w-screen bg-gray-100 dark:bg-black p-4">
-      <nav className="max-w-8xl mx-auto flex justify-between items-center">
+    <header
+      className="min-w-screen fixed top-0 left-0 w-full z-50 bg-gray-100 dark:bg-black bg-opacity-80 backdrop-blur h-16">
+      <nav className="max-w-8xl mx-auto flex justify-between items-center px-4 h-full">
         <div className="flex items-center gap-4">
           <Link
             to="/"
@@ -66,17 +67,17 @@ const Header = () => {
             Naslovnica
           </Link>
 
-          {jePonuditelj && (
-            <Link
-              to="/projekti"
-              className="px-4 py-2 text-white hover:text-gray-300 flex items-center gap-1"
-            >
-              <Search/>
-              Pronađi posao
-            </Link>
-          )}
-
           <div className={`lg:flex gap-4 justify-between items-center hidden`}>
+            {jePonuditelj && (
+              <Link
+                to="/projekti"
+                className="px-4 py-2 text-white hover:text-gray-300 flex items-center gap-1"
+              >
+                <Search/>
+                Pronađi posao
+              </Link>
+            )}
+
             {isLoggedIn && (
               <Link
                 to="/korisnik/projekti"

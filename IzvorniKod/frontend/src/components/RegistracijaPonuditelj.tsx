@@ -4,7 +4,6 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useNavigate} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
-import Header from './Header';
 import {LoginResponse} from "../types/Auth.ts";
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
 
@@ -53,7 +52,6 @@ const RegistracijaPonuditelj: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="max-w-8xl mx-auto flex flex-col items-center justify-center">
         <h2 className="text-center text-3xl font-extrabold">Registriraj se kao ponuditelj</h2>
         <FormProvider {...methods}>

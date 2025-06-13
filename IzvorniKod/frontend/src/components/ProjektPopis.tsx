@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Projekt} from '../types/Projekt.ts';
-import Header from "./Header.tsx";
 import axiosInstance from "../utils/axiosConfig.ts";
 import {FormProvider, useForm} from "react-hook-form";
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
@@ -75,70 +74,67 @@ export const ProjektPopis: React.FC = () => {
   }, [fetchData, methods]);
 
   if (ucitavanje) return <>
-    <Header/>
     <div className="flex justify-center items-center min-h-screen">
       Učitavanje...
     </div>
   </>;
   if (greska) return <>
-    <Header/>
     <div className="flex justify-center items-center min-h-screen text-red-500 p-4">
       {greska}
     </div>
   </>;
 
   return (
-    <>
-      <Header/>
-      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-2xl font-bold mb-6">Popis projekata</h1>
-        <FormProvider {...methods}>
-          <form
-            onSubmit={e => e.preventDefault()}
-            className="space-y-4 mb-8">
-            <div className="flex gap-2 items-center">
+    <div className="container min-w-full mt-5 px-3 sm:px-6 lg:px-9">
+      <h1 className="text-xl md:text-2xl font-bold mb-6">Popis projekata</h1>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={e => e.preventDefault()}
+          className="space-y-4 mb-8">
+          <div className="flex gap-2 items-center">
+            <input
+              {...methods.register('naziv')}
+              type="text"
+              placeholder="Naziv projekta"
+              className="w-8/10 md:9/10 p-2 border rounded"
+            />
+            <button
+              type="button"
+              className="bg-blue-500 text-white px-4 rounded hover:bg-blue-600"
+              onClick={() => setShowFilters(f => !f)}
+            >
+              {showFilters ? 'Sakrij filtere' : 'Prikaži filtere'}
+            </button>
+          </div>
+          {showFilters && (
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
-                {...methods.register('naziv')}
-                type="text"
-                placeholder="Naziv projekta"
-                className="w-9/10 p-2 border rounded"
+                {...methods.register('budzet')}
+                type="number"
+                placeholder="Minimalni budžet"
+                className="w-auto md:w-1/4 p-2 border rounded"
+                min={0}
               />
+              <input
+                {...methods.register('rokIzrade')}
+                type="date"
+                className="w-1/2 md:w-1/4 p-2 border rounded"
+              />
+              <VjestinaAutocomplete name="vjestine"/>
               <button
                 type="button"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                onClick={() => setShowFilters(f => !f)}
+                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                onClick={() => methods.reset()}
+                disabled={ucitavanje}
               >
-                {showFilters ? 'Sakrij filtere' : 'Prikaži filtere'}
+                Očisti filtere
               </button>
             </div>
-            {showFilters && (
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  {...methods.register('budzet')}
-                  type="number"
-                  placeholder="Minimalni budžet"
-                  className="w-1/2 md:w-1/4 p-2 border rounded"
-                  min={0}
-                />
-                <input
-                  {...methods.register('rokIzrade')}
-                  type="date"
-                  className="w-1/2 md:w-1/4 p-2 border rounded"
-                />
-                <VjestinaAutocomplete name="vjestine"/>
-                <button
-                  type="button"
-                  className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
-                  onClick={() => methods.reset()}
-                  disabled={ucitavanje}
-                >
-                  Očisti filtere
-                </button>
-              </div>
-            )}
-          </form>
-        </FormProvider>
-        {greska && <div className="text-red-500 mb-4">{greska}</div>}
+          )}
+        </form>
+      </FormProvider>
+      {greska && <div className="text-red-500 mb-4">{greska}</div>}
+      <div className="grid-container h-[595px] overflow-y-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projekti.map((projekt) => (
             <Link
@@ -173,6 +169,6 @@ export const ProjektPopis: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };

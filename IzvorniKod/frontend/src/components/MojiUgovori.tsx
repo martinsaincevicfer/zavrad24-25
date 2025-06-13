@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
-import Header from "./Header";
 import {Ugovor} from "../types/Ugovor";
 import {authService} from "../services/authService.ts";
 import {Link} from "react-router-dom";
@@ -31,18 +30,15 @@ const MojiUgovori: React.FC = () => {
 
   if (ucitavanje) return (
     <>
-      <Header/>
       <div className="flex justify-center items-center min-h-screen">Učitavanje ugovora...</div>
     </>);
   if (greska) return (
     <>
-      <Header/>
       <div className="text-red-500 flex justify-center items-center min-h-screen">{greska}</div>
     </>);
 
   return (
     <>
-      <Header/>
       <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
         <h1 className="text-2xl font-bold mb-4 text-center">Moji ugovori</h1>
         {ugovori.length === 0 ? (

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {Projekt} from '../types/Projekt';
-import Header from './Header';
 import axiosInstance from '../utils/axiosConfig';
 import {authService} from '../services/authService';
 import {Ponuda} from "../types/Ponuda.ts";
@@ -151,19 +150,16 @@ export const ProjektDetalji: React.FC = () => {
   const projektImaUgovor = ponude?.some(ponuda => ponuda.status === 'prihvacena');
 
   if (ucitavanje) return <>
-    <Header/>
     <div className="container max-w-8xl mx-auto text-center">
       Učitavanje...
     </div>
   </>;
   if (greska) return <>
-    <Header/>
     <div className="container max-w-8xl mx-auto text-center text-red-500 p-4">
       {greska}
     </div>
   </>;
   if (!projekt) return <>
-    <Header/>
     <div className="container max-w-8xl mx-auto text-center p-4">
       Projekt nije pronađen.
     </div>
@@ -171,8 +167,6 @@ export const ProjektDetalji: React.FC = () => {
 
   return (
     <>
-      <Header/>
-
       <div className="container max-w-8xl mx-auto rounded-lg px-3 sm:px-6 lg:px-9">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">{projekt.naziv}</h1>

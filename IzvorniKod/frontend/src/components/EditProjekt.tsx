@@ -4,7 +4,6 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {z} from 'zod';
 import axiosInstance from '../utils/axiosConfig';
 import {useNavigate, useParams} from 'react-router-dom';
-import Header from './Header';
 import VjestinaAutocomplete from './VjestinaAutocomplete';
 import {Projekt} from "../types/Projekt.ts";
 import {Vjestina} from "../types/Vjestina.ts";
@@ -61,7 +60,6 @@ const EditProjekt: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="max-w-4xl mx-auto p-6 rounded">
         <h1 className="text-2xl font-bold mb-6 text-center">Uredi Projekt</h1>
         <FormProvider {...methods}>

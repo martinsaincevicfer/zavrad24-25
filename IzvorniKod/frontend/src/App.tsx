@@ -16,69 +16,69 @@ import MojiUgovori from "./components/MojiUgovori.tsx";
 import UgovorDetalji from "./components/UgovorDetalji.tsx";
 import EditProjekt from "./components/EditProjekt.tsx";
 import ZabranjenPristup from "./components/ZabranjenPristup.tsx";
+import Layout from "./components/Layout.tsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/homepage" element={<Homepage/>}/>
+        <Route path="/homepage" element={
+          <Layout><Homepage/></Layout>}/>
         <Route path="/" element={<Navigate to="/homepage"/>}/>
-        <Route path="/zabranjeno" element={<ZabranjenPristup/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/registracija/osoba" element={<RegistracijaOsoba/>}/>
-        <Route path="/registracija/tvrtka" element={<RegistracijaTvrtka/>}/>
+        <Route path="/zabranjeno" element={<Layout><ZabranjenPristup/></Layout>}/>
+        <Route path="/login" element={<Layout><Login/></Layout>}/>
+        <Route path="/registracija/osoba" element={<Layout><RegistracijaOsoba/></Layout>}/>
+        <Route path="/registracija/tvrtka" element={<Layout><RegistracijaTvrtka/></Layout>}/>
         <Route
           path="/registracija/ponuditelj"
           element={
             <PrivateRoute>
-              <RegistracijaPonuditelj/>
+              <Layout><RegistracijaPonuditelj/></Layout>
             </PrivateRoute>
-          }
-        />
+          }/>
         <Route path="/profil" element={
           <PrivateRoute>
-            <Profil/>
+            <Layout><Profil/></Layout>
           </PrivateRoute>
-        }
-        />
-        <Route path="/projekti" element={<ProjektPopis/>}/>
-        <Route path="/projekti/:id" element={<ProjektDetalji/>}/>
+        }/>
+        <Route path="/projekti" element={<Layout><ProjektPopis/></Layout>}/>
+        <Route path="/projekti/:id" element={<Layout><ProjektDetalji/></Layout>}/>
         <Route path="/projekti/:id/uredi" element={
           <PrivateRoute>
-            <EditProjekt/>
+            <Layout><EditProjekt/></Layout>
           </PrivateRoute>
-        }
-        />
+        }/>
         <Route path="/ponuditelji/:id" element={
           <PrivateRoute>
-            <PonuditeljDetalji/>
+            <Layout><PonuditeljDetalji/></Layout>
+
           </PrivateRoute>
-        }
-        />
+        }/>
         <Route path="/projekti/stvori" element={
           <PrivateRoute>
-            <KreiranjeProjekta/>
+            <Layout><KreiranjeProjekta/></Layout>
+
           </PrivateRoute>
-        }
-        />
+        }/>
         <Route path="/korisnik/projekti" element={
           <PrivateRoute>
-            <MojiProjekti/>
+            <Layout><MojiProjekti/></Layout>
+
           </PrivateRoute>
         }/>
         <Route path="/ponuditelj/ponude" element={
           <PrivateRoute requiredRole={'ponuditelj'}>
-            <MojePonude/>
+            <Layout><MojePonude/></Layout>
           </PrivateRoute>
         }/>
         <Route path="/ugovori" element={
           <PrivateRoute>
-            <MojiUgovori/>
+            <Layout><MojiUgovori/></Layout>
           </PrivateRoute>
         }/>
         <Route path="/ugovori/:id" element={
           <PrivateRoute>
-            <UgovorDetalji/>
+            <Layout><UgovorDetalji/></Layout>
           </PrivateRoute>
         }/>
       </Routes>

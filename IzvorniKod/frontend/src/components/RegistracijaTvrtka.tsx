@@ -3,7 +3,6 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import Header from './Header';
 import {authService} from "../services/authService.ts";
 
 const registracijaTvrtkaSchema = z.object({
@@ -49,7 +48,6 @@ const RegistracijaTvrtka = () => {
 
   return (
     <>
-      <Header/>
       <div className="max-w-8xl mx-auto px-3 rounded">
         <h1 className="text-xl font-bold mb-6 text-center">Registracija Tvrtke</h1>
         <form onSubmit={handleSubmit(onSubmit)}

@@ -4,7 +4,6 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useNavigate} from 'react-router-dom';
 import {authService} from '../services/authService';
-import Header from './Header';
 
 const loginSchema = z.object({
   email: z.string().email('Unesite valjan email.'),
@@ -36,7 +35,6 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Header/>
       <div className="container max-w-8xl mx-auto flex flex-col items-center">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold">
