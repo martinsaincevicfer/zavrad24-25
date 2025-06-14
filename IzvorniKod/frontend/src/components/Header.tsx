@@ -21,7 +21,9 @@ const Header = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const jeNarucitelj = authService.isUserInRole('narucitelj');
   const jePonuditelj = authService.isUserInRole('ponuditelj');
+  const jeAdministrator = authService.isUserInRole('administrator');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -78,7 +80,7 @@ const Header = () => {
               </Link>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn && !jeAdministrator && jeNarucitelj && (
               <Link
                 to="/korisnik/projekti"
                 className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
@@ -88,7 +90,7 @@ const Header = () => {
               </Link>
             )}
 
-            {jePonuditelj && (
+            {jePonuditelj && !jeAdministrator && (
               <div className="flex gap-2">
                 <Link to="/ponuditelj/ponude"
                       className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
@@ -98,7 +100,7 @@ const Header = () => {
               </div>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn && !jeAdministrator && jeNarucitelj && (
               <Link
                 to="/ugovori"
                 className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
@@ -117,7 +119,7 @@ const Header = () => {
         </button>
 
         <div className={`lg:flex gap-4 justify-between items-center hidden`}>
-          {isLoggedIn && (
+          {isLoggedIn && !jeAdministrator && jeNarucitelj && (
             <Link
               to="/projekti/stvori"
               className="px-4 py-2 hover:text-gray-300 text-white flex items-center gap-1"
@@ -177,7 +179,7 @@ const Header = () => {
               </Link>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn && !jeAdministrator && jeNarucitelj && (
               <Link
                 to="/korisnik/projekti"
                 className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
@@ -187,7 +189,7 @@ const Header = () => {
               </Link>
             )}
 
-            {jePonuditelj && (
+            {jePonuditelj && !jeAdministrator && (
               <div className="flex flex-col items-start gap-2">
                 <Link to="/ponuditelj/ponude"
                       className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
@@ -197,7 +199,7 @@ const Header = () => {
               </div>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn && !jeAdministrator && (
               <Link
                 to="/ugovori"
                 className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
@@ -206,7 +208,7 @@ const Header = () => {
               </Link>
             )}
 
-            {isLoggedIn && (
+            {isLoggedIn && !jeAdministrator && (
               <Link
                 to="/projekti/stvori"
                 className="text-white flex items-center gap-1"

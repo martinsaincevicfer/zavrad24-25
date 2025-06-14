@@ -223,11 +223,10 @@ export const ProjektDetalji: React.FC = () => {
               </div>
               <div className="flex justify-between border-b pb-2">
                 <span className="font-semibold">Korisnik:</span>
-                <span>{korisnik ? formatKorisnikPodaci(korisnik) : 'Učitavanje...'}</span>
+                <span>{projekt.narucitelj ? formatKorisnikPodaci(projekt.narucitelj) : 'Učitavanje...'}</span>
               </div>
             </div>
           </div>
-
 
           {!ulogiraniKorisnik && (
             <Link

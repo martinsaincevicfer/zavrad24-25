@@ -1,6 +1,6 @@
 INSERT INTO Uloga (naziv) VALUES
 ('ponuditelj'),
-('klijent'),
+('narucitelj'),
 ('administrator');
 
 -- Ivan - lozinka: lozinka123
@@ -90,13 +90,16 @@ INSERT INTO Korisnik (email, lozinka) VALUES ('klijent9@example.com', '$2a$10$Uu
 -- Klijent10 - lozinka: clientpass10
 INSERT INTO Korisnik (email, lozinka) VALUES ('klijent10@example.com', '$2a$10$gVjymEwb7SY4WFHMi33dO.w/zfWi.haK3qoTx4mK52ucWhpeH0/Jy');
 
+-- administrator - lozinka: administrator
+INSERT INTO Korisnik (email, lozinka) VALUES ('administrator@administrator.hr', '$2a$10$nb7QaOVw8NVhlFX2hn6STOrUApLk2DV7otdFOQWicSdGxLthVJ34C');
+
 INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
 (1, 2), (2, 2), (3, 2), (4, 2), (5, 2),
 (6, 2), (7, 2), (8, 2), (9, 2), (10, 2),
 (11, 2), (12, 2), (13, 2), (14, 2), (15, 2),
 (16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
 (21, 2), (22, 2), (23, 2), (24, 2), (25, 2),
-(26, 2), (27, 2), (28, 2), (29, 2);
+(26, 2), (27, 2), (28, 2), (29, 2), (30, 3);
 
 INSERT INTO KorisnikUloga (korisnik_id, uloga_id) VALUES
 (1, 1),
@@ -148,7 +151,8 @@ INSERT INTO Osoba (korisnik_id, ime, prezime, adresa) VALUES
 (26, 'Lana', 'Šimić', 'Dubrovnik'),
 (27, 'Zoran', 'Matić', 'Karlovac'),
 (28, 'Petra', 'Božić', 'Pula'),
-(29, 'Ivan', 'Krpan', 'Vinkovci');
+(29, 'Ivan', 'Krpan', 'Vinkovci'),
+(30, 'Administrator', 'Administrator', 'Admin adresa');
 
 INSERT INTO Ponuditelj (korisnik_id, kratki_opis, edukacija, iskustvo) VALUES
 (1, 'Stručnjak za web development', 'Fakultet računarstva', '5 godina iskustva u front-end razvoju'),

@@ -32,7 +32,7 @@ function App() {
         <Route
           path="/registracija/ponuditelj"
           element={
-            <PrivateRoute>
+            <PrivateRoute requiredRole={'narucitelj'}>
               <Layout><RegistracijaPonuditelj/></Layout>
             </PrivateRoute>
           }/>
@@ -44,26 +44,24 @@ function App() {
         <Route path="/projekti" element={<Layout><ProjektPopis/></Layout>}/>
         <Route path="/projekti/:id" element={<Layout><ProjektDetalji/></Layout>}/>
         <Route path="/projekti/:id/uredi" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><EditProjekt/></Layout>
           </PrivateRoute>
         }/>
         <Route path="/ponuditelji/:id" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><PonuditeljDetalji/></Layout>
-
           </PrivateRoute>
         }/>
         <Route path="/projekti/stvori" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><KreiranjeProjekta/></Layout>
 
           </PrivateRoute>
         }/>
         <Route path="/korisnik/projekti" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><MojiProjekti/></Layout>
-
           </PrivateRoute>
         }/>
         <Route path="/ponuditelj/ponude" element={
@@ -72,12 +70,12 @@ function App() {
           </PrivateRoute>
         }/>
         <Route path="/ugovori" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><MojiUgovori/></Layout>
           </PrivateRoute>
         }/>
         <Route path="/ugovori/:id" element={
-          <PrivateRoute>
+          <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><UgovorDetalji/></Layout>
           </PrivateRoute>
         }/>

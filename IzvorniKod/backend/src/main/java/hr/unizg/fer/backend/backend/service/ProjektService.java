@@ -73,11 +73,11 @@ public class ProjektService {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Nije pronađen korisnik: " + email));
 
-        boolean isKlijent = korisnik.getUloge().stream()
-                .anyMatch(uloga -> uloga.getNaziv().equals("klijent"));
+        boolean jeNarucitelj = korisnik.getUloge().stream()
+                .anyMatch(uloga -> uloga.getNaziv().equals("narucitelj"));
 
-        if (!isKlijent) {
-            throw new SecurityException("Pristup odbijen: korisnik nije klijent.");
+        if (!jeNarucitelj) {
+            throw new SecurityException("Pristup odbijen: korisnik nije narucitelj.");
         }
 
         Projekt projekt = new Projekt();
@@ -102,18 +102,18 @@ public class ProjektService {
     }
 
     @Transactional
-    public List<ProjektDTO> getProjektiZaKlijenta() {
+    public List<ProjektDTO> getProjektiZaNarucitelja() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
 
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Nije pronađen korisnik: " + email));
 
-        boolean isKlijent = korisnik.getUloge().stream()
-                .anyMatch(uloga -> uloga.getNaziv().equalsIgnoreCase("klijent"));
+        boolean jeNarucitelj = korisnik.getUloge().stream()
+                .anyMatch(uloga -> uloga.getNaziv().equalsIgnoreCase("narucitelj"));
 
-        if (!isKlijent) {
-            throw new SecurityException("Pristup odbijen: korisnik nije klijent.");
+        if (!jeNarucitelj) {
+            throw new SecurityException("Pristup odbijen: korisnik nije narucitelj.");
         }
 
         return korisnik.getProjekti().stream()

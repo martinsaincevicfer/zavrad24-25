@@ -13,6 +13,7 @@ const Profil = () => {
   const [userError, setUserError] = useState<string>('');
   const [freelancerError, setFreelancerError] = useState<string>('');
   const jePonuditelj = authService.isUserInRole('ponuditelj');
+  const jeAdministrator = authService.isUserInRole('administrator');
 
   const fetchUserProfile = async () => {
     try {
@@ -160,15 +161,17 @@ const Profil = () => {
               <div className="text-red-500">{freelancerError || 'Podaci o ponuditelju nisu dostupni.'}</div>
             )
           ) : (
-            <div className="flex flex-col items-center">
-              <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao ponuditelj.</p>
-              <Link
-                to={'/registracija/ponuditelj'}
-                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Registriraj se kao ponuditelj
-              </Link>
-            </div>
+            !jeAdministrator && (
+              <div className="flex flex-col items-center">
+                <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao ponuditelj.</p>
+                <Link
+                  to={'/registracija/ponuditelj'}
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                >
+                  Registriraj se kao ponuditelj
+                </Link>
+              </div>
+            )
           )}
         </div>
       </div>

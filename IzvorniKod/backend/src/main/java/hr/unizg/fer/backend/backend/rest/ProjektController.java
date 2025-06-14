@@ -35,8 +35,8 @@ public class ProjektController {
     }
 
     @GetMapping("/moji-projekti")
-    public ResponseEntity<List<ProjektDTO>> getProjektiZaUlogiranogKlijenta() {
-        return ResponseEntity.ok(projektService.getProjektiZaKlijenta());
+    public ResponseEntity<List<ProjektDTO>> getProjektiZaUlogiranogNarucitelja() {
+        return ResponseEntity.ok(projektService.getProjektiZaNarucitelja());
     }
 
     @GetMapping("/search")

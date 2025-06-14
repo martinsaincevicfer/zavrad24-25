@@ -39,7 +39,7 @@ public class KorisnikService {
     public Object getKorisnikDetails(String email) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
-
+        
         if (korisnik.getTvrtka() != null) {
             TvrtkaDTO tvrtkaDTO = new TvrtkaDTO();
             tvrtkaDTO.setId(korisnik.getId());
@@ -81,9 +81,9 @@ public class KorisnikService {
 
         korisnik.setOsoba(osoba);
 
-        Uloga klijentUloga = ulogaRepository.findById(2)
-                .orElseThrow(() -> new EntityNotFoundException("Uloga 'klijent' nije pronađena"));
-        korisnik.getUloge().add(klijentUloga);
+        Uloga naruciteljUloga = ulogaRepository.findById(2)
+                .orElseThrow(() -> new EntityNotFoundException("Uloga 'narucitelj' nije pronađena"));
+        korisnik.getUloge().add(naruciteljUloga);
 
         korisnikRepository.save(korisnik);
     }
@@ -106,9 +106,9 @@ public class KorisnikService {
 
         korisnik.setTvrtka(tvrtka);
 
-        Uloga klijentUloga = ulogaRepository.findById(2)
-                .orElseThrow(() -> new EntityNotFoundException("Uloga 'klijent' nije pronađena"));
-        korisnik.getUloge().add(klijentUloga);
+        Uloga naruciteljUloga = ulogaRepository.findById(2)
+                .orElseThrow(() -> new EntityNotFoundException("Uloga 'narucitelj' nije pronađena"));
+        korisnik.getUloge().add(naruciteljUloga);
 
         korisnikRepository.save(korisnik);
     }
