@@ -12,11 +12,17 @@ type DecodedToken = {
 };
 
 export const authService = {
+  notifyAuthChange(): void {
+    window.dispatchEvent(new Event('authChanged'));
+  },
+
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     const response = await axios.post<LoginResponse>(`${API_URL}/login`, credentials);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', response.data.email);
+      this.notifyRoleChange();
+      this.notifyAuthChange();
     }
     return response.data;
   },
@@ -24,6 +30,8 @@ export const authService = {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.notifyRoleChange();
+    this.notifyAuthChange();
   },
 
   getCurrentUser(): string | null {
@@ -62,5 +70,9 @@ export const authService = {
   isTokenExpired(): boolean {
     const expiration = this.getTokenExpiration();
     return expiration ? Date.now() > expiration : true;
+  },
+
+  notifyRoleChange(): void {
+    window.dispatchEvent(new Event('rolesChanged'));
   }
 };

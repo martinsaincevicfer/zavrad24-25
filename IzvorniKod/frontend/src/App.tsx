@@ -17,6 +17,7 @@ import UgovorDetalji from "./components/UgovorDetalji.tsx";
 import EditProjekt from "./components/EditProjekt.tsx";
 import ZabranjenPristup from "./components/ZabranjenPristup.tsx";
 import Layout from "./components/Layout.tsx";
+import AdminPanel from "./components/AdminPanel.tsx";
 
 function App() {
   return (
@@ -56,7 +57,6 @@ function App() {
         <Route path="/projekti/stvori" element={
           <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><KreiranjeProjekta/></Layout>
-
           </PrivateRoute>
         }/>
         <Route path="/korisnik/projekti" element={
@@ -77,6 +77,11 @@ function App() {
         <Route path="/ugovori/:id" element={
           <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><UgovorDetalji/></Layout>
+          </PrivateRoute>
+        }/>
+        <Route path="/admin" element={
+          <PrivateRoute requiredRole={'administrator'}>
+            <Layout><AdminPanel/></Layout>
           </PrivateRoute>
         }/>
       </Routes>

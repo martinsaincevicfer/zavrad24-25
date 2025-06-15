@@ -8,8 +8,11 @@ import {
   LogIn,
   LogOut,
   Menu,
+  Moon,
   Plus,
   Search,
+  ShieldUser,
+  Sun,
   User,
   UserPlus,
   X
@@ -21,24 +24,58 @@ const Header = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const jeNarucitelj = authService.isUserInRole('narucitelj');
-  const jePonuditelj = authService.isUserInRole('ponuditelj');
-  const jeAdministrator = authService.isUserInRole('administrator');
+  const [jeNarucitelj, setJeNarucitelj] = useState(false);
+  const [jePonuditelj, setJePonuditelj] = useState(false);
+  const [jeAdministrator, setJeAdministrator] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(
+    localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
+  );
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('user');
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
-    setIsLoggedIn(!!token);
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
-    if (email) {
-      try {
-        setUserEmail(email || null);
-      } catch (error) {
-        console.error("Neispravan format podataka u localStorage za ključ 'user'.", error);
-        setUserEmail(null);
-      }
-    }
+  useEffect(() => {
+    const updateAuth = () => {
+      const token = localStorage.getItem('token');
+      const email = localStorage.getItem('user');
+      setIsLoggedIn(!!token);
+      setUserEmail(email || null);
+      setJeNarucitelj(authService.isUserInRole('narucitelj'));
+      setJePonuditelj(authService.isUserInRole('ponuditelj'));
+      setJeAdministrator(authService.isUserInRole('administrator'));
+    };
+
+    updateAuth();
+
+    window.addEventListener('rolesChanged', updateAuth);
+    window.addEventListener('authChanged', updateAuth);
+
+    return () => {
+      window.removeEventListener('rolesChanged', updateAuth);
+      window.removeEventListener('authChanged', updateAuth);
+    };
+  }, []);
+
+  useEffect(() => {
+    const updateRoles = () => {
+      setJeNarucitelj(authService.isUserInRole('narucitelj'));
+      setJePonuditelj(authService.isUserInRole('ponuditelj'));
+      setJeAdministrator(authService.isUserInRole('administrator'));
+    };
+
+    updateRoles();
+
+    window.addEventListener('rolesChanged', updateRoles);
+
+    return () => {
+      window.removeEventListener('rolesChanged', updateRoles);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -108,17 +145,51 @@ const Header = () => {
                 Moji ugovori
               </Link>
             )}
+            {isLoggedIn && jeAdministrator && (
+              <Link
+                to="/admin"
+                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                <ShieldUser/>
+                Admin
+              </Link>
+            )}
           </div>
         </div>
 
-        <button
-          className="text-xl dark:text-white lg:hidden flex items-center"
-          onClick={toggleMenu}
-        >
-          {menuOpen ? <X/> : <Menu/>}
-        </button>
+        <div className="flex items-center gap-4 lg:hidden">
+          <button
+            onClick={toggleTheme}
+            className="ml-4 px-2 py-1 rounded text-black dark:text-white"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Moon/>
+            ) : (
+              <Sun/>
+            )}
+          </button>
+
+          <button
+            className="text-xl dark:text-white lg:hidden flex items-center"
+            onClick={toggleMenu}
+          >
+            {menuOpen ? <X/> : <Menu/>}
+          </button>
+        </div>
 
         <div className={`lg:flex gap-4 justify-between items-center hidden`}>
+          <button
+            onClick={toggleTheme}
+            className="ml-4 px-2 py-1 rounded text-black dark:text-white"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Moon/>
+            ) : (
+              <Sun/>
+            )}
+          </button>
+
           {isLoggedIn && !jeAdministrator && jeNarucitelj && (
             <Link
               to="/projekti/stvori"
@@ -205,6 +276,15 @@ const Header = () => {
                 className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
                 <FileUser/>
                 Moji ugovori
+              </Link>
+            )}
+
+            {isLoggedIn && jeAdministrator && (
+              <Link
+                to="/admin"
+                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                <ShieldUser/>
+                Admin
               </Link>
             )}
 

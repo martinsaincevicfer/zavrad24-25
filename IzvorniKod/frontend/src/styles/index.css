@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -25,11 +27,6 @@ a {
     text-decoration: inherit;
 }
 
-h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
-}
-
 button {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -46,9 +43,7 @@ button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        background-color: #242424;
-        color: rgba(255, 255, 255, 0.87);
-    }
+:root.dark {
+    background-color: #242424;
+    color: rgba(255, 255, 255, 0.87);
 }

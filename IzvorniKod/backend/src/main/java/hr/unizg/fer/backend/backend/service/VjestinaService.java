@@ -29,4 +29,29 @@ public class VjestinaService {
                 .map(VjestinaDTO::new)
                 .collect(Collectors.toList());
     }
+
+    public List<VjestinaDTO> getAllVjestine() {
+        return vjestinaRepository.findAll().stream()
+                .map(VjestinaDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public VjestinaDTO createVjestina(VjestinaDTO dto) {
+        Vjestina v = new Vjestina();
+        v.setNaziv(dto.getNaziv());
+        v.setKategorija(dto.getKategorija());
+        return new VjestinaDTO(vjestinaRepository.save(v));
+    }
+
+    public VjestinaDTO updateVjestina(Integer id, VjestinaDTO dto) {
+        Vjestina v = vjestinaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vještina not found"));
+        v.setNaziv(dto.getNaziv());
+        v.setKategorija(dto.getKategorija());
+        return new VjestinaDTO(vjestinaRepository.save(v));
+    }
+
+    public void deleteVjestina(Integer id) {
+        vjestinaRepository.deleteById(id);
+    }
 }
