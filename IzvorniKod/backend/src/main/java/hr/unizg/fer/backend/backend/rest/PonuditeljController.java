@@ -62,4 +62,11 @@ public class PonuditeljController {
 
         return ResponseEntity.ok(new LoginResponse(jwt, currentUserEmail));
     }
+
+    @PutMapping("/edit")
+    public ResponseEntity<?> updateCurrentPonuditelj(@Valid @RequestBody PonuditeljDTO dto) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        ponuditeljService.updatePonuditelj(email, dto);
+        return ResponseEntity.ok("Ponuditelj ažuriran!");
+    }
 }

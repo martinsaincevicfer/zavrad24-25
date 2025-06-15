@@ -12,10 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -59,5 +56,19 @@ public class AuthController {
     public ResponseEntity<?> registerTvrtka(@Valid @RequestBody TvrtkaDTO tvrtkaDTO) {
         korisnikService.registerTvrtka(tvrtkaDTO);
         return ResponseEntity.ok("Tvrtka registrirana uspješno!");
+    }
+
+    @PutMapping("/update/osoba")
+    public ResponseEntity<?> updateOsoba(@Valid @RequestBody OsobaDTO osobaDTO) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        korisnikService.updateOsoba(email, osobaDTO);
+        return ResponseEntity.ok("Osoba ažurirana!");
+    }
+
+    @PutMapping("/update/tvrtka")
+    public ResponseEntity<?> updateTvrtka(@Valid @RequestBody TvrtkaDTO tvrtkaDTO) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        korisnikService.updateTvrtka(email, tvrtkaDTO);
+        return ResponseEntity.ok("Tvrtka ažurirana!");
     }
 }

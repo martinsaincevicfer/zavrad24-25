@@ -39,7 +39,7 @@ public class KorisnikService {
     public Object getKorisnikDetails(String email) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
-        
+
         if (korisnik.getTvrtka() != null) {
             TvrtkaDTO tvrtkaDTO = new TvrtkaDTO();
             tvrtkaDTO.setId(korisnik.getId());
@@ -110,6 +110,26 @@ public class KorisnikService {
                 .orElseThrow(() -> new EntityNotFoundException("Uloga 'narucitelj' nije pronađena"));
         korisnik.getUloge().add(naruciteljUloga);
 
+        korisnikRepository.save(korisnik);
+    }
+
+    public void updateOsoba(String email, OsobaDTO osobaDTO) {
+        Korisnik korisnik = korisnikRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
+        if (korisnik.getOsoba() == null) throw new EntityNotFoundException("Nije osoba");
+        korisnik.getOsoba().setIme(osobaDTO.getIme());
+        korisnik.getOsoba().setPrezime(osobaDTO.getPrezime());
+        korisnik.getOsoba().setAdresa(osobaDTO.getAdresa());
+        korisnikRepository.save(korisnik);
+    }
+
+    public void updateTvrtka(String email, TvrtkaDTO tvrtkaDTO) {
+        Korisnik korisnik = korisnikRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Korisnik nije pronađen"));
+        if (korisnik.getTvrtka() == null) throw new EntityNotFoundException("Nije tvrtka");
+        korisnik.getTvrtka().setNazivTvrtke(tvrtkaDTO.getNazivTvrtke());
+        korisnik.getTvrtka().setOib(tvrtkaDTO.getOib());
+        korisnik.getTvrtka().setAdresa(tvrtkaDTO.getAdresa());
         korisnikRepository.save(korisnik);
     }
 }

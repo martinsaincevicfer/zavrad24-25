@@ -159,77 +159,79 @@ const AdminPanel: React.FC = () => {
           {loading ? (
             <div>Učitavanje...</div>
           ) : (
-            <table className="w-full text-left">
-              <thead className="uppercase bg-gray-200 dark:bg-gray-900 dark:text-white">
-              <tr>
-                <th className="px-4 py-2">Naziv</th>
-                <th className="px-4 py-2">Kategorija</th>
-                <th className="px-4 py-2">Akcije</th>
-              </tr>
-              </thead>
-              <tbody>
-              {vjestine.map(v => (
-                <tr key={v.id}>
-                  {editId === v.id ? (
-                    <>
-                      <td className="px-4 py-2">
-                        <input
-                          type="text"
-                          {...editRegister('naziv')}
-                          className={`border p-2 rounded w-full ${editErrors.naziv ? 'border-red-500' : ''}`}
-                        />
-                        {editErrors.naziv && <p className="text-red-500 text-sm">{editErrors.naziv.message}</p>}
-                      </td>
-                      <td className="px-4 py-2">
-                        <input
-                          type="text"
-                          {...editRegister('kategorija')}
-                          className={`border p-2 rounded w-full ${editErrors.kategorija ? 'border-red-500' : ''}`}
-                        />
-                        {editErrors.kategorija &&
-                          <p className="text-red-500 text-sm">{editErrors.kategorija.message}</p>}
-                      </td>
-                      <td className="px-4 py-2 flex gap-2">
-                        <button
-                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                          onClick={handleEditSubmit(onEditSubmit)}
-                          disabled={isEditSubmitting}
-                        >
-                          Spremi
-                        </button>
-                        <button
-                          className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
-                          onClick={cancelEdit}
-                          type="button"
-                        >
-                          Odustani
-                        </button>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td className="px-4 py-2">{v.naziv}</td>
-                      <td className="px-4 py-2">{v.kategorija}</td>
-                      <td className="px-4 py-2 flex gap-2">
-                        <button
-                          className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                          onClick={() => startEdit(v)}
-                        >
-                          Uredi
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                          onClick={() => handleDelete(v.id)}
-                        >
-                          Obriši
-                        </button>
-                      </td>
-                    </>
-                  )}
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead className="uppercase bg-gray-200 dark:bg-gray-900 dark:text-white">
+                <tr>
+                  <th className="px-4 py-2">Naziv</th>
+                  <th className="px-4 py-2">Kategorija</th>
+                  <th className="px-4 py-2">Akcije</th>
                 </tr>
-              ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                {vjestine.map(v => (
+                  <tr key={v.id}>
+                    {editId === v.id ? (
+                      <>
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            {...editRegister('naziv')}
+                            className={`border p-2 rounded w-full ${editErrors.naziv ? 'border-red-500' : ''}`}
+                          />
+                          {editErrors.naziv && <p className="text-red-500 text-sm">{editErrors.naziv.message}</p>}
+                        </td>
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            {...editRegister('kategorija')}
+                            className={`border p-2 rounded w-full ${editErrors.kategorija ? 'border-red-500' : ''}`}
+                          />
+                          {editErrors.kategorija &&
+                            <p className="text-red-500 text-sm">{editErrors.kategorija.message}</p>}
+                        </td>
+                        <td className="px-4 py-2 flex gap-2">
+                          <button
+                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                            onClick={handleEditSubmit(onEditSubmit)}
+                            disabled={isEditSubmitting}
+                          >
+                            Spremi
+                          </button>
+                          <button
+                            className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+                            onClick={cancelEdit}
+                            type="button"
+                          >
+                            Odustani
+                          </button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td className="px-4 py-2">{v.naziv}</td>
+                        <td className="px-4 py-2">{v.kategorija}</td>
+                        <td className="px-4 py-2 flex gap-2">
+                          <button
+                            className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                            onClick={() => startEdit(v)}
+                          >
+                            Uredi
+                          </button>
+                          <button
+                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                            onClick={() => handleDelete(v.id)}
+                          >
+                            Obriši
+                          </button>
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       )}
