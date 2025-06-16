@@ -38,53 +38,51 @@ const MojiUgovori: React.FC = () => {
     </>);
 
   return (
-    <>
-      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-2xl font-bold mb-4 text-center">Moji ugovori</h1>
-        {ugovori.length === 0 ? (
-          <p>Nemate nijedan ugovor.</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ugovori.map((ugovor) => (
-              <Link
-                to={`/ugovori/${ugovor.id}`}
-                key={ugovor.id}
-                className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
-              >
+    <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
+      <h1 className="text-xl md:text-2xl font-bold mb-6">Moji ugovori</h1>
+      {ugovori.length === 0 ? (
+        <p className="text-xl text-center text-gray-600">Nemate nijedan ugovor.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {ugovori.map((ugovor) => (
+            <Link
+              to={`/ugovori/${ugovor.id}`}
+              key={ugovor.id}
+              className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
+            >
+              <p>
+                <strong>Projekt: </strong>{ugovor.projekt.naziv}
+              </p>
+              {jePonuditelj && (
                 <p>
-                  <strong>Projekt: </strong>{ugovor.projekt.naziv}
+                  <strong>Narucitelj: </strong>
+                  {ugovor.projekt.narucitelj.id}
                 </p>
-                {jePonuditelj && (
-                  <p>
-                    <strong>Narucitelj: </strong>
-                    {ugovor.projekt.narucitelj.id}
-                  </p>
-                )}
-                {!jePonuditelj && (
-                  <p>
-                    <strong>Ponuditelj: </strong>
-                    {ugovor.ponuda.ponuditelj.ime} {ugovor.ponuda.ponuditelj.prezime} {ugovor.ponuda.ponuditelj.nazivTvrtke}
-                  </p>
-                )}
+              )}
+              {!jePonuditelj && (
                 <p>
-                  <strong>Status: </strong>{ugovor.status}
+                  <strong>Ponuditelj: </strong>
+                  {ugovor.ponuda.ponuditelj.ime} {ugovor.ponuda.ponuditelj.prezime} {ugovor.ponuda.ponuditelj.nazivTvrtke}
                 </p>
-                <p>
-                  <strong>Datum početka: </strong>
-                  {new Date(ugovor.datumPocetka).toLocaleDateString()}
-                </p>
-                <p>
-                  <strong>Datum završetka: </strong>
-                  {ugovor.datumZavrsetka
-                    ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
-                    : "N/A"}
-                </p>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </>
+              )}
+              <p>
+                <strong>Status: </strong>{ugovor.status}
+              </p>
+              <p>
+                <strong>Datum početka: </strong>
+                {new Date(ugovor.datumPocetka).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Datum završetka: </strong>
+                {ugovor.datumZavrsetka
+                  ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
+                  : "N/A"}
+              </p>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

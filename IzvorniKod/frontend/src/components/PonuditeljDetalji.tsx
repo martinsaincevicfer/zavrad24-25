@@ -3,6 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
 import {Recenzija} from "../types/Recenzija.ts";
 import {Ponuditelj} from "../types/Ponuditelj.ts";
+import {Star} from "lucide-react";
 
 const PonuditeljDetalji: React.FC = () => {
   const {id} = useParams<{ id: string }>();
@@ -74,122 +75,129 @@ const PonuditeljDetalji: React.FC = () => {
   }
 
   return (
-    <>
-      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-3xl font-bold mb-6">
-          {ponuditelj.tip === 'tvrtka' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
-        </h1>
+    <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
+      <h1 className="text-3xl md:text-4xl font-bold mb-6">
+        {ponuditelj.tip === 'tvrtka' ? ponuditelj.nazivTvrtke : `${ponuditelj.ime} ${ponuditelj.prezime}`}
+      </h1>
 
-        <div className="rounded-lg p-8 space-y-8">
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">
-              {ponuditelj.tip === 'tvrtka' ? 'Podaci o tvrtki' : 'Osobni podaci'}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ponuditelj.tip === 'tvrtka' ? (
-                <>
-                  <div>
-                    <p className="font-medium">Naziv tvrtke:</p>
-                    <p>{ponuditelj.nazivTvrtke}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">OIB:</p>
-                    <p>{ponuditelj.oib}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Adresa tvrtke:</p>
-                    <p>{ponuditelj.adresaTvrtke}</p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div>
-                    <p className="font-medium">Ime:</p>
-                    <p>{ponuditelj.ime}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Prezime:</p>
-                    <p>{ponuditelj.prezime}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Adresa:</p>
-                    <p>{ponuditelj.adresa}</p>
-                  </div>
-                </>
-              )}
-              <div>
-                <p className="font-medium">Email:</p>
-                <p>{ponuditelj.email}</p>
-              </div>
+      <div className="rounded-lg space-y-8">
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">
+            {ponuditelj.tip === 'tvrtka' ? 'Podaci o tvrtki' : 'Osobni podaci'}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {ponuditelj.tip === 'tvrtka' ? (
+              <>
+                <div>
+                  <p className="font-medium">Naziv tvrtke:</p>
+                  <p>{ponuditelj.nazivTvrtke}</p>
+                </div>
+                <div>
+                  <p className="font-medium">OIB:</p>
+                  <p>{ponuditelj.oib}</p>
+                </div>
+                <div>
+                  <p className="font-medium">Adresa tvrtke:</p>
+                  <p>{ponuditelj.adresaTvrtke}</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <p className="font-medium">Ime:</p>
+                  <p>{ponuditelj.ime}</p>
+                </div>
+                <div>
+                  <p className="font-medium">Prezime:</p>
+                  <p>{ponuditelj.prezime}</p>
+                </div>
+                <div>
+                  <p className="font-medium">Adresa:</p>
+                  <p>{ponuditelj.adresa}</p>
+                </div>
+              </>
+            )}
+            <div>
+              <p className="font-medium">Email:</p>
+              <p>{ponuditelj.email}</p>
             </div>
           </div>
+        </div>
 
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Profesionalni profil</h2>
-            <div className="space-y-6">
-              <div>
-                <p className="font-medium mb-2">Opis:</p>
-                <p>{ponuditelj.kratkiOpis}</p>
-              </div>
-              <div>
-                <p className="font-medium mb-2">Edukacija:</p>
-                <p>{ponuditelj.edukacija}</p>
-              </div>
-              <div>
-                <p className="font-medium mb-2">Iskustvo:</p>
-                <p>{ponuditelj.iskustvo}</p>
-              </div>
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Profesionalni profil</h2>
+          <div className="space-y-6">
+            <div>
+              <p className="font-medium mb-2">Opis:</p>
+              <p>{ponuditelj.kratkiOpis}</p>
+            </div>
+            <div>
+              <p className="font-medium mb-2">Edukacija:</p>
+              <p>{ponuditelj.edukacija}</p>
+            </div>
+            <div>
+              <p className="font-medium mb-2">Iskustvo:</p>
+              <p>{ponuditelj.iskustvo}</p>
             </div>
           </div>
+        </div>
 
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Vještine</h2>
-            <div className="flex flex-wrap gap-2">
-              {ponuditelj.vjestine.map((vjestina) => (
-                <span
-                  key={vjestina.id}
-                  className="bg-blue-300 text-blue-800 px-3 py-1 rounded-full"
-                >
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Vještine</h2>
+          <div className="flex flex-wrap gap-2">
+            {ponuditelj.vjestine.map((vjestina) => (
+              <span
+                key={vjestina.id}
+                className="text-black bg-gray-100 dark:text-white dark:bg-gray-800 text-l md:text-xl px-2 py-1"
+              >
                   {vjestina.naziv}
                 </span>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <p className="font-medium">Član od:</p>
-            <p>{new Date(ponuditelj.datumStvaranja).toLocaleDateString('hr-HR')}</p>
+            ))}
           </div>
         </div>
 
-        <div className="mt-10">
-          <h2 className="text-2xl font-semibold mb-4">Recenzije</h2>
-          {recenzijeLoading ? (
-            <div>Učitavanje recenzija...</div>
-          ) : recenzije.length === 0 ? (
-            <div>Još nema recenzija za ovog ponuditelja.</div>
-          ) : (
-            <div className="space-y-4">
-              {recenzije.map((recenzija, idx) => (
-                <div key={idx} className="border rounded p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="font-bold">Ocjena:</span>
-                    <span>{recenzija.ocjena} / 5</span>
-                  </div>
-                  <div>
-                    <span className="font-bold">Komentar:</span>
-                    <span className="ml-2">{recenzija.komentar}</span>
-                  </div>
-                  <div className="text-sm text-gray-500 mt-1">
-                    {new Date(recenzija.datumStvaranja).toLocaleDateString('hr-HR')}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+        <div>
+          <p className="font-medium">Član od:</p>
+          <p>{new Date(ponuditelj.datumStvaranja).toLocaleDateString('hr-HR')}</p>
         </div>
       </div>
-    </>
+
+      <div className="mt-10">
+        <h2 className="text-2xl font-semibold mb-4">Recenzije</h2>
+        {recenzijeLoading ? (
+          <div>Učitavanje recenzija...</div>
+        ) : recenzije.length === 0 ? (
+          <div>Još nema recenzija za ovog ponuditelja.</div>
+        ) : (
+          <div className="space-y-4">
+            {recenzije.map((recenzija, idx) => (
+              <div key={idx} className="border rounded p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="font-bold">Ocjena:</span>
+                  <span className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) =>
+                      <Star
+                        key={i}
+                        fill={i < recenzija.ocjena ? '#ffffff' : 'none'}
+                        stroke={i < recenzija.ocjena ? '#ffffff' : 'currentColor'}
+                        className="w-5 h-5"
+                      />
+                    )}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-bold">Komentar:</span>
+                  <span className="ml-2">{recenzija.komentar}</span>
+                </div>
+                <div className="text-sm text-gray-500 mt-1">
+                  {new Date(recenzija.datumStvaranja).toLocaleDateString('hr-HR')}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

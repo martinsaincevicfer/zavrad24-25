@@ -24,62 +24,66 @@ const PonudaPopis: React.FC<PonudaPopisProps> = ({
   const ulogiraniKorisnik = authService.getCurrentUser();
 
   return (
-    <div className="mt-6">
-      <h2 className="text-xl font-bold mb-4">Ponude za projekt</h2>
+    <div className="">
+      <h2 className="text-l md:text-xl font-bold mb-4">Ponude za projekt</h2>
       {ponude.length === 0 ? (
         <p>Trenutno nema ponuda za ovaj projekt.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-4 h-1/6 md:h-1/5 overflow-y-scroll">
           {ponude.map((ponuda) => (
-            <li key={ponuda.id} className="border rounded-lg p-4">
-              <p>
-                Ponuditelj:
+            <div
+              className="flex flex-col md:flex-row gap-5 items-start justify-between border rounded-lg p-3 text-l bg-gray-100 dark:bg-gray-800">
+              <li key={ponuda.id}
+                  className="mt-0 pt-0"
+              >
                 <Link
                   to={`/ponuditelji/${ponuda.ponuditelj.id}`}
-                  className="text-blue-500 hover:text-blue-600"
+                  className="text-blue-500 hover:text-blue-600 text-xl text-center"
                 >
                   {ponuda.ponuditelj.ime} {ponuda.ponuditelj.prezime} {ponuda.ponuditelj.nazivTvrtke} ({ponuda.ponuditelj.email})
                 </Link>
-              </p>
-              <p>
-                <strong>Iznos:</strong> {ponuda.iznos} €
-              </p>
-              <p>
-                <strong>Poruka:</strong> {ponuda.poruka}
-              </p>
-              <p>
-                <strong>Rok za prihvaćanje ponude:</strong> {formatDatum(ponuda.rokZaPrihvacanje)}
-              </p>
-              <p>
-                <strong>Datum slanja ponude:</strong> {formatDatum(ponuda.datumStvaranja)}
-              </p>
+                <p className="text-m md:text-l">
+                  <strong className="text-m md:text-l">Iznos:</strong> {ponuda.iznos} €
+                </p>
+                <p className="text-m md:text-l">
+                  <strong className="text-m md:text-l">Poruka:</strong> {ponuda.poruka}
+                </p>
+                <p className="text-m md:text-l">
+                  <strong className="text-m md:text-l">Datum slanja
+                    ponude:</strong> {formatDatum(ponuda.datumStvaranja)}
+                </p>
+                <p className="text-m md:text-l">
+                  <strong className="text-m md:text-l">Rok za prihvaćanje
+                    ponude:</strong> {formatDatum(ponuda.rokZaPrihvacanje)}
+                </p>
 
-              {ponuda.status === 'aktivna' && (ulogiraniKorisnik === korisnik?.email) && (
-                <button
-                  onClick={() => onPrihvatiPonudu(ponuda.id)}
-                  className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  Prihvati ponudu
-                </button>
-              )}
+                {ponuda.status === 'aktivna' && (ulogiraniKorisnik === korisnik?.email) && (
+                  <button
+                    onClick={() => onPrihvatiPonudu(ponuda.id)}
+                    className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                  >
+                    Prihvati ponudu
+                  </button>
+                )}
+              </li>
 
               {ponuda.ponuditelj.email === ulogiraniKorisnik && ponuda.status !== 'prihvacena' && (
-                <div className="mt-2 flex gap-2">
+                <div className="flex gap-2">
                   <button
                     onClick={() => onEditPonuda(ponuda)}
-                    className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                    className="bg-yellow-500 text-white rounded hover:bg-yellow-600"
                   >
                     Uredi
                   </button>
                   <button
                     onClick={() => onDeletePonuda(ponuda.id)}
-                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                    className="bg-red-500 text-white rounded hover:bg-red-600"
                   >
                     Obriši
                   </button>
                 </div>
               )}
-            </li>
+            </div>
           ))}
         </ul>
       )}

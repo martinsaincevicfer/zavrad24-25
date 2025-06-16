@@ -85,7 +85,7 @@ export const ProjektPopis: React.FC = () => {
   </>;
 
   return (
-    <div className="container min-w-full mt-5 px-3 sm:px-6 lg:px-9">
+    <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
       <h1 className="text-xl md:text-2xl font-bold mb-6">Popis projekata</h1>
       <FormProvider {...methods}>
         <form
@@ -96,39 +96,51 @@ export const ProjektPopis: React.FC = () => {
               {...methods.register('naziv')}
               type="text"
               placeholder="Naziv projekta"
-              className="w-8/10 md:9/10 p-2 border rounded"
+              className="w-6/10 md:w-22/25 p-2 border rounded"
             />
             <button
               type="button"
-              className="bg-blue-500 text-white px-4 rounded hover:bg-blue-600"
+              className="bg-blue-500 text-white rounded hover:bg-blue-600 text-sm"
               onClick={() => setShowFilters(f => !f)}
             >
               {showFilters ? 'Sakrij filtere' : 'Prikaži filtere'}
             </button>
           </div>
           {showFilters && (
-            <div className="flex flex-col sm:flex-row gap-2">
-              <input
-                {...methods.register('budzet')}
-                type="number"
-                placeholder="Minimalni budžet"
-                className="w-auto md:w-1/4 p-2 border rounded"
-                min={0}
-              />
-              <input
-                {...methods.register('rokIzrade')}
-                type="date"
-                className="w-1/2 md:w-1/4 p-2 border rounded"
-              />
-              <VjestinaAutocomplete name="vjestine"/>
-              <button
-                type="button"
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
-                onClick={() => methods.reset()}
-                disabled={ucitavanje}
-              >
-                Očisti filtere
-              </button>
+            <div
+              className="flex flex-col sm:flex-row items-stretch justify-around gap-2 p-4 rounded-lg bg-gray-900">
+              <div className="flex flex-col w-full md:w-1/4">
+                <span className="mb-2">Minimalni budžet</span>
+                <input
+                  {...methods.register('budzet')}
+                  type="number"
+                  placeholder="Minimalni budžet"
+                  className="p-2 border rounded"
+                  min={0}
+                />
+              </div>
+              <div className="flex flex-col w-full md:w-1/4">
+                <span className="mb-2">Minimalni rok izrade</span>
+                <input
+                  {...methods.register('rokIzrade')}
+                  type="date"
+                  className="p-2 border rounded"
+                />
+              </div>
+              <div className="flex flex-col w-full md:w-1/4">
+                <span className="mb-2">Odabrane vještine</span>
+                <VjestinaAutocomplete name="vjestine"/>
+              </div>
+              <div className="flex flex-col justify-end items-center w-full sm:w-auto">
+                <button
+                  type="button"
+                  className="bg-gray-400 text-white rounded hover:bg-gray-500 text-sm mt-6 md:mt-0 m-2"
+                  onClick={() => methods.reset()}
+                  disabled={ucitavanje}
+                >
+                  Očisti filtere
+                </button>
+              </div>
             </div>
           )}
         </form>
@@ -140,11 +152,11 @@ export const ProjektPopis: React.FC = () => {
             <Link
               to={`/projekti/${projekt.id}`}
               key={projekt.id}
-              className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
+              className="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800"
             >
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
               <p className="text-black dark:text-white mb-2">{projekt.opis}</p>
-              <p className="">
+              <p className="text-sm mb-2">
                 <span className="font-semibold">Budžet:</span>
                 <span>{formatNovac(projekt.budzet)}</span>
               </p>
@@ -153,12 +165,11 @@ export const ProjektPopis: React.FC = () => {
                 {new Date(projekt.rokIzrade).toLocaleDateString('hr')}
               </p>
               <div className="mb-3">
-                <span className="font-semibold">Potrebne vještine:</span>
                 <div className="flex flex-wrap gap-2 mt-1">
                   {projekt.vjestine.map((vjestina) => (
                     <span
                       key={vjestina.id}
-                      className="text-black bg-blue-300 text-xs px-2 py-1 roundedbg-blue-300 rounded-full"
+                      className="text-black bg-gray-200 dark:text-white dark:bg-gray-800 text-sm md:text-m px-2 py-1"
                     >
                     {vjestina.naziv}
                   </span>

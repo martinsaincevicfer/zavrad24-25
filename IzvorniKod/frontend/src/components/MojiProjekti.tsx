@@ -43,9 +43,9 @@ export const MojiProjekti: React.FC = () => {
   if (!projekti.length)
     return (
       <>
-        <div className="container max-w-8xl mx-auto px-4 py-6">
+        <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
           <h1 className="text-2xl font-bold mb-4">Moji projekti</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-large text-center text-gray-600">
+          <div className="text-xl text-center text-gray-600">
             Nemate niti jedan projekt.
           </div>
         </div>
@@ -53,31 +53,29 @@ export const MojiProjekti: React.FC = () => {
     );
 
   return (
-    <>
-      <div className="container max-w-8xl mx-auto mt-8 px-3 sm:px-6 lg:px-9">
-        <h1 className="text-2xl font-bold mb-4 text-center">Moji projekti</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projekti.map((projekt) => (
-            <Link
-              to={`/projekti/${projekt.id}`}
-              key={projekt.id}
-              className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
-            >
-              <h2 className="text-xl font-semibold mb-2">{projekt.naziv}</h2>
-              <p className="truncate mb-4">{projekt.opis}</p>
-              <div className="space-y-1 text-sm">
-                <div>
-                  <span className="font-medium">Budžet: </span>€{projekt.budzet}
-                </div>
-                <div>
-                  <span className="font-medium">Rok izrade: </span>
-                  {new Date(projekt.rokIzrade).toLocaleDateString("hr-HR")}
-                </div>
+    <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
+      <h1 className="text-xl md:text-2xl font-bold mb-6">Moji projekti</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projekti.map((projekt) => (
+          <Link
+            to={`/projekti/${projekt.id}`}
+            key={projekt.id}
+            className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
+          >
+            <h2 className="text-xl font-semibold mb-2">{projekt.naziv}</h2>
+            <p className="truncate mb-4">{projekt.opis}</p>
+            <div className="space-y-1 text-sm">
+              <div>
+                <span className="font-medium">Budžet: </span>€{projekt.budzet}
               </div>
-            </Link>
-          ))}
-        </div>
+              <div>
+                <span className="font-medium">Rok izrade: </span>
+                {new Date(projekt.rokIzrade).toLocaleDateString("hr-HR")}
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
-    </>
+    </div>
   );
 };

@@ -82,89 +82,87 @@ const MojePonude: React.FC = () => {
   }
 
   return (
-    <>
-      <div className="max-w-8xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Moje ponude</h1>
-        {ponude.length === 0 ? (
-          <p className="text-gray-700 text-center">Nemate ponuda.</p>
-        ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {ponude.map((ponuda) => (
-              <li key={ponuda.id} className="p-4 bg-gray-200 dark:bg-gray-700">
-                <h2 className="text-lg font-semibold">
-                  Projekt: {ponuda.projekt.naziv}
-                </h2>
-                <p className="text-sm text-gray-400">
-                  <strong>Status:</strong> {ponuda.status}
-                </p>
-                {editPonudaId === ponuda.id ? (
-                  <>
-                    <div className="mb-2">
-                      <label className="block text-sm">Iznos (€):</label>
-                      <input
-                        type="number"
-                        value={editIznos}
-                        onChange={e => setEditIznos(Number(e.target.value))}
-                        className="w-full p-1 rounded"
-                      />
+    <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
+      <h1 className="text-xl md:text-2xl font-bold mb-6">Moje ponude</h1>
+      {ponude.length === 0 ? (
+        <p className="text-xl text-center text-gray-600">Nemate ponuda.</p>
+      ) : (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {ponude.map((ponuda) => (
+            <li key={ponuda.id} className="p-4 bg-gray-200 dark:bg-gray-700">
+              <h2 className="text-lg font-semibold">
+                Projekt: {ponuda.projekt.naziv}
+              </h2>
+              <p className="text-sm">
+                <strong>Status:</strong> {ponuda.status}
+              </p>
+              {editPonudaId === ponuda.id ? (
+                <>
+                  <div className="mb-2">
+                    <label className="block text-sm">Iznos (€):</label>
+                    <input
+                      type="number"
+                      value={editIznos}
+                      onChange={e => setEditIznos(Number(e.target.value))}
+                      className="w-full p-1 rounded"
+                    />
+                  </div>
+                  <div className="mb-2">
+                    <label className="block text-sm">Poruka:</label>
+                    <input
+                      type="text"
+                      value={editPoruka}
+                      onChange={e => setEditPoruka(e.target.value)}
+                      className="w-full p-1 rounded"
+                    />
+                  </div>
+                  <button
+                    onClick={() => handleEditSave(ponuda.id)}
+                    className="px-3 py-1 bg-green-500 text-white rounded mr-2"
+                  >
+                    Spremi
+                  </button>
+                  <button
+                    onClick={() => setEditPonudaId(null)}
+                    className="px-3 py-1 bg-gray-500 text-white rounded"
+                  >
+                    Odustani
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm">
+                    <strong>Iznos:</strong> {ponuda.iznos} €
+                  </p>
+                  <p className="text-sm">
+                    <strong>Poruka:</strong> {ponuda.poruka}
+                  </p>
+                  <p className="text-sm">
+                    <strong>Datum slanja ponude:</strong> {formatDatum(ponuda.datumStvaranja)}
+                  </p>
+                  {ponuda.status !== "prihvacena" && (
+                    <div className="mt-2 flex gap-2">
+                      <button
+                        onClick={() => handleEditClick(ponuda)}
+                        className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                      >
+                        Uredi
+                      </button>
+                      <button
+                        onClick={() => handleDelete(ponuda.id)}
+                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                      >
+                        Obriši
+                      </button>
                     </div>
-                    <div className="mb-2">
-                      <label className="block text-sm">Poruka:</label>
-                      <input
-                        type="text"
-                        value={editPoruka}
-                        onChange={e => setEditPoruka(e.target.value)}
-                        className="w-full p-1 rounded"
-                      />
-                    </div>
-                    <button
-                      onClick={() => handleEditSave(ponuda.id)}
-                      className="px-3 py-1 bg-green-500 text-white rounded mr-2"
-                    >
-                      Spremi
-                    </button>
-                    <button
-                      onClick={() => setEditPonudaId(null)}
-                      className="px-3 py-1 bg-gray-500 text-white rounded"
-                    >
-                      Odustani
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-sm text-gray-400">
-                      <strong>Iznos:</strong> {ponuda.iznos} €
-                    </p>
-                    <p className="text-sm text-gray-400">
-                      <strong>Poruka:</strong> {ponuda.poruka}
-                    </p>
-                    <p className="text-sm text-gray-400">
-                      <strong>Datum:</strong> {formatDatum(ponuda.datumStvaranja)}
-                    </p>
-                    {ponuda.status !== "prihvacena" && (
-                      <div className="mt-2 flex gap-2">
-                        <button
-                          onClick={() => handleEditClick(ponuda)}
-                          className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-                        >
-                          Uredi
-                        </button>
-                        <button
-                          onClick={() => handleDelete(ponuda.id)}
-                          className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                        >
-                          Obriši
-                        </button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </>
+                  )}
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

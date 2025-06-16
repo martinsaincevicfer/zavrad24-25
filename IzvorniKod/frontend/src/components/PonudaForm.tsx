@@ -17,11 +17,10 @@ export type PonudaFormType = z.infer<typeof ponudaSchema>;
 
 interface PonudaFormProps {
   onSubmit: (data: PonudaFormType) => Promise<void>;
-  onCancel: () => void;
   isSubmitting?: boolean;
 }
 
-const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, onCancel, isSubmitting}) => {
+const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, isSubmitting}) => {
   const {
     register,
     handleSubmit,
@@ -34,10 +33,12 @@ const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, onCancel, isSubmitting
 
 
   return (
-    <form onSubmit={handleSubmit(async (data) => {
-      await onSubmit(data);
-      reset();
-    })}>
+    <form
+      onSubmit={handleSubmit(async (data) => {
+        await onSubmit(data);
+        reset();
+      })}
+      className="mt-4 border p-4 rounded-lg">
       <div className="mb-4">
         <label htmlFor="iznos" className="block text-sm font-medium">
           Iznos (€)
@@ -46,7 +47,7 @@ const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, onCancel, isSubmitting
           type="number"
           step="0.01"
           {...register('iznos', {valueAsNumber: true})}
-          className={`mt-1 block w-full ${errors.iznos ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-blue-500 focus:border-blue-500`}
+          className={`bg-gray-100 dark:bg-gray-800 mt-1 border block w-full ${errors.iznos ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-blue-500 focus:border-blue-500`}
         />
         {errors.iznos && (
           <p className="text-red-500 text-sm">{errors.iznos.message}</p>
@@ -59,7 +60,7 @@ const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, onCancel, isSubmitting
         <textarea
           {...register('poruka')}
           rows={3}
-          className={`mt-1 block w-full ${errors.poruka ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-blue-500 focus:border-blue-500`}
+          className={`bg-gray-100 dark:bg-gray-800 mt-1 border  block w-full ${errors.poruka ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-blue-500 focus:border-blue-500`}
         ></textarea>
         {errors.poruka && (
           <p className="text-red-500 text-sm">{errors.poruka.message}</p>
@@ -72,13 +73,6 @@ const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, onCancel, isSubmitting
           disabled={isSubmitting || formSubmitting}
         >
           {isSubmitting || formSubmitting ? 'Šaljem...' : 'Pošalji'}
-        </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-        >
-          Zatvori
         </button>
       </div>
     </form>

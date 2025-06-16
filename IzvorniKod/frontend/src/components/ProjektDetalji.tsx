@@ -166,111 +166,124 @@ export const ProjektDetalji: React.FC = () => {
   </>;
 
   return (
-    <>
-      <div className="container max-w-8xl mx-auto rounded-lg px-3 sm:px-6 lg:px-9">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">{projekt.naziv}</h1>
-          {ulogiraniKorisnik === korisnik?.email && !projektImaUgovor && (
-            <div className="flex gap-2 mt-4">
-              <button
-                onClick={urediProjekt}
-                className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-              >
-                Uredi projekt
-              </button>
-              <button
-                onClick={obrisiProjekt}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
-                Obriši projekt
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Opis projekta</h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-6 truncate">{projekt.opis}</p>
-
-            <h2 className="text-xl font-semibold mb-2">Potrebne vještine</h2>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {projekt.vjestine.map((vjestina) => (
-                <div
-                  key={vjestina.id}
-                  className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full"
-                >
-                  <span>{vjestina.naziv}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="p-4 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Detalji projekta</h2>
-            <div className="space-y-3">
-              <div className="flex justify-between border-b pb-2">
-                <span className="font-semibold">Budžet:</span>
-                <span>{formatNovac(projekt.budzet)}</span>
-              </div>
-              <div className="flex justify-between border-b pb-2">
-                <span className="font-semibold">Rok izrade:</span>
-                <span>{formatDatum(projekt.rokIzrade).split(',')[0]}</span>
-              </div>
-              <div className="flex justify-between border-b pb-2">
-                <span className="font-semibold">Datum stvaranja:</span>
-                <span>{formatDatum(projekt.datumStvaranja)}</span>
-              </div>
-              <div className="flex justify-between border-b pb-2">
-                <span className="font-semibold">Korisnik:</span>
-                <span>{projekt.narucitelj ? formatKorisnikPodaci(projekt.narucitelj) : 'Učitavanje...'}</span>
-              </div>
-            </div>
-          </div>
-
-          {!ulogiraniKorisnik && (
-            <Link
-              to={"/login"}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 w-1/3"
-            >
-              Kreiraj novu ponudu
-            </Link>
-          )}
-        </div>
-
-        {ulogiraniKorisnik === korisnik?.email && projekt.status !== 'zatvoren' && (
-          <ZatvoriProjektGumb projektId={projekt.id}/>
-        )}
-
-        {jePonuditelj && !ponuditeljVecPoslaoPonudu && !(ulogiraniKorisnik === korisnik?.email) && (
-          <div className="mt-6">
-            <button
-              onClick={() => setPrikaziFormu(true)}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Kreiraj novu ponudu
-            </button>
-
-            {prikaziFormu && (
-              <PonudaForm onSubmit={posaljiPonudu} onCancel={() => setPrikaziFormu(false)}/>
+    <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold">{projekt.naziv}</h1>
+        {ulogiraniKorisnik === korisnik?.email && !projektImaUgovor && (
+          <div className="hidden md:flex gap-2 mt-4 items-center justify-center">
+            {ulogiraniKorisnik === korisnik?.email && projekt.status !== 'zatvoren' && (
+              <ZatvoriProjektGumb projektId={projekt.id}/>
             )}
+            <button
+              onClick={urediProjekt}
+              className="bg-yellow-500 text-white rounded hover:bg-yellow-600"
+            >
+              Uredi projekt
+            </button>
+            <button
+              onClick={obrisiProjekt}
+              className="bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Obriši projekt
+            </button>
           </div>
-        )}
-
-        {ulogiraniKorisnik && !jePonuditelj && !(ulogiraniKorisnik === korisnik?.email) && (
-          <Link
-            to={'/registracija/ponuditelj'}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Registriraj se kao ponuditelj
-          </Link>
-        )}
-
-        {ponude && (
-          <PonudaPopis ponude={ponude} formatDatum={formatDatum} onPrihvatiPonudu={stvoriUgovor} korisnik={korisnik}
-                       onEditPonuda={onEditPonuda} onDeletePonuda={onDeletePonuda}/>
         )}
       </div>
-    </>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="mb-4">
+          <div className="flex justify-baseline pb-2">
+            <span className="font-semibold mr-2 text-l md:text-xl">Naručitelj:</span>
+            <span
+              className="text-l md:text-xl">{projekt.narucitelj ? formatKorisnikPodaci(projekt.narucitelj) : 'Učitavanje...'}</span>
+          </div>
+          <div className="flex justify-between pb-2">
+            <span className="font-semibold text-l md:text-xl">Budžet:</span>
+            <span className="text-l md:text-xl">{formatNovac(projekt.budzet)}</span>
+          </div>
+          <div className="flex justify-between pb-2">
+            <span className="font-semibold text-l md:text-xl">Datum stvaranja:</span>
+            <span className="text-l md:text-xl">{formatDatum(projekt.datumStvaranja)}</span>
+          </div>
+          <div className="flex justify-between pb-2">
+            <span className="font-semibold text-l md:text-xl">Rok izrade:</span>
+            <span className="text-l md:text-xl">{formatDatum(projekt.rokIzrade).split(',')[0]}</span>
+          </div>
+          <div>
+            <h2 className="text-l md:text-xl font-semibold mb-2">Opis projekta</h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-6 truncate text-l">{projekt.opis}</p>
+          </div>
+          <h2 className="text-l md:text-xl font-semibold mb-2">Preporučene vještine</h2>
+          <div className="flex flex-wrap gap-2">
+            {projekt.vjestine.map((vjestina) => (
+              <div
+                key={vjestina.id}
+                className="flex items-center text-black bg-gray-200 dark:text-white dark:bg-gray-800 text-m md:text-l px-3 py-1"
+              >
+                <span>{vjestina.naziv}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {ulogiraniKorisnik === korisnik?.email && !projektImaUgovor && (
+          <div className="flex flex-col md:hidden gap-2 mt-4 items-start justify-center mb-4">
+            {ulogiraniKorisnik === korisnik?.email && projekt.status !== 'zatvoren' && (
+              <ZatvoriProjektGumb projektId={projekt.id}/>
+            )}
+            <button
+              onClick={urediProjekt}
+              className="bg-yellow-500 text-white rounded hover:bg-yellow-600"
+            >
+              Uredi projekt
+            </button>
+            <button
+              onClick={obrisiProjekt}
+              className="bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              Obriši projekt
+            </button>
+          </div>
+        )}
+
+        {!ulogiraniKorisnik && (
+          <Link
+            to={"/login"}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 w-1/3"
+          >
+            Kreiraj novu ponudu
+          </Link>
+        )}
+      </div>
+
+      {jePonuditelj && !ponuditeljVecPoslaoPonudu && !(ulogiraniKorisnik === korisnik?.email) && (
+        <div className="mt-6">
+          <button
+            onClick={() => setPrikaziFormu((prev) => !prev)}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            {prikaziFormu ? 'Zatvori' : 'Kreiraj novu ponudu'}
+          </button>
+
+          {prikaziFormu && (
+            <PonudaForm onSubmit={posaljiPonudu}/>
+          )}
+        </div>
+      )}
+
+      {ulogiraniKorisnik && !jePonuditelj && !(ulogiraniKorisnik === korisnik?.email) && (
+        <Link
+          to={'/registracija/ponuditelj'}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Registriraj se kao ponuditelj
+        </Link>
+      )}
+
+      {ponude && (
+        <PonudaPopis ponude={ponude} formatDatum={formatDatum} onPrihvatiPonudu={stvoriUgovor} korisnik={korisnik}
+                     onEditPonuda={onEditPonuda} onDeletePonuda={onDeletePonuda}/>
+      )}
+    </div>
   );
 };

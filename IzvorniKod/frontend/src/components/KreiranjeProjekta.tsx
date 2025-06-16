@@ -44,92 +44,90 @@ const KreiranjeProjekta: React.FC = () => {
   const onSubmit = async (data: ProjektForm) => {
     try {
       await axiosInstance.post('/projekti/stvori', data);
-      alert('Projekt uspješno kreiran!');
+      alert('Projekt uspješno registriran!');
       navigate('/korisnik/projekti');
     } catch (error) {
-      console.error('Greška prilikom kreiranja projekta:', error);
+      console.error('Greška prilikom registriranja projekta:', error);
       alert('Došlo je do greške. Pokušajte ponovno.');
     }
   };
 
   return (
-    <>
-      <div className="max-w-4xl mx-auto p-6 rounded">
-        <h1 className="text-2xl font-bold mb-6 text-center">Kreiraj Novi Projekt</h1>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="naziv">
-                Naziv projekta
-              </label>
-              <input
-                type="text"
-                id="naziv"
-                className={`w-full p-2 border rounded ${errors.naziv ? 'border-red-500' : ''}`}
-                {...register('naziv')}
-              />
-              {errors.naziv && <p className="text-red-500 text-sm">{errors.naziv.message}</p>}
-            </div>
+    <div className="max-w-3xl mx-auto p-6 rounded">
+      <h1 className="text-2xl font-bold mb-6 text-center">Registriraj novi projekt</h1>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="naziv">
+              Naziv projekta
+            </label>
+            <input
+              type="text"
+              id="naziv"
+              className={`w-full p-2 border rounded ${errors.naziv ? 'border-red-500' : ''}`}
+              {...register('naziv')}
+            />
+            {errors.naziv && <p className="text-red-500 text-sm">{errors.naziv.message}</p>}
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="opis">
-                Opis projekta
-              </label>
-              <textarea
-                id="opis"
-                rows={4}
-                className={`w-full p-2 border rounded ${errors.opis ? 'border-red-500' : ''}`}
-                {...register('opis')}
-              />
-              {errors.opis && <p className="text-red-500 text-sm">{errors.opis.message}</p>}
-            </div>
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="opis">
+              Opis projekta
+            </label>
+            <textarea
+              id="opis"
+              rows={4}
+              className={`w-full p-2 border rounded ${errors.opis ? 'border-red-500' : ''}`}
+              {...register('opis')}
+            />
+            {errors.opis && <p className="text-red-500 text-sm">{errors.opis.message}</p>}
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="budzet">
-                Budžet (€)
-              </label>
-              <input
-                type="number"
-                id="budzet"
-                className={`w-full p-2 border rounded ${errors.budzet ? 'border-red-500' : ''}`}
-                {...register('budzet', {valueAsNumber: true})}
-              />
-              {errors.budzet && <p className="text-red-500 text-sm">{errors.budzet.message}</p>}
-            </div>
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="budzet">
+              Budžet (€)
+            </label>
+            <input
+              type="number"
+              id="budzet"
+              className={`w-full p-2 border rounded ${errors.budzet ? 'border-red-500' : ''}`}
+              {...register('budzet', {valueAsNumber: true})}
+            />
+            {errors.budzet && <p className="text-red-500 text-sm">{errors.budzet.message}</p>}
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="rokIzrade">
-                Rok za izradu projekta
-              </label>
-              <input
-                type="date"
-                id="rokIzrade"
-                className={`w-full p-2 border rounded ${errors.rokIzrade ? 'border-red-500' : ''}`}
-                {...register('rokIzrade')}
-              />
-              {errors.rokIzrade && <p className="text-red-500 text-sm">{errors.rokIzrade.message}</p>}
-            </div>
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="rokIzrade">
+              Rok za izradu projekta
+            </label>
+            <input
+              type="date"
+              id="rokIzrade"
+              className={`w-full p-2 border rounded ${errors.rokIzrade ? 'border-red-500' : ''}`}
+              {...register('rokIzrade')}
+            />
+            {errors.rokIzrade && <p className="text-red-500 text-sm">{errors.rokIzrade.message}</p>}
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="vjestine">
-                Predložene vještine
-              </label>
-              <VjestinaAutocomplete name="vjestine"/>
-              {errors.vjestine && (
-                <p className="text-red-500 text-sm mt-1">{errors.vjestine.message}</p>
-              )}
-            </div>
+          <div>
+            <label className="block text-sm font-medium mb-1" htmlFor="vjestine">
+              Predložene vještine
+            </label>
+            <VjestinaAutocomplete name="vjestine"/>
+            {errors.vjestine && (
+              <p className="text-red-500 text-sm mt-1">{errors.vjestine.message}</p>
+            )}
+          </div>
 
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-            >
-              Kreiraj Projekt
-            </button>
-          </form>
-        </FormProvider>
-      </div>
-    </>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          >
+            Registriraj projekt
+          </button>
+        </form>
+      </FormProvider>
+    </div>
   );
 };
 

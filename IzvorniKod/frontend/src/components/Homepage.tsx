@@ -28,7 +28,7 @@ const Homepage = () => {
               className="px-4 py-2 bg-blue-500 hover:bg-blue-600  text-white text-xl font-medium flex items-center gap-1"
             >
               <Plus/>
-              Napravi projekt
+              Registriraj projekt
             </Link>
           </div>
         </>

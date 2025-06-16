@@ -93,6 +93,8 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleMenuLinkClick = () => setMenuOpen(false);
+
   return (
     <header
       className="min-w-screen fixed top-0 left-0 w-full z-50 bg-gray-100 dark:bg-black bg-opacity-80 backdrop-blur h-16">
@@ -110,7 +112,7 @@ const Header = () => {
             {jePonuditelj && (
               <Link
                 to="/projekti"
-                className="px-4 py-2 text-white hover:text-gray-300 flex items-center gap-1"
+                className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1"
               >
                 <Search/>
                 Pronađi posao
@@ -120,7 +122,7 @@ const Header = () => {
             {isLoggedIn && !jeAdministrator && jeNarucitelj && (
               <Link
                 to="/korisnik/projekti"
-                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+                className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1"
               >
                 <FileText/>
                 Moji projekti
@@ -130,7 +132,7 @@ const Header = () => {
             {jePonuditelj && !jeAdministrator && (
               <div className="flex gap-2">
                 <Link to="/ponuditelj/ponude"
-                      className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                      className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1">
                   <ArrowUpFromLine/>
                   Moje ponude
                 </Link>
@@ -140,7 +142,7 @@ const Header = () => {
             {isLoggedIn && !jeAdministrator && jeNarucitelj && (
               <Link
                 to="/ugovori"
-                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1">
                 <FileUser/>
                 Moji ugovori
               </Link>
@@ -148,7 +150,7 @@ const Header = () => {
             {isLoggedIn && jeAdministrator && (
               <Link
                 to="/admin"
-                className="px-4 py-2 dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1">
                 <ShieldUser/>
                 Admin
               </Link>
@@ -156,10 +158,10 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 lg:hidden">
+        <div className="flex items-center lg:hidden">
           <button
             onClick={toggleTheme}
-            className="ml-4 px-2 py-1 rounded text-black dark:text-white"
+            className="px-4 py-2 hover:text-gray-400 dark:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? (
@@ -170,7 +172,7 @@ const Header = () => {
           </button>
 
           <button
-            className="text-xl dark:text-white lg:hidden flex items-center"
+            className="text-xl px-4 py-2 hover:text-gray-400 dark:text-white lg:hidden flex items-center"
             onClick={toggleMenu}
           >
             {menuOpen ? <X/> : <Menu/>}
@@ -180,7 +182,7 @@ const Header = () => {
         <div className={`lg:flex gap-4 justify-between items-center hidden`}>
           <button
             onClick={toggleTheme}
-            className="ml-4 px-2 py-1 rounded text-black dark:text-white"
+            className="px-4 py-2 hover:text-gray-400 dark:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? (
@@ -193,17 +195,17 @@ const Header = () => {
           {isLoggedIn && !jeAdministrator && jeNarucitelj && (
             <Link
               to="/projekti/stvori"
-              className="px-4 py-2 hover:text-gray-300 text-white flex items-center gap-1"
+              className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1"
             >
               <Plus/>
-              Napravi projekt
+              Registriraj projekt
             </Link>
           )}
 
           {isLoggedIn && userEmail && (
             <Link
               to="/profil"
-              className="px-4 py-2 dark:text-white flex items-center gap-1 hover:text-gray-300"
+              className="px-4 py-2 hover:text-gray-400 dark:text-white flex items-center gap-1"
             >
               <User/>
               {userEmail}
@@ -229,7 +231,7 @@ const Header = () => {
           {!isLoggedIn && (
             <Link
               to="/registracija/osoba"
-              className="px-4 py-2.5 bg-green-500 text-white rounded hover:bg-green-600 transition duration-300 flex items-center gap-1"
+              className="px-4 py-2.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 flex items-center gap-1 border-transparent border-1 border-solid"
             >
               <UserPlus/>
               Registracija
@@ -243,7 +245,8 @@ const Header = () => {
             {jePonuditelj && (
               <Link
                 to="/projekti"
-                className="text-white flex items-center gap-1"
+                onClick={handleMenuLinkClick}
+                className="hover:text-gray-400 dark:text-white flex items-center gap-1"
               >
                 <Search/>
                 Pronađi posao
@@ -253,7 +256,8 @@ const Header = () => {
             {isLoggedIn && !jeAdministrator && jeNarucitelj && (
               <Link
                 to="/korisnik/projekti"
-                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300"
+                onClick={handleMenuLinkClick}
+                className="hover:text-gray-400 dark:text-white flex items-center gap-1"
               >
                 <FileUser/>
                 Moji projekti
@@ -263,7 +267,8 @@ const Header = () => {
             {jePonuditelj && !jeAdministrator && (
               <div className="flex flex-col items-start gap-2">
                 <Link to="/ponuditelj/ponude"
-                      className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1">
+                      onClick={handleMenuLinkClick}
+                      className="hover:text-gray-400 dark:text-white flex items-center gap-1">
                   <ArrowUpFromLine/>
                   Moje ponude
                 </Link>
@@ -273,7 +278,8 @@ const Header = () => {
             {isLoggedIn && !jeAdministrator && (
               <Link
                 to="/ugovori"
-                className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
+                onClick={handleMenuLinkClick}
+                className="hover:text-gray-400 dark:text-white flex items-center gap-1">
                 <FileUser/>
                 Moji ugovori
               </Link>
@@ -282,6 +288,7 @@ const Header = () => {
             {isLoggedIn && jeAdministrator && (
               <Link
                 to="/admin"
+                onClick={handleMenuLinkClick}
                 className="dark:text-white dark:hover:text-gray-300 flex items-center gap-1 hover:text-gray-300">
                 <ShieldUser/>
                 Admin
@@ -291,10 +298,11 @@ const Header = () => {
             {isLoggedIn && !jeAdministrator && (
               <Link
                 to="/projekti/stvori"
-                className="text-white flex items-center gap-1"
+                onClick={handleMenuLinkClick}
+                className="hover:text-gray-400 dark:text-white flex items-center gap-1"
               >
                 <Plus/>
-                Napravi projekt
+                Registriraj projekt
               </Link>
             )}
 
@@ -302,7 +310,8 @@ const Header = () => {
               {isLoggedIn && userEmail && (
                 <Link
                   to="/profil"
-                  className="dark:text-white flex items-center gap-1 hover:text-gray-300"
+                  onClick={handleMenuLinkClick}
+                  className="hover:text-gray-400 dark:text-white flex items-center gap-1"
                 >
                   <User/>
                   {userEmail}

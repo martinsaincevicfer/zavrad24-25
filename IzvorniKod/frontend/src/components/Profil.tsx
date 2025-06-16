@@ -170,9 +170,9 @@ const Profil = () => {
 
   return (
     <div className="mt-8 px-3 sm:px-6 lg:px-9 flex justify-around">
-      <div className="flex flex-col items-start justify-between gap-15 w-full md:w-1/2">
+      <div className="flex flex-col items-start justify-between gap-6 w-full md:w-1/2 border rounded-lg p-6">
         <div className="flex items-center justify-between w-full">
-          <h1 className="text-3xl p-4 font-bold">Profil</h1>
+          <h1 className="text-4xl p-4 font-bold">Profil</h1>
           {!isEditingUser && (
             <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
                     onClick={() => setIsEditingUser(true)}>
@@ -235,22 +235,22 @@ const Profil = () => {
                     <p className="text-red-500">{osobaForm.formState.errors.adresa.message}</p>}
                 </div>
                 <div className="flex gap-2">
-                  <button type="submit" disabled={osobaForm.formState.isSubmitting}
-                          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Spremi
-                  </button>
                   <button type="button" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
                           onClick={() => {
                             setIsEditingUser(false);
                             osobaForm.reset();
                           }}>Odustani
                   </button>
+                  <button type="submit" disabled={osobaForm.formState.isSubmitting}
+                          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Spremi
+                  </button>
                 </div>
               </form>
             )
           ) : (
-            <div className="flex flex-col items-start w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-3/4">
               {userProfile.tip === 'tvrtka' ? (
-                <div className="flex flex-row items-center justify-between w-4/5">
+                <>
                   <div className="p-4 rounded-lg">
                     <p className="text-gray-600">Naziv tvrtke</p>
                     <p className="font-semibold">{(userProfile as Tvrtka).nazivTvrtke}</p>
@@ -259,9 +259,9 @@ const Profil = () => {
                     <p className="text-gray-600">OIB</p>
                     <p className="font-semibold">{(userProfile as Tvrtka).oib}</p>
                   </div>
-                </div>
+                </>
               ) : (
-                <div className="flex flex-row items-center justify-between w-4/5">
+                <>
                   <div className="p-4 rounded-lg">
                     <p className="text-gray-600">Ime</p>
                     <p className="font-semibold">{(userProfile as Osoba).ime}</p>
@@ -270,9 +270,9 @@ const Profil = () => {
                     <p className="text-gray-600">Prezime</p>
                     <p className="font-semibold">{(userProfile as Osoba).prezime}</p>
                   </div>
-                </div>
+                </>
               )}
-              <div className="flex flex-row items-center justify-between w-4/5">
+              <>
                 <div className="p-4 rounded-lg">
                   <p className="text-gray-600">Email</p>
                   <p className="font-semibold">{userProfile.email}</p>
@@ -283,13 +283,13 @@ const Profil = () => {
                     ? (userProfile as Tvrtka).adresa
                     : (userProfile as Osoba).adresa}</p>
                 </div>
-              </div>
+              </>
             </div>
           )
         )}
 
         {jePonuditelj && (
-          <div className="w-full">
+          <div className="w-full t border-t-1 pt-6">
             <div className="flex items-center justify-between w-full">
               <h2 className="text-2xl font-bold">Podaci o ponuditelju</h2>
               {!isEditingFreelancer && (
@@ -325,16 +325,16 @@ const Profil = () => {
                       <p className="text-red-500">{freelancerErrors.vjestine.message as string}</p>}
                   </div>
                   <div className="flex gap-2">
-                    <button type="submit" disabled={isFreelancerSubmitting}
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                      Spremi
-                    </button>
                     <button type="button" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
                             onClick={() => {
                               setIsEditingFreelancer(false);
                               resetFreelancerForm();
                             }}>
                       Odustani
+                    </button>
+                    <button type="submit" disabled={isFreelancerSubmitting}
+                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                      Spremi
                     </button>
                   </div>
                 </form>
