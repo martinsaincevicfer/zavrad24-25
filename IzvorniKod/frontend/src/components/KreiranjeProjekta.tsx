@@ -5,6 +5,7 @@ import {z} from 'zod';
 import axiosInstance from '../utils/axiosConfig';
 import {useNavigate} from 'react-router-dom';
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
+import {toast, ToastContainer} from "react-toastify";
 
 const projektSchema = z.object({
   naziv: z
@@ -44,16 +45,20 @@ const KreiranjeProjekta: React.FC = () => {
   const onSubmit = async (data: ProjektForm) => {
     try {
       await axiosInstance.post('/projekti/stvori', data);
-      alert('Projekt uspješno registriran!');
+      toast.success('Projekt uspješno registriran!');
       navigate('/korisnik/projekti');
     } catch (error) {
       console.error('Greška prilikom registriranja projekta:', error);
-      alert('Došlo je do greške. Pokušajte ponovno.');
+      toast.error('Došlo je do greške. Pokušajte ponovno.');
     }
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6 rounded">
+      <ToastContainer theme="auto" position="top-center"
+                      toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
+                      limit={1}
+      />
       <h1 className="text-2xl font-bold mb-6 text-center">Registriraj novi projekt</h1>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">

@@ -18,6 +18,7 @@ import EditProjekt from "./components/EditProjekt.tsx";
 import ZabranjenPristup from "./components/ZabranjenPristup.tsx";
 import Layout from "./components/Layout.tsx";
 import AdminPanel from "./components/AdminPanel.tsx";
+import {ConfirmProvider} from "./components/ConfirmContext.tsx";
 
 function App() {
   return (
@@ -43,7 +44,11 @@ function App() {
           </PrivateRoute>
         }/>
         <Route path="/projekti" element={<Layout><ProjektPopis/></Layout>}/>
-        <Route path="/projekti/:id" element={<Layout><ProjektDetalji/></Layout>}/>
+        <Route path="/projekti/:id" element={<Layout>
+          <ConfirmProvider>
+            <ProjektDetalji/>
+          </ConfirmProvider>
+        </Layout>}/>
         <Route path="/projekti/:id/uredi" element={
           <PrivateRoute requiredRole={'narucitelj'}>
             <Layout><EditProjekt/></Layout>
@@ -66,7 +71,11 @@ function App() {
         }/>
         <Route path="/ponuditelj/ponude" element={
           <PrivateRoute requiredRole={'ponuditelj'}>
-            <Layout><MojePonude/></Layout>
+            <Layout>
+              <ConfirmProvider>
+                <MojePonude/>
+              </ConfirmProvider>
+            </Layout>
           </PrivateRoute>
         }/>
         <Route path="/ugovori" element={
@@ -76,12 +85,20 @@ function App() {
         }/>
         <Route path="/ugovori/:id" element={
           <PrivateRoute requiredRole={'narucitelj'}>
-            <Layout><UgovorDetalji/></Layout>
+            <Layout>
+              <ConfirmProvider>
+                <UgovorDetalji/>
+              </ConfirmProvider>
+            </Layout>
           </PrivateRoute>
         }/>
         <Route path="/admin" element={
           <PrivateRoute requiredRole={'administrator'}>
-            <Layout><AdminPanel/></Layout>
+            <Layout>
+              <ConfirmProvider>
+                <AdminPanel/>
+              </ConfirmProvider>
+            </Layout>
           </PrivateRoute>
         }/>
       </Routes>

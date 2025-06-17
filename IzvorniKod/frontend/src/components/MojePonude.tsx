@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {Ponuda} from "../types/Ponuda.ts";
+import {toast, ToastContainer} from "react-toastify";
+import {useConfirm} from "./ConfirmContext.tsx";
 
 const MojePonude: React.FC = () => {
   const [ponude, setPonude] = useState<Ponuda[]>([]);
@@ -9,6 +11,7 @@ const MojePonude: React.FC = () => {
   const [editPonudaId, setEditPonudaId] = useState<number | null>(null);
   const [editIznos, setEditIznos] = useState<number>(0);
   const [editPoruka, setEditPoruka] = useState<string>("");
+  const confirm = useConfirm();
 
   useEffect(() => {
     fetchPonude();
@@ -48,21 +51,23 @@ const MojePonude: React.FC = () => {
         poruka: editPoruka,
       });
       setEditPonudaId(null);
+      toast.success("Ponuda uspješno uređena.");
       fetchPonude();
     } catch (err) {
       console.error(err);
-      alert("Greška prilikom uređivanja ponude.");
+      toast.error("Greška prilikom uređivanja ponude.");
     }
   };
 
   const handleDelete = async (ponudaId: number) => {
-    if (!window.confirm("Jeste li sigurni da želite obrisati ovu ponudu?")) return;
+    if (!(await confirm({message: "Jeste li sigurni da želite obrisati ovu ponudu?"}))) return;
     try {
       await axiosInstance.delete(`/ponude/${ponudaId}`);
+      toast.success("Ponuda uspješno obrisana.");
       fetchPonude();
     } catch (err) {
       console.error(err);
-      alert("Greška prilikom brisanja ponude.");
+      toast.error("Greška prilikom brisanja ponude.");
     }
   };
 
@@ -83,6 +88,10 @@ const MojePonude: React.FC = () => {
 
   return (
     <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
+      <ToastContainer theme="auto" position="top-center"
+                      toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
+                      limit={1}
+      />
       <h1 className="text-xl md:text-2xl font-bold mb-6">Moje ponude</h1>
       {ponude.length === 0 ? (
         <p className="text-xl text-center text-gray-600">Nemate ponuda.</p>

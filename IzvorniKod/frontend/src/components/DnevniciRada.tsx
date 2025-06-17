@@ -5,6 +5,7 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {authService} from "../services/authService";
 import Dnevnikrada from "../types/Dnevnikrada.ts";
+import {useConfirm} from "./ConfirmContext.tsx";
 
 const dnevnikSchema = z.object({
   poruka: z.string().min(5, "Opis mora imati barem 5 znakova"),
@@ -15,13 +16,15 @@ type DnevnikForm = z.infer<typeof dnevnikSchema>;
 
 interface Props {
   ugovorId: number;
+  ugovorStatus: string;
 }
 
-const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
+const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
   const [dnevnici, setDnevnici] = useState<Dnevnikrada[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const jePonuditelj = authService.isUserInRole("ponuditelj");
+  const confirm = useConfirm();
 
   const {
     register,
@@ -68,7 +71,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Jeste li sigurni da želite obrisati dnevnik rada?")) return;
+    if (!(await confirm({message: "Jeste li sigurni da želite obrisati dnevnik rada?"}))) return;
     try {
       await axiosInstance.delete(`/dnevnicirada/${id}`);
       setDnevnici((prev) => prev.filter((d) => d.id !== id));
@@ -79,8 +82,8 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
   };
 
   return (
-    <div className="p-6 mt-4 border rounded">
-      <h2 className="text-xl font-bold mb-2">Dnevnici rada</h2>
+    <div className="mt-4 rounded">
+      <h2 className="mb-2 font-semibold text-l md:text-xl">Dnevnik rada:</h2>
       {loading ? (
         <div>Učitavanje...</div>
       ) : error ? (
@@ -88,27 +91,29 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
       ) : (
         <>
           {dnevnici.length === 0 ? (
-            <div>Nema unesenih dnevnika rada.</div>
+            <div>Nema unosa u dnevniku rada.</div>
           ) : (
             <ul className="space-y-3">
               {dnevnici.map((dnevnik) => (
                 <li
                   key={dnevnik.id}
-                  className="border p-3 rounded flex justify-between items-center"
+                  className="border p-3 rounded flex flex-col md:flex-row justify-between items-start md:items-center gap-2"
                 >
                   <div>
                     <div>
-                      <strong>Opis:</strong> {dnevnik.poruka}
+                      <span className="font-semibold text-l md:text-xl">
+                        {dnevnik.poruka}
+                      </span>
                     </div>
                     <div className="text-sm text-gray-500">
-                      <strong>Datum unosa:</strong>{" "}
+                      <strong>Dodano:</strong>{" "}
                       {new Date(dnevnik.datumUnosa).toLocaleString()}
                     </div>
                   </div>
-                  {jePonuditelj && (
+                  {jePonuditelj && ugovorStatus !== 'zavrsen' && (
                     <button
                       onClick={() => handleDelete(dnevnik.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 ml-4"
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                     >
                       Obriši
                     </button>
@@ -117,10 +122,10 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
               ))}
             </ul>
           )}
-          {jePonuditelj && (
-            <form onSubmit={handleSubmit(onSubmit)} className="mb-6 space-y-4 max-w-md">
+          {jePonuditelj && ugovorStatus !== 'zavrsen' && (
+            <form onSubmit={handleSubmit(onSubmit)} className="my-4 space-y-4 max-w-md">
               <div>
-                <label className="block font-semibold">Opis:</label>
+                <label className="block font-semibold">Poruka:</label>
                 <textarea
                   {...register("poruka")}
                   className="border rounded px-2 py-1 w-full"
@@ -135,7 +140,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId}) => {
                 disabled={isSubmitting}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
-                {isSubmitting ? "Spremanje..." : "Dodaj dnevnik rada"}
+                {isSubmitting ? "Spremanje..." : "Dodaj novi unos"}
               </button>
             </form>
           )}

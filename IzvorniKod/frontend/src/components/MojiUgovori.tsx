@@ -4,18 +4,19 @@ import {Ugovor} from "../types/Ugovor";
 import {authService} from "../services/authService.ts";
 import {Link} from "react-router-dom";
 
+const getLoggedInUserEmail = () => authService.getCurrentUser();
+
 const MojiUgovori: React.FC = () => {
   const [ugovori, setUgovori] = useState<Ugovor[]>([]);
   const [ucitavanje, setUcitavanje] = useState<boolean>(true);
   const [greska, setGreska] = useState<string | null>(null);
   const jePonuditelj = authService.isUserInRole("ponuditelj");
+  const loggedInEmail = getLoggedInUserEmail();
 
   useEffect(() => {
     const fetchUgovori = async () => {
       try {
-        const response = await axiosInstance.get<Ugovor[]>(
-          jePonuditelj ? "/ugovori/ponuditelj" : "/ugovori/korisnik"
-        );
+        const response = await axiosInstance.get<Ugovor[]>("/ugovori");
         setUgovori(response.data);
       } catch (error) {
         console.error("Greška pri dohvaćanju ugovora:", error);
@@ -53,16 +54,19 @@ const MojiUgovori: React.FC = () => {
               <p>
                 <strong>Projekt: </strong>{ugovor.projekt.naziv}
               </p>
-              {jePonuditelj && (
-                <p>
-                  <strong>Narucitelj: </strong>
-                  {ugovor.projekt.narucitelj.id}
-                </p>
-              )}
-              {!jePonuditelj && (
+              {loggedInEmail === ugovor.projekt.narucitelj.email ? (
                 <p>
                   <strong>Ponuditelj: </strong>
-                  {ugovor.ponuda.ponuditelj.ime} {ugovor.ponuda.ponuditelj.prezime} {ugovor.ponuda.ponuditelj.nazivTvrtke}
+                  {ugovor.ponuda.ponuditelj.tip === "osoba"
+                    ? `${ugovor.ponuda.ponuditelj.ime ?? ""} ${ugovor.ponuda.ponuditelj.prezime ?? ""}`
+                    : ugovor.ponuda.ponuditelj.nazivTvrtke ?? ""}
+                </p>
+              ) : (
+                <p>
+                  <strong>Naručitelj: </strong>
+                  {ugovor.projekt.narucitelj.tip === "osoba"
+                    ? `${(ugovor.projekt.narucitelj as import("../types/Korisnik").Osoba).ime} ${(ugovor.projekt.narucitelj as import("../types/Korisnik").Osoba).prezime}`
+                    : (ugovor.projekt.narucitelj as import("../types/Korisnik").Tvrtka).nazivTvrtke}
                 </p>
               )}
               <p>

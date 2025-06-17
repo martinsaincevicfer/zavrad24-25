@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import axiosInstance from '../utils/axiosConfig';
 import {LoginResponse} from "../types/Auth.ts";
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
+import {toast, ToastContainer} from "react-toastify";
 
 const ponuditeljSchema = z.object({
   kratkiOpis: z.string()
@@ -41,82 +42,84 @@ const RegistracijaPonuditelj: React.FC = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', response.data.email);
       }
-      alert('Uspješna registracija kao ponuditelj!');
+      toast.success('Uspješna registracija kao ponuditelj!');
       navigate('/profil');
       window.location.reload();
     } catch (err) {
       console.error('Greška prilikom registracije:', err);
-      alert('Registracija ponuditelja nije uspjela.');
+      toast.error('Registracija ponuditelja nije uspjela.');
     }
   };
 
   return (
-    <>
-      <div className="max-w-8xl mx-auto flex flex-col items-center justify-center">
-        <h2 className="text-center text-3xl font-extrabold">Registriraj se kao ponuditelj</h2>
-        <FormProvider {...methods}>
-          <form className="mt-8 space-y-6 w-2/3 md:w-xl" onSubmit={methods.handleSubmit(onSubmit)}>
-            <div className="rounded-md space-y-4">
-              <div>
-                <label htmlFor="kratkiOpis" className="block text-sm font-medium">
-                  Kratki Opis
-                </label>
-                <textarea
-                  id="kratkiOpis"
-                  rows={3}
-                  className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
-                    errors.kratkiOpis ? 'border-red-500' : ''
-                  }`}
-                  {...register('kratkiOpis')}
-                />
-                {errors.kratkiOpis && <p className="text-red-500 text-sm">{errors.kratkiOpis.message}</p>}
-              </div>
-              <div>
-                <label htmlFor="edukacija" className="block text-sm font-medium">
-                  Edukacija
-                </label>
-                <input
-                  id="edukacija"
-                  type="text"
-                  className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
-                    errors.edukacija ? 'border-red-500' : ''
-                  }`}
-                  {...register('edukacija')}
-                />
-                {errors.edukacija && <p className="text-red-500 text-sm">{errors.edukacija.message}</p>}
-              </div>
-              <div>
-                <label htmlFor="iskustvo" className="block text-sm font-medium">
-                  Iskustvo
-                </label>
-                <textarea
-                  id="iskustvo"
-                  rows={3}
-                  className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
-                    errors.iskustvo ? 'border-red-500' : ''
-                  }`}
-                  {...register('iskustvo')}
-                />
-                {errors.iskustvo && <p className="text-red-500 text-sm">{errors.iskustvo.message}</p>}
-              </div>
-              <div>
-                <label htmlFor="vjestine" className="block text-sm font-medium">
-                  Vještine
-                </label>
-                <VjestinaAutocomplete name={"vjestine"}/>
-                {errors.vjestine && <p className="text-red-500 text-sm">{errors.vjestine.message}</p>}
-              </div>
+    <div className="max-w-8xl mx-auto flex flex-col items-center justify-center">
+      <ToastContainer theme="auto" position="top-center"
+                      toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
+                      limit={1}
+      />
+      <h2 className="text-center text-3xl font-extrabold">Registriraj se kao ponuditelj</h2>
+      <FormProvider {...methods}>
+        <form className="mt-8 space-y-6 w-2/3 md:w-xl" onSubmit={methods.handleSubmit(onSubmit)}>
+          <div className="rounded-md space-y-4">
+            <div>
+              <label htmlFor="kratkiOpis" className="block text-sm font-medium">
+                Kratki Opis
+              </label>
+              <textarea
+                id="kratkiOpis"
+                rows={3}
+                className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
+                  errors.kratkiOpis ? 'border-red-500' : ''
+                }`}
+                {...register('kratkiOpis')}
+              />
+              {errors.kratkiOpis && <p className="text-red-500 text-sm">{errors.kratkiOpis.message}</p>}
             </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none"
-            >
-              Registriraj se
-            </button>
-          </form>
-        </FormProvider>
-      </div>
-    </>
+            <div>
+              <label htmlFor="edukacija" className="block text-sm font-medium">
+                Edukacija
+              </label>
+              <input
+                id="edukacija"
+                type="text"
+                className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
+                  errors.edukacija ? 'border-red-500' : ''
+                }`}
+                {...register('edukacija')}
+              />
+              {errors.edukacija && <p className="text-red-500 text-sm">{errors.edukacija.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="iskustvo" className="block text-sm font-medium">
+                Iskustvo
+              </label>
+              <textarea
+                id="iskustvo"
+                rows={3}
+                className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
+                  errors.iskustvo ? 'border-red-500' : ''
+                }`}
+                {...register('iskustvo')}
+              />
+              {errors.iskustvo && <p className="text-red-500 text-sm">{errors.iskustvo.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="vjestine" className="block text-sm font-medium">
+                Vještine
+              </label>
+              <VjestinaAutocomplete name={"vjestine"}/>
+              {errors.vjestine && <p className="text-red-500 text-sm">{errors.vjestine.message}</p>}
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none"
+          >
+            Registriraj se
+          </button>
+        </form>
+      </FormProvider>
+    </div>
   );
 };
 

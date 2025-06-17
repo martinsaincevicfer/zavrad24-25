@@ -23,16 +23,10 @@ public class UgovorController {
         return ugovorService.getUgovorById(ugovorId);
     }
 
-    @GetMapping("/korisnik")
-    public List<UgovorDTO> getUgovoriForKorisnik(Principal principal) {
+    @GetMapping
+    public List<UgovorDTO> getAllUgovoriForCurrentUser(Principal principal) {
         String korisnikEmail = principal.getName();
-        return ugovorService.findAllByKorisnikEmail(korisnikEmail);
-    }
-
-    @GetMapping("/ponuditelj")
-    public List<UgovorDTO> getUgovoriForPonuditelj(Principal principal) {
-        String ponuditeljEmail = principal.getName();
-        return ugovorService.findAllByPonuditeljEmail(ponuditeljEmail);
+        return ugovorService.findAllForCurrentUser(korisnikEmail);
     }
 
     @PostMapping("/korisnik/stvori")

@@ -58,40 +58,26 @@ public class UgovorService {
     }
 
     @Transactional
-    public List<UgovorDTO> findAllByKorisnikEmail(String email) {
+    public List<UgovorDTO> findAllForCurrentUser(String email) {
         Korisnik korisnik = korisnikRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Korisnik s emailom " + email + " ne postoji."));
 
-        return ugovorRepository.findByPonuda_Projekt_Narucitelj_Id(korisnik.getId()).stream()
+        List<Ugovor> ugovori = ugovorRepository.findByPonuda_Projekt_Narucitelj_Id(korisnik.getId());
+
+        boolean isPonuditelj = korisnik.getUloge().stream()
+                .anyMatch(uloga -> uloga.getNaziv().equalsIgnoreCase("ponuditelj"));
+        if (isPonuditelj) {
+            List<Ugovor> ponuditeljUgovori = ugovorRepository.findByPonuda_Ponuditelj_Id(korisnik.getId());
+            ponuditeljUgovori.stream()
+                    .filter(u -> !ugovori.contains(u))
+                    .forEach(ugovori::add);
+        }
+
+        return ugovori.stream()
                 .map(ugovor -> {
                     PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
                     ProjektDTO projektDTO = convertProjektToDTO(ugovor.getPonuda().getProjekt());
                     RecenzijaDTO recenzijaDTO = convertRecenzijaToDTO(ugovor.getRecenzija());
-
-                    return new UgovorDTO(
-                            ugovor.getId(),
-                            ugovor.getStatus(),
-                            ugovor.getDatumPocetka(),
-                            ugovor.getDatumZavrsetka(),
-                            ponudaDTO,
-                            projektDTO,
-                            recenzijaDTO
-                    );
-                })
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    public List<UgovorDTO> findAllByPonuditeljEmail(String email) {
-        Korisnik korisnik = korisnikRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Korisnik s emailom " + email + " ne postoji."));
-
-        return ugovorRepository.findByPonuda_Ponuditelj_Id(korisnik.getId()).stream()
-                .map(ugovor -> {
-                    PonudaDTO ponudaDTO = convertPonudaToDTO(ugovor.getPonuda());
-                    ProjektDTO projektDTO = convertProjektToDTO(ugovor.getPonuda().getProjekt());
-                    RecenzijaDTO recenzijaDTO = convertRecenzijaToDTO(ugovor.getRecenzija());
-
                     return new UgovorDTO(
                             ugovor.getId(),
                             ugovor.getStatus(),

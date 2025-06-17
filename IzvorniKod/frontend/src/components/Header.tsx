@@ -97,7 +97,7 @@ const Header = () => {
 
   return (
     <header
-      className="min-w-screen fixed top-0 left-0 w-full z-50 bg-gray-100 dark:bg-black bg-opacity-80 backdrop-blur h-16">
+      className="min-w-screen fixed top-0 left-0 w-full z-40 bg-gray-100 dark:bg-black bg-opacity-80 backdrop-blur h-16">
       <nav className="max-w-8xl mx-auto flex justify-between items-center px-4 h-full">
         <div className="flex items-center gap-4">
           <Link
@@ -241,7 +241,7 @@ const Header = () => {
 
         {menuOpen && (
           <div
-            className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 lg:hidden z-50">
+            className="absolute top-16 left-0 w-full bg-gray-100 dark:bg-black flex flex-col items-start gap-4 p-4 lg:hidden z-40">
             {jePonuditelj && (
               <Link
                 to="/projekti"

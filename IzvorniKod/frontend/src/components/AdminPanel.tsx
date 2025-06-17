@@ -4,6 +4,7 @@ import {Vjestina} from "../types/Vjestina.ts";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {useConfirm} from "./ConfirmContext.tsx";
 
 const vjestinaSchema = z.object({
   naziv: z.string().min(2, "Naziv je obavezan").max(100, "Naziv je predugačak"),
@@ -17,6 +18,7 @@ const AdminPanel: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);
+  const confirm = useConfirm();
 
   const {
     register: createRegister,
@@ -71,7 +73,7 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm('Obrisati vještinu?')) return;
+    if (!(await confirm({message: 'Jeste li sigurni da želite obrisati ovu vještinu?'}))) return;
     await axiosInstance.delete(`/vjestine/${id}`);
     fetchVjestine();
   };

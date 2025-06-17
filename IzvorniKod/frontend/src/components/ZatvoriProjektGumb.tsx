@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import axiosInstance from '../utils/axiosConfig';
+import {toast} from "react-toastify";
+import {useConfirm} from "./ConfirmContext.tsx";
 
 interface Props {
   projektId: number;
@@ -9,18 +11,19 @@ interface Props {
 
 const ZatvoriProjektGumb: React.FC<Props> = ({projektId, disabled, onClosed}) => {
   const [loading, setLoading] = useState(false);
+  const confirm = useConfirm();
 
   const handleClose = async () => {
-    if (!window.confirm('Jeste li sigurni da želite zatvoriti projekt?')) return;
+    if (!(await confirm({message: 'Jeste li sigurni da želite zatvoriti primanje ponuda za ovaj projekt?'}))) return;
     setLoading(true);
     try {
       await axiosInstance.patch(`/projekti/${projektId}/zatvori`);
-      alert('Projekt je uspješno zatvoren.');
+      toast.success('Projekt je uspješno zatvoren.');
       if (onClosed) onClosed();
       else window.location.reload();
     } catch (e) {
       console.error(e);
-      alert('Greška pri zatvaranju projekta.');
+      toast.error('Greška pri zatvaranju projekta.');
     } finally {
       setLoading(false);
     }

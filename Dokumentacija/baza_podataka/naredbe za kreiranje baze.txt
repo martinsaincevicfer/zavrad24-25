@@ -102,7 +102,7 @@ CREATE TABLE Recenzija (
 
 CREATE TABLE Ugovor (
   ugovor_id SERIAL PRIMARY KEY,
-  status VARCHAR(20) NOT NULL CHECK (status IN ('aktivan', 'zavrsen', 'otkazan')),
+  status VARCHAR(20) NOT NULL CHECK (status IN ('aktivan', 'zavrsen')),
   datum_pocetka DATE NOT NULL,
   datum_zavrsetka DATE CHECK (datum_zavrsetka >= datum_pocetka),
   ponuda_id INT NOT NULL UNIQUE,

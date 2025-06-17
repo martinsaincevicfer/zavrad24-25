@@ -7,6 +7,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import VjestinaAutocomplete from './VjestinaAutocomplete';
 import {Projekt} from "../types/Projekt.ts";
 import {Vjestina} from "../types/Vjestina.ts";
+import {toast, ToastContainer} from "react-toastify";
 
 const projektSchema = z.object({
   naziv: z.string().min(2).max(100),
@@ -40,7 +41,7 @@ const EditProjekt: React.FC = () => {
         setValue('rokIzrade', res.data.rokIzrade.split('T')[0]);
         setValue('vjestine', res.data.vjestine.map((v: Vjestina) => v.id) as [number, ...number[]]);
       } catch {
-        alert('Greška pri dohvaćanju projekta.');
+        toast.error('Greška pri dohvaćanju projekta.');
         navigate('/korisnik/projekti');
       }
     };
@@ -50,16 +51,20 @@ const EditProjekt: React.FC = () => {
   const onSubmit = async (data: ProjektForm) => {
     try {
       await axiosInstance.put(`/projekti/${id}`, data);
-      alert('Projekt uspješno ažuriran!');
+      toast.success('Projekt uspješno ažuriran!');
       navigate(`/projekti/${id}`);
     } catch (error) {
       console.error(error);
-      alert("Dogodila se greška pri ažuriranju projekta.");
+      toast.error("Dogodila se greška pri ažuriranju projekta.");
     }
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6 rounded">
+      <ToastContainer theme="auto" position="top-center"
+                      toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
+                      limit={1}
+      />
       <h1 className="text-2xl font-bold mb-6 text-center">Uredi Projekt</h1>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

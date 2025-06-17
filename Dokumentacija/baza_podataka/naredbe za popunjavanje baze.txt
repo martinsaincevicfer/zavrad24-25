@@ -238,8 +238,8 @@ INSERT INTO ProjektVjestina (vjestina_id, projekt_id) VALUES
 (10, 7), (11, 7), (2, 7);
 
 INSERT INTO Ponuda (status, iznos, poruka, rok_za_prihvacanje, projekt_id, ponuditelj_id) VALUES
-('aktivna', 4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', '2025-07-14 12:00:00', 1, 1),
-('prihvacena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', '2025-07-10 12:00:00', 2, 7),
+('aktivna', 4800.00, 'Mogu dostaviti unutar roka. Imam iskustva sličnim projektima.', '2025-07-14 12:00:00', 1, 7),
+('prihvacena', 9500.00, 'Imam bogato iskustvo u mobilnim aplikacijama.', '2025-07-10 12:00:00', 2, 1),
 ('prihvacena', 1800.00, 'SEO optimizaciju mogu završiti brzo i učinkovito.', '2025-07-15 12:00:00', 3, 4),
 ('prihvacena', 2900.00, 'Radim baze podataka već 7 godina.', '2025-07-09 12:00:00', 4, 10),
 ('prihvacena', 3900.00, 'Digitalni marketing je moja specijalnost.', '2025-07-12 12:00:00', 5, 6),
@@ -267,18 +267,18 @@ INSERT INTO Recenzija (ocjena, komentar) VALUES
 (5, 'Vrlo brz i učinkovit.');
 
 INSERT INTO Ugovor (status, datum_pocetka, datum_zavrsetka, ponuda_id, recenzija_id) VALUES
-('aktivan', '2025-06-01', '2025-07-01', 2, NULL),
+('aktivan', '2025-06-01', NULL, 2, NULL),
 ('zavrsen', '2025-04-01', '2025-05-01', 4, 1),
 ('zavrsen', '2025-04-15', '2025-05-15', 6, 2),
-('aktivan', '2025-05-10', '2025-06-10', 7, NULL),
-('otkazan', '2025-05-01', '2025-05-15', 5, NULL),
+('aktivan', '2025-05-10', NULL, 7, NULL),
+('aktivan', '2025-05-01', NULL, 5, NULL),
 ('zavrsen', '2025-03-01', '2025-04-01', 3, 3),
-('aktivan', '2025-05-20', '2025-06-20', 8, NULL),
+('aktivan', '2025-05-20', NULL, 8, NULL),
 ('zavrsen', '2025-01-01', '2025-02-01', 9, 4),
 ('zavrsen', '2025-02-01', '2025-03-01', 10, 5),
-('aktivan', '2025-03-15', '2025-04-15', 11, NULL),
+('aktivan', '2025-03-15', NULL, 11, NULL),
 ('zavrsen', '2025-04-01', '2025-05-01', 12, 6),
-('otkazan', '2025-02-01', '2025-02-10', 13, NULL);
+('aktivan', '2025-02-01', NULL, 13, NULL);
 
 INSERT INTO DnevnikRada (ugovor_id, poruka, datum_unosa) VALUES
 (1, 'Započeo inicijalnu analizu projekta i postavio osnovne tehničke zahtjeve.', '2025-06-01 09:00:00'),
