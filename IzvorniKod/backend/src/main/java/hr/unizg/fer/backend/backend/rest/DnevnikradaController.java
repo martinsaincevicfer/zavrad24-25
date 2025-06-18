@@ -31,4 +31,9 @@ public class DnevnikradaController {
         dnevnikradaService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DnevnikradaDTO> update(@PathVariable Integer id, @RequestBody DnevnikradaDTO dto) {
+        return ResponseEntity.ok(dnevnikradaService.update(id, dto));
+    }
 }

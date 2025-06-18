@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
 import {Ugovor} from "../types/Ugovor.ts";
@@ -26,6 +26,11 @@ const UgovorDetalji: React.FC = () => {
   const loggedInEmail = getLoggedInUserEmail();
   const jePonuditelj = authService.isUserInRole('ponuditelj');
   const [recenzijaStatus, setRecenzijaStatus] = useState<null | "success" | "error">(null);
+
+  const [editMode, setEditMode] = useState(false);
+  const [editOcjena, setEditOcjena] = useState<number>(1);
+  const [editKomentar, setEditKomentar] = useState<string>("");
+
   const {
     register,
     handleSubmit,
@@ -50,25 +55,25 @@ const UgovorDetalji: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchUgovor = async () => {
-      try {
-        if (!id) throw new Error("ID ugovora nije definiran.");
+  const fetchUgovor = useCallback(async () => {
+    try {
+      if (!id) throw new Error("ID ugovora nije definiran.");
 
-        const response = await axiosInstance.get<Ugovor>(
-          `/ugovori/${id}`
-        );
-        setUgovor(response.data);
-      } catch (err) {
-        console.error("Greška prilikom dohvaćanja ugovora:", err);
-        setError("Došlo je do pogreške prilikom dohvaćanja podataka.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUgovor();
+      const response = await axiosInstance.get<Ugovor>(
+        `/ugovori/${id}`
+      );
+      setUgovor(response.data);
+    } catch (err) {
+      console.error("Greška prilikom dohvaćanja ugovora:", err);
+      setError("Došlo je do pogreške prilikom dohvaćanja podataka.");
+    } finally {
+      setLoading(false);
+    }
   }, [id]);
+
+  useEffect(() => {
+    fetchUgovor();
+  }, [id, fetchUgovor]);
 
   const zavrsiUgovor = async () => {
     try {
@@ -79,6 +84,41 @@ const UgovorDetalji: React.FC = () => {
       toast.dismiss();
       toast.clearWaitingQueue();
       toast.error("Greška pri završavanju ugovora.");
+    }
+  };
+
+  const onEditClick = () => {
+    if (ugovor?.recenzija) {
+      setEditOcjena(ugovor.recenzija.ocjena);
+      setEditKomentar(ugovor.recenzija.komentar);
+      setEditMode(true);
+    }
+  };
+
+  const handleEditSave = async () => {
+    try {
+      await axiosInstance.put(`/recenzije/uredi/${ugovor?.id}`, {
+        ocjena: editOcjena,
+        komentar: editKomentar,
+        ugovorId: ugovor?.id,
+      });
+      toast.success("Recenzija uspješno uređena.");
+      setEditMode(false);
+      fetchUgovor();
+    } catch (err) {
+      console.error(err);
+      toast.error("Greška prilikom uređivanja recenzije.");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`/recenzije/obrisi/${ugovor?.id}`);
+      toast.success("Recenzija obrisana.");
+      fetchUgovor();
+    } catch (err) {
+      console.error(err);
+      toast.error("Greška prilikom brisanja recenzije.");
     }
   };
 
@@ -215,6 +255,70 @@ const UgovorDetalji: React.FC = () => {
               <div className="text-red-600 mt-2">Greška pri slanju recenzije.</div>
             )}
           </form>
+        </div>
+      )}
+
+      {ugovor.recenzija && !jePonuditelj && !editMode && (
+        <div className="p-6 mt-4 bg-gray-100 dark:bg-gray-800 rounded">
+          <h2 className="text-xl font-bold mb-2">Vaša recenzija</h2>
+          <div>
+            <span className="font-semibold">Ocjena:</span> {ugovor.recenzija.ocjena}
+          </div>
+          <div>
+            <span className="font-semibold">Komentar:</span> {ugovor.recenzija.komentar}
+          </div>
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={onEditClick}
+              className="bg-yellow-500 text-white px-3 py-1 rounded"
+            >
+              Uredi recenziju
+            </button>
+            <button
+              onClick={handleDelete}
+              className="bg-red-500 text-white px-3 py-1 rounded"
+            >
+              Obriši recenziju
+            </button>
+          </div>
+        </div>
+      )}
+
+      {ugovor.recenzija && !jePonuditelj && editMode && (
+        <div className="p-6 mt-4 bg-gray-100 dark:bg-gray-800 rounded">
+          <h2 className="text-xl font-bold mb-2">Uredi recenziju</h2>
+          <div className="mb-2">
+            <label className="block font-semibold">Ocjena (1-5):</label>
+            <input
+              type="number"
+              min={1}
+              max={5}
+              value={editOcjena}
+              onChange={e => setEditOcjena(Number(e.target.value))}
+              className="border rounded px-2 py-1 w-full"
+            />
+          </div>
+          <div className="mb-2">
+            <label className="block font-semibold">Komentar:</label>
+            <textarea
+              value={editKomentar}
+              onChange={e => setEditKomentar(e.target.value)}
+              className="border rounded px-2 py-1 w-full"
+              rows={3}
+            />
+          </div>
+          <button
+            onClick={handleEditSave}
+            className="px-3 py-1 bg-green-500 text-white rounded mr-2"
+          >
+            Spremi
+          </button>
+          <button
+            onClick={() => setEditMode(false)}
+            className="px-3 py-1 bg-gray-500 text-white rounded"
+          >
+            Odustani
+          </button>
         </div>
       )}
     </div>

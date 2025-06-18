@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axiosInstance from '../utils/axiosConfig';
 import {toast} from "react-toastify";
-import {useConfirm} from "./ConfirmContext.tsx";
+import {useConfirm} from "../utils/ConfirmContextUtils.ts";
 
 interface Props {
   projektId: number;

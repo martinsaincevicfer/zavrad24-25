@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import {Ponuda} from "../types/Ponuda.ts";
 import {toast, ToastContainer} from "react-toastify";
-import {useConfirm} from "./ConfirmContext.tsx";
+import {useConfirm} from "../utils/ConfirmContextUtils.ts";
 
 const MojePonude: React.FC = () => {
   const [ponude, setPonude] = useState<Ponuda[]>([]);

@@ -36,10 +36,12 @@ public class DnevnikradaService {
         return dto;
     }
 
+    @Transactional
     public void delete(Integer id) {
         dnevnikradaRepository.deleteById(id);
     }
 
+    @Transactional
     public List<DnevnikradaDTO> findAllByUgovorId(Integer ugovorId) {
         return dnevnikradaRepository.findAll().stream()
                 .filter(d -> d.getUgovor().getId().equals(ugovorId))
@@ -52,5 +54,16 @@ public class DnevnikradaService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public DnevnikradaDTO update(Integer id, DnevnikradaDTO dto) {
+        Dnevnikrada dnevnikrada = dnevnikradaRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Dnevnikrada not found"));
+        dnevnikrada.setPoruka(dto.getPoruka());
+        dnevnikrada = dnevnikradaRepository.save(dnevnikrada);
+        dto.setId(dnevnikrada.getId());
+        dto.setDatumUnosa(dnevnikrada.getDatumUnosa());
+        return dto;
     }
 }

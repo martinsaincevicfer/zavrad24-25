@@ -60,11 +60,65 @@ public class RecenzijaService {
         return ugovori.stream()
                 .map(Ugovor::getRecenzija)
                 .filter(Objects::nonNull)
-                .map(recenzija -> new RecenzijaDTO(
-                        recenzija.getOcjena(),
-                        recenzija.getKomentar(),
-                        recenzija.getDatumStvaranja()
-                ))
+                .map(recenzija -> {
+                    String naruciteljIme;
+                    var narucitelj = recenzija.getUgovor().getPonuda().getProjekt().getNarucitelj();
+                    if (narucitelj.getOsoba() != null) {
+                        naruciteljIme = narucitelj.getOsoba().getIme() + " " + narucitelj.getOsoba().getPrezime();
+                    } else if (narucitelj.getTvrtka() != null) {
+                        naruciteljIme = narucitelj.getTvrtka().getNazivTvrtke();
+                    } else {
+                        naruciteljIme = "";
+                    }
+
+                    return new RecenzijaDTO(
+                            recenzija.getOcjena(),
+                            recenzija.getKomentar(),
+                            recenzija.getDatumStvaranja(),
+                            naruciteljIme
+                    );
+                })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void updateRecenzija(Integer ugovorId, RecenzijaFormDTO dto) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Korisnik korisnik = korisnikRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Korisnik not found"));
+        Ugovor ugovor = ugovorRepository.findById(ugovorId)
+                .orElseThrow(() -> new IllegalArgumentException("Ugovor not found"));
+
+        if (!ugovor.getPonuda().getProjekt().getNarucitelj().equals(korisnik)) {
+            throw new IllegalArgumentException("Ulogirani korisnik nije vlasnik projekta!");
+        }
+
+        Recenzija recenzija = ugovor.getRecenzija();
+        if (recenzija == null) {
+            throw new IllegalArgumentException("Recenzija ne postoji za ovaj ugovor!");
+        }
+
+        recenzija.setOcjena(dto.getOcjena());
+        recenzija.setKomentar(dto.getKomentar());
+        recenzijaRepository.save(recenzija);
+    }
+
+    @Transactional
+    public void deleteRecenzija(Integer ugovorId) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Korisnik korisnik = korisnikRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Korisnik not found"));
+        Ugovor ugovor = ugovorRepository.findById(ugovorId)
+                .orElseThrow(() -> new IllegalArgumentException("Ugovor not found"));
+
+        if (!ugovor.getPonuda().getProjekt().getNarucitelj().equals(korisnik)) {
+            throw new IllegalArgumentException("Ulogirani korisnik nije vlasnik projekta!");
+        }
+
+        Recenzija recenzija = ugovor.getRecenzija();
+        if (recenzija != null) {
+            ugovor.setRecenzija(null);
+            recenzijaRepository.delete(recenzija);
+        }
     }
 }

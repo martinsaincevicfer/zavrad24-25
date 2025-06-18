@@ -42,7 +42,8 @@ public class UgovorService {
             recenzijaDTO = new RecenzijaDTO(
                     recenzija.getOcjena(),
                     recenzija.getKomentar(),
-                    recenzija.getDatumStvaranja()
+                    recenzija.getDatumStvaranja(),
+                    ""
             );
         }
 
@@ -184,7 +185,8 @@ public class UgovorService {
         return new RecenzijaDTO(
                 recenzija.getOcjena(),
                 recenzija.getKomentar(),
-                recenzija.getDatumStvaranja()
+                recenzija.getDatumStvaranja(),
+                ""
         );
     }
 }

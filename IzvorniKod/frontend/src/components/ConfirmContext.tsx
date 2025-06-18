@@ -1,20 +1,11 @@
-import {createContext, ReactNode, useContext, useState} from "react";
-
-type ConfirmOptions = {
-  message: string;
-};
-
-type ConfirmContextType = {
-  confirm: (options: ConfirmOptions) => Promise<boolean>;
-};
-
-const ConfirmContext = createContext<ConfirmContextType | undefined>(undefined);
+import {ReactNode, useState} from "react";
+import {ConfirmContext} from "../utils/ConfirmContextUtils";
 
 export const ConfirmProvider = ({children}: { children: ReactNode }) => {
   const [message, setMessage] = useState<string | null>(null);
   const [resolver, setResolver] = useState<((value: boolean) => void) | null>(null);
 
-  const confirm = (options: ConfirmOptions) => {
+  const confirm = (options: { message: string }) => {
     setMessage(options.message);
     return new Promise<boolean>((resolve) => {
       setResolver(() => resolve);
@@ -56,10 +47,4 @@ export const ConfirmProvider = ({children}: { children: ReactNode }) => {
       )}
     </ConfirmContext.Provider>
   );
-};
-
-export const useConfirm = () => {
-  const context = useContext(ConfirmContext);
-  if (!context) throw new Error("useConfirm must be used within ConfirmProvider");
-  return context.confirm;
 };

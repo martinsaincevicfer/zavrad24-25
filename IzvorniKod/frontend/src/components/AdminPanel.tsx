@@ -4,7 +4,7 @@ import {Vjestina} from "../types/Vjestina.ts";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {useConfirm} from "./ConfirmContext.tsx";
+import {useConfirm} from "../utils/ConfirmContextUtils.ts";
 
 const vjestinaSchema = z.object({
   naziv: z.string().min(2, "Naziv je obavezan").max(100, "Naziv je predugačak"),
@@ -13,7 +13,6 @@ const vjestinaSchema = z.object({
 type VjestinaForm = z.infer<typeof vjestinaSchema>;
 
 const AdminPanel: React.FC = () => {
-  const [tab, setTab] = useState<'vjestine'>('vjestine');
   const [vjestine, setVjestine] = useState<Vjestina[]>([]);
   const [loading, setLoading] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
@@ -52,8 +51,8 @@ const AdminPanel: React.FC = () => {
   };
 
   useEffect(() => {
-    if (tab === 'vjestine') fetchVjestine();
-  }, [tab]);
+    fetchVjestine();
+  }, []);
 
   const openCreate = () => {
     if (formOpen) {
@@ -99,144 +98,133 @@ const AdminPanel: React.FC = () => {
 
   return (
     <div className="p-6">
-      <div className="flex gap-4 mb-6">
-        <button
-          className={`px-4 py-2 rounded ${tab === 'vjestine' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          onClick={() => setTab('vjestine')}
-        >
-          Vještine
-        </button>
-      </div>
-
       <hr className="mb-6"/>
 
-      {tab === 'vjestine' && (
-        <div>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Popis vještina</h2>
-            <button
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              onClick={openCreate}
-            >
-              Nova vještina
-            </button>
-          </div>
-
-          {formOpen && (
-            <form
-              onSubmit={handleCreateSubmit(onCreateSubmit)}
-              className="bg-gray-200 dark:bg-gray-900 p-6 rounded shadow-md min-w-[300px] flex flex-col gap-4 mb-6 border"
-            >
-              <h3 className="text-lg font-bold mb-2">Nova vještina</h3>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Naziv"
-                  {...createRegister('naziv')}
-                  className={`border p-2 rounded w-full ${createErrors.naziv ? 'border-red-500' : ''}`}
-                />
-                {createErrors.naziv && <p className="text-red-500 text-sm">{createErrors.naziv.message}</p>}
-              </div>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Kategorija"
-                  {...createRegister('kategorija')}
-                  className={`border p-2 rounded w-full ${createErrors.kategorija ? 'border-red-500' : ''}`}
-                />
-                {createErrors.kategorija && <p className="text-red-500 text-sm">{createErrors.kategorija.message}</p>}
-              </div>
-              <div className="flex gap-2 justify-end">
-                <button
-                  type="submit"
-                  disabled={isCreateSubmitting}
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
-                >
-                  Spremi
-                </button>
-              </div>
-            </form>
-          )}
-
-          {loading ? (
-            <div>Učitavanje...</div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead className="uppercase bg-gray-200 dark:bg-gray-900 dark:text-white">
-                <tr>
-                  <th className="px-4 py-2">Naziv</th>
-                  <th className="px-4 py-2">Kategorija</th>
-                  <th className="px-4 py-2">Akcije</th>
-                </tr>
-                </thead>
-                <tbody>
-                {vjestine.map(v => (
-                  <tr key={v.id}>
-                    {editId === v.id ? (
-                      <>
-                        <td className="px-4 py-2">
-                          <input
-                            type="text"
-                            {...editRegister('naziv')}
-                            className={`border p-2 rounded w-full ${editErrors.naziv ? 'border-red-500' : ''}`}
-                          />
-                          {editErrors.naziv && <p className="text-red-500 text-sm">{editErrors.naziv.message}</p>}
-                        </td>
-                        <td className="px-4 py-2">
-                          <input
-                            type="text"
-                            {...editRegister('kategorija')}
-                            className={`border p-2 rounded w-full ${editErrors.kategorija ? 'border-red-500' : ''}`}
-                          />
-                          {editErrors.kategorija &&
-                            <p className="text-red-500 text-sm">{editErrors.kategorija.message}</p>}
-                        </td>
-                        <td className="px-4 py-2 flex gap-2">
-                          <button
-                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                            onClick={handleEditSubmit(onEditSubmit)}
-                            disabled={isEditSubmitting}
-                          >
-                            Spremi
-                          </button>
-                          <button
-                            className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
-                            onClick={cancelEdit}
-                            type="button"
-                          >
-                            Odustani
-                          </button>
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td className="px-4 py-2">{v.naziv}</td>
-                        <td className="px-4 py-2">{v.kategorija}</td>
-                        <td className="px-4 py-2 flex gap-2">
-                          <button
-                            className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                            onClick={() => startEdit(v)}
-                          >
-                            Uredi
-                          </button>
-                          <button
-                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                            onClick={() => handleDelete(v.id)}
-                          >
-                            Obriši
-                          </button>
-                        </td>
-                      </>
-                    )}
-                  </tr>
-                ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Popis vještina</h2>
+          <button
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            onClick={openCreate}
+          >
+            Nova vještina
+          </button>
         </div>
-      )}
+
+        {formOpen && (
+          <form
+            onSubmit={handleCreateSubmit(onCreateSubmit)}
+            className="bg-gray-200 dark:bg-gray-900 p-6 rounded shadow-md min-w-[300px] flex flex-col gap-4 mb-6 border"
+          >
+            <h3 className="text-lg font-bold mb-2">Nova vještina</h3>
+            <div>
+              <input
+                type="text"
+                placeholder="Naziv"
+                {...createRegister('naziv')}
+                className={`border p-2 rounded w-full ${createErrors.naziv ? 'border-red-500' : ''}`}
+              />
+              {createErrors.naziv && <p className="text-red-500 text-sm">{createErrors.naziv.message}</p>}
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Kategorija"
+                {...createRegister('kategorija')}
+                className={`border p-2 rounded w-full ${createErrors.kategorija ? 'border-red-500' : ''}`}
+              />
+              {createErrors.kategorija && <p className="text-red-500 text-sm">{createErrors.kategorija.message}</p>}
+            </div>
+            <div className="flex gap-2 justify-end">
+              <button
+                type="submit"
+                disabled={isCreateSubmitting}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+              >
+                Spremi
+              </button>
+            </div>
+          </form>
+        )}
+
+        {loading ? (
+          <div>Učitavanje...</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead className="uppercase bg-gray-200 dark:bg-gray-900 dark:text-white">
+              <tr>
+                <th className="px-4 py-2">Naziv</th>
+                <th className="px-4 py-2">Kategorija</th>
+                <th className="px-4 py-2">Akcije</th>
+              </tr>
+              </thead>
+              <tbody>
+              {vjestine.map(v => (
+                <tr key={v.id}>
+                  {editId === v.id ? (
+                    <>
+                      <td className="px-4 py-2">
+                        <input
+                          type="text"
+                          {...editRegister('naziv')}
+                          className={`border p-2 rounded w-full ${editErrors.naziv ? 'border-red-500' : ''}`}
+                        />
+                        {editErrors.naziv && <p className="text-red-500 text-sm">{editErrors.naziv.message}</p>}
+                      </td>
+                      <td className="px-4 py-2">
+                        <input
+                          type="text"
+                          {...editRegister('kategorija')}
+                          className={`border p-2 rounded w-full ${editErrors.kategorija ? 'border-red-500' : ''}`}
+                        />
+                        {editErrors.kategorija &&
+                          <p className="text-red-500 text-sm">{editErrors.kategorija.message}</p>}
+                      </td>
+                      <td className="px-4 py-2 flex gap-2">
+                        <button
+                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                          onClick={handleEditSubmit(onEditSubmit)}
+                          disabled={isEditSubmitting}
+                        >
+                          Spremi
+                        </button>
+                        <button
+                          className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+                          onClick={cancelEdit}
+                          type="button"
+                        >
+                          Odustani
+                        </button>
+                      </td>
+                    </>
+                  ) : (
+                    <>
+                      <td className="px-4 py-2">{v.naziv}</td>
+                      <td className="px-4 py-2">{v.kategorija}</td>
+                      <td className="px-4 py-2 flex gap-2">
+                        <button
+                          className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                          onClick={() => startEdit(v)}
+                        >
+                          Uredi
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                          onClick={() => handleDelete(v.id)}
+                        >
+                          Obriši
+                        </button>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

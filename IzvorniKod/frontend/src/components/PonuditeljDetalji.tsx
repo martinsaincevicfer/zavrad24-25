@@ -172,6 +172,9 @@ const PonuditeljDetalji: React.FC = () => {
           <div className="space-y-4">
             {recenzije.map((recenzija, idx) => (
               <div key={idx} className="border rounded p-4">
+                <div>
+                  <span className="ml-2 font-semibold">{recenzija.naruciteljIme}</span>
+                </div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="font-bold">Ocjena:</span>
                   <span className="flex items-center gap-1">

@@ -29,4 +29,18 @@ public class RecenzijaController {
         recenzijaService.createRecenzija(dto);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/uredi/{ugovorId}")
+    public ResponseEntity<?> updateRecenzija(
+            @PathVariable Integer ugovorId,
+            @RequestBody RecenzijaFormDTO dto) {
+        recenzijaService.updateRecenzija(ugovorId, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/obrisi/{ugovorId}")
+    public ResponseEntity<?> deleteRecenzija(@PathVariable Integer ugovorId) {
+        recenzijaService.deleteRecenzija(ugovorId);
+        return ResponseEntity.ok().build();
+    }
 }

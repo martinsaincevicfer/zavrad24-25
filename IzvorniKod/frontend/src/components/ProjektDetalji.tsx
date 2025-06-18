@@ -9,7 +9,7 @@ import ZatvoriProjektGumb from "./ZatvoriProjektGumb.tsx";
 import PonudaForm, {PonudaFormType} from './PonudaForm';
 import PonudaPopis from "./PonudaPopis.tsx";
 import {toast, ToastContainer} from "react-toastify";
-import {useConfirm} from "./ConfirmContext.tsx";
+import {useConfirm} from "../utils/ConfirmContextUtils.ts";
 
 
 export const ProjektDetalji: React.FC = () => {

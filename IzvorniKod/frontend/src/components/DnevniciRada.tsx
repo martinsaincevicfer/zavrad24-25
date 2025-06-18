@@ -5,14 +5,13 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {authService} from "../services/authService";
 import Dnevnikrada from "../types/Dnevnikrada.ts";
-import {useConfirm} from "./ConfirmContext.tsx";
+import {useConfirm} from "../utils/ConfirmContextUtils.ts";
 
 const dnevnikSchema = z.object({
   poruka: z.string().min(5, "Opis mora imati barem 5 znakova"),
 });
 
 type DnevnikForm = z.infer<typeof dnevnikSchema>;
-
 
 interface Props {
   ugovorId: number;
@@ -25,6 +24,9 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
   const [error, setError] = useState<string | null>(null);
   const jePonuditelj = authService.isUserInRole("ponuditelj");
   const confirm = useConfirm();
+
+  const [editId, setEditId] = useState<number | null>(null);
+  const [editPoruka, setEditPoruka] = useState<string>("");
 
   const {
     register,
@@ -60,7 +62,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
     try {
       await axiosInstance.post("/dnevnicirada/stvori", {
         ugovorId,
-        ...data,
+        poruka: data.poruka,
       });
       reset();
       fetchDnevnici();
@@ -81,6 +83,32 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
     }
   };
 
+  const handleEditClick = (dnevnik: Dnevnikrada) => {
+    setEditId(dnevnik.id);
+    setEditPoruka(dnevnik.poruka);
+  };
+
+  const handleEditSave = async (id: number) => {
+    try {
+      await axiosInstance.put(`/dnevnicirada/${id}`, {
+        id,
+        ugovorId,
+        poruka: editPoruka,
+      });
+      setEditId(null);
+      setEditPoruka("");
+      fetchDnevnici();
+    } catch (err) {
+      console.error(err);
+      setError("Greška pri uređivanju dnevnika rada.");
+    }
+  };
+
+  const handleEditCancel = () => {
+    setEditId(null);
+    setEditPoruka("");
+  };
+
   return (
     <div className="mt-4 rounded">
       <h2 className="mb-2 font-semibold text-l md:text-xl">Dnevnik rada:</h2>
@@ -90,57 +118,77 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
         <div className="text-red-500">{error}</div>
       ) : (
         <>
-          {dnevnici.length === 0 ? (
-            <div>Nema unosa u dnevniku rada.</div>
-          ) : (
-            <ul className="space-y-3">
-              {dnevnici.map((dnevnik) => (
-                <li
-                  key={dnevnik.id}
-                  className="border p-3 rounded flex flex-col md:flex-row justify-between items-start md:items-center gap-2"
-                >
-                  <div>
-                    <div>
-                      <span className="font-semibold text-l md:text-xl">
-                        {dnevnik.poruka}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      <strong>Dodano:</strong>{" "}
-                      {new Date(dnevnik.datumUnosa).toLocaleString()}
-                    </div>
-                  </div>
-                  {jePonuditelj && ugovorStatus !== 'zavrsen' && (
+          <ul>
+            {dnevnici.map((dnevnik) => (
+              <li key={dnevnik.id} className="mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded">
+                {editId === dnevnik.id ? (
+                  <>
+                    <input
+                      type="text"
+                      value={editPoruka}
+                      onChange={e => setEditPoruka(e.target.value)}
+                      className="w-full p-1 rounded border mb-2"
+                    />
                     <button
-                      onClick={() => handleDelete(dnevnik.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      onClick={() => handleEditSave(dnevnik.id)}
+                      className="px-3 py-1 bg-green-500 text-white rounded mr-2"
                     >
-                      Obriši
+                      Spremi
                     </button>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-          {jePonuditelj && ugovorStatus !== 'zavrsen' && (
-            <form onSubmit={handleSubmit(onSubmit)} className="my-4 space-y-4 max-w-md">
+                    <button
+                      onClick={handleEditCancel}
+                      className="px-3 py-1 bg-gray-500 text-white rounded"
+                    >
+                      Odustani
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <span className="font-semibold">Opis:</span> {dnevnik.poruka}
+                    </div>
+                    <div>
+                      <span className="font-semibold">Datum unosa:</span>{" "}
+                      {new Date(dnevnik.datumUnosa).toLocaleString("hr-HR")}
+                    </div>
+                    {jePonuditelj && ugovorStatus !== "zavrsen" && (
+                      <div className="flex gap-2 mt-2">
+                        <button
+                          onClick={() => handleEditClick(dnevnik)}
+                          className="bg-yellow-500 text-white px-3 py-1 rounded"
+                        >
+                          Uredi
+                        </button>
+                        <button
+                          onClick={() => handleDelete(dnevnik.id)}
+                          className="bg-red-500 text-white px-3 py-1 rounded"
+                        >
+                          Obriši
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+          {jePonuditelj && ugovorStatus !== "zavrsen" && (
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-4">
               <div>
-                <label className="block font-semibold">Poruka:</label>
-                <textarea
+                <label className="block font-semibold">Opis:</label>
+                <input
+                  type="text"
                   {...register("poruka")}
                   className="border rounded px-2 py-1 w-full"
-                  rows={3}
                 />
-                {errors.poruka && (
-                  <span className="text-red-500">{errors.poruka.message}</span>
-                )}
+                {errors.poruka && <span className="text-red-500">{errors.poruka.message}</span>}
               </div>
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
-                {isSubmitting ? "Spremanje..." : "Dodaj novi unos"}
+                {isSubmitting ? "Spremanje..." : "Dodaj dnevnik rada"}
               </button>
             </form>
           )}

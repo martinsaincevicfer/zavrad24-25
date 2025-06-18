@@ -6,14 +6,16 @@ public class RecenzijaDTO {
     private Integer ocjena;
     private String komentar;
     private Instant datumStvaranja;
+    private String naruciteljIme;
 
     public RecenzijaDTO() {
     }
 
-    public RecenzijaDTO(Integer ocjena, String komentar, Instant datumStvaranja) {
+    public RecenzijaDTO(Integer ocjena, String komentar, Instant datumStvaranja, String naruciteljIme) {
         this.ocjena = ocjena;
         this.komentar = komentar;
         this.datumStvaranja = datumStvaranja;
+        this.naruciteljIme = naruciteljIme;
     }
 
     public Integer getOcjena() {
@@ -38,5 +40,13 @@ public class RecenzijaDTO {
 
     public void setDatumStvaranja(Instant datumStvaranja) {
         this.datumStvaranja = datumStvaranja;
+    }
+
+    public String getNaruciteljIme() {
+        return naruciteljIme;
+    }
+
+    public void setNaruciteljIme(String naruciteljIme) {
+        this.naruciteljIme = naruciteljIme;
     }
 }
