@@ -44,7 +44,7 @@ public class KorisnikService {
             TvrtkaDTO tvrtkaDTO = new TvrtkaDTO();
             tvrtkaDTO.setId(korisnik.getId());
             tvrtkaDTO.setEmail(korisnik.getEmail());
-            tvrtkaDTO.setTip("TVRTKA");
+            tvrtkaDTO.setTip("tvrtka");
             tvrtkaDTO.setOib(korisnik.getTvrtka().getOib());
             tvrtkaDTO.setNazivTvrtke(korisnik.getTvrtka().getNazivTvrtke());
             tvrtkaDTO.setAdresa(korisnik.getTvrtka().getAdresa());
@@ -53,7 +53,7 @@ public class KorisnikService {
             OsobaDTO osobaDTO = new OsobaDTO();
             osobaDTO.setId(korisnik.getId());
             osobaDTO.setEmail(korisnik.getEmail());
-            osobaDTO.setTip("OSOBA");
+            osobaDTO.setTip("osoba");
             osobaDTO.setIme(korisnik.getOsoba().getIme());
             osobaDTO.setPrezime(korisnik.getOsoba().getPrezime());
             osobaDTO.setAdresa(korisnik.getOsoba().getAdresa());

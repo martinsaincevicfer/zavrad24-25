@@ -157,6 +157,15 @@ const Profil = () => {
     }
   };
 
+  const formatDatum = (datum: string) =>
+    new Date(datum).toLocaleDateString('hr-HR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen">
       <div className="text-xl">Učitavanje...</div>
@@ -203,14 +212,14 @@ const Profil = () => {
                     <p className="text-red-500">{tvrtkaForm.formState.errors.adresa.message}</p>}
                 </div>
                 <div className="flex gap-2">
-                  <button type="submit" disabled={tvrtkaForm.formState.isSubmitting}
-                          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Spremi
-                  </button>
                   <button type="button" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
                           onClick={() => {
                             setIsEditingUser(false);
                             tvrtkaForm.reset();
                           }}>Odustani
+                  </button>
+                  <button type="submit" disabled={tvrtkaForm.formState.isSubmitting}
+                          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Spremi
                   </button>
                 </div>
               </form>
@@ -356,7 +365,7 @@ const Profil = () => {
                   </div>
                   <div className="p-4 rounded-lg">
                     <p className="text-gray-600">Datum Stvaranja</p>
-                    <p className="font-semibold">{freelancerProfile.datumStvaranja}</p>
+                    <p className="font-semibold">{formatDatum(freelancerProfile.datumStvaranja)}</p>
                   </div>
                   <div className="p-4 rounded-lg">
                     <p className="text-gray-600">Vještine</p>
@@ -377,12 +386,14 @@ const Profil = () => {
         )}
 
         {!jePonuditelj && !jeAdministrator && (
-          <div className="flex flex-col items-center">
-            <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao ponuditelj.</p>
-            <Link to={'/registracija/ponuditelj'}
-                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              Registriraj se kao ponuditelj
-            </Link>
+          <div className="flex items-center justify-center w-full t border-t-1 pt-6">
+            <div className="flex flex-col items-center">
+              <p className="text-lg font-medium mb-4">Trenutno niste registrirani kao ponuditelj.</p>
+              <Link to={'/registracija/ponuditelj'}
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                Registriraj se kao ponuditelj
+              </Link>
+            </div>
           </div>
         )}
       </div>

@@ -48,7 +48,7 @@ const PonudaPopis: React.FC<PonudaPopisProps> = ({
                 key={ponuda.id}
                 className="flex flex-col md:flex-row gap-5 items-start justify-between border rounded-lg p-3 text-l bg-gray-100 dark:bg-gray-800"
               >
-                <li className="mt-0 pt-0">
+                <li className="mt-0 pt-0 overflow-x-auto w-full">
                   <Link
                     to={`/ponuditelji/${ponuda.ponuditelj.id}`}
                     className="text-blue-500 hover:text-blue-600 text-xl text-center"
@@ -71,7 +71,7 @@ const PonudaPopis: React.FC<PonudaPopisProps> = ({
                       <p className="text-m md:text-l">
                         <strong className="text-m md:text-l">Iznos:</strong> {ponuda.iznos} €
                       </p>
-                      <p className="text-m md:text-l">
+                      <p className="text-m md:text-l w-full overflow-y-scroll overflow-x-auto">
                         <strong className="text-m md:text-l">Poruka:</strong> {ponuda.poruka}
                       </p>
                       <p className="text-m md:text-l">
@@ -138,16 +138,16 @@ const EditPonudaFormComponent: React.FC<EditPonudaFormComponentProps> = ({defaul
           type="number"
           step="0.01"
           {...register("iznos", {valueAsNumber: true})}
-          className="w-full p-1 rounded"
+          className="w-full p-1 rounded border"
         />
         {errors.iznos && <span className="text-red-500 text-xs">{errors.iznos.message}</span>}
       </div>
       <div className="mb-2">
         <label className="block text-sm">Poruka:</label>
-        <input
-          type="text"
+        <textarea
           {...register("poruka")}
-          className="w-full p-1 rounded"
+          className="w-full p-1 rounded border"
+          rows={3}
         />
         {errors.poruka && <span className="text-red-500 text-xs">{errors.poruka.message}</span>}
       </div>

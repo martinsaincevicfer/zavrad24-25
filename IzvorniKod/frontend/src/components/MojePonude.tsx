@@ -88,7 +88,7 @@ const MojePonude: React.FC = () => {
 
   return (
     <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
-      <ToastContainer theme="auto" position="top-center"
+      <ToastContainer theme="auto" position="bottom-right"
                       toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
                       limit={1}
       />
@@ -143,7 +143,7 @@ const MojePonude: React.FC = () => {
                   <p className="text-sm">
                     <strong>Iznos:</strong> {ponuda.iznos} €
                   </p>
-                  <p className="text-sm">
+                  <p className="text-sm h-16 overflow-y-scroll">
                     <strong>Poruka:</strong> {ponuda.poruka}
                   </p>
                   <p className="text-sm">

@@ -10,7 +10,7 @@ import DnevniciRada from "./DnevniciRada.tsx";
 import {toast, ToastContainer} from "react-toastify";
 
 const recenzijaSchema = z.object({
-  ocjena: z.number().min(1).max(5, "Ocjena mora biti između 1 i 5"),
+  ocjena: z.number({message: "Ocjena mora biti broj."}).min(1).max(5, "Ocjena mora biti između 1 i 5"),
   komentar: z.string().min(5, "Komentar mora imati barem 5 znakova"),
 });
 
@@ -24,7 +24,6 @@ const UgovorDetalji: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const loggedInEmail = getLoggedInUserEmail();
-  const jePonuditelj = authService.isUserInRole('ponuditelj');
   const [recenzijaStatus, setRecenzijaStatus] = useState<null | "success" | "error">(null);
 
   const [editMode, setEditMode] = useState(false);
@@ -35,7 +34,6 @@ const UgovorDetalji: React.FC = () => {
     register,
     handleSubmit,
     formState: {errors, isSubmitting},
-    reset
   } = useForm<RecenzijaForm>({
     resolver: zodResolver(recenzijaSchema),
     mode: "all"
@@ -48,7 +46,7 @@ const UgovorDetalji: React.FC = () => {
         ...data,
       });
       setRecenzijaStatus("success");
-      reset();
+      fetchUgovor();
     } catch (err) {
       console.error(err);
       setRecenzijaStatus("error");
@@ -77,8 +75,8 @@ const UgovorDetalji: React.FC = () => {
 
   const zavrsiUgovor = async () => {
     try {
-      await axiosInstance.patch(`/ugovori/ponuditelji/zavrsi/${ugovor?.id}`);
-      location.reload();
+      await axiosInstance.patch(`/ugovori/narucitelj/zavrsi/${ugovor?.id}`);
+      fetchUgovor();
     } catch (err) {
       console.error(err);
       toast.dismiss();
@@ -148,12 +146,24 @@ const UgovorDetalji: React.FC = () => {
 
   return (
     <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
-      <ToastContainer theme="auto" position="top-center"
+      <ToastContainer theme="auto" position="bottom-right"
                       toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
                       limit={1}
       />
       <div className="grid grid-cols-1 gap-2">
-        <h1 className="text-3xl md:text-4xl font-bold">Detalji ugovora</h1>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold">Detalji ugovora</h1>
+          {ugovor.status !== "zavrsen" && loggedInEmail === ugovor.projekt.narucitelj.email && (
+            <div className="mt-4">
+              <button
+                onClick={zavrsiUgovor}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Označi ugovor kao završen
+              </button>
+            </div>
+          )}
+        </div>
         {loggedInEmail === ugovor.projekt.narucitelj.email ? (
           <div className="flex justify-between">
             <span className="font-semibold text-l md:text-xl">Ponuditelj: </span>
@@ -204,22 +214,11 @@ const UgovorDetalji: React.FC = () => {
         </div>
       </div>
 
-      {!jePonuditelj && ugovor.status !== "zavrsen" && (
+      <DnevniciRada ugovor={ugovor}/>
+
+      {ugovor.status === "zavrsen" && !ugovor.recenzija && loggedInEmail === ugovor.projekt.narucitelj.email && (
         <div className="mt-4">
-          <button
-            onClick={zavrsiUgovor}
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-          >
-            Označi ugovor kao završen
-          </button>
-        </div>
-      )}
-
-      <DnevniciRada ugovorId={ugovor.id} ugovorStatus={ugovor.status}/>
-
-      {ugovor.status === "zavrsen" && !ugovor.recenzija && !jePonuditelj && (
-        <div className="p-6 mt-4">
-          <h2 className="text-xl font-bold mb-2">Dodaj recenziju</h2>
+          <h2 className="text-xl font-bold mb-2">Ostavi recenziju</h2>
           <form onSubmit={handleSubmit(onSubmitRecenzija)} className="space-y-4 max-w-md">
             <div>
               <label className="block font-semibold">Ocjena (1-5):</label>
@@ -258,16 +257,34 @@ const UgovorDetalji: React.FC = () => {
         </div>
       )}
 
-      {ugovor.recenzija && !jePonuditelj && !editMode && (
-        <div className="p-6 mt-4 bg-gray-100 dark:bg-gray-800 rounded">
-          <h2 className="text-xl font-bold mb-2">Vaša recenzija</h2>
-          <div>
-            <span className="font-semibold">Ocjena:</span> {ugovor.recenzija.ocjena}
+      {ugovor.recenzija && loggedInEmail === ugovor.projekt.narucitelj.email && !editMode && (
+        <div className="p-4 mt-8 bg-gray-100 dark:bg-gray-800 rounded">
+          <div className="flex gap-2 mt-2 justify-between">
+            <h2 className="text-xl font-bold mb-2">Vaša recenzija</h2>
+            <div className="hidden md:flex gap-2">
+              <button
+                onClick={onEditClick}
+                className="bg-yellow-500 text-white px-3 py-1 rounded"
+              >
+                Uredi recenziju
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Obriši recenziju
+              </button>
+            </div>
           </div>
-          <div>
-            <span className="font-semibold">Komentar:</span> {ugovor.recenzija.komentar}
+          <div className="overflow-x-auto">
+            <div>
+              <span className="font-semibold">Ocjena:</span> {ugovor.recenzija.ocjena}
+            </div>
+            <div>
+              <span className="font-semibold">Komentar:</span> {ugovor.recenzija.komentar}
+            </div>
           </div>
-          <div className="flex gap-2 mt-2">
+          <div className="flex md:hidden gap-2 mt-2">
             <button
               onClick={onEditClick}
               className="bg-yellow-500 text-white px-3 py-1 rounded"
@@ -284,9 +301,25 @@ const UgovorDetalji: React.FC = () => {
         </div>
       )}
 
-      {ugovor.recenzija && !jePonuditelj && editMode && (
+      {ugovor.recenzija && loggedInEmail === ugovor.projekt.narucitelj.email && editMode && (
         <div className="p-6 mt-4 bg-gray-100 dark:bg-gray-800 rounded">
-          <h2 className="text-xl font-bold mb-2">Uredi recenziju</h2>
+          <div className="flex justify-between">
+            <h2 className="text-xl font-bold mb-2">Uredi recenziju</h2>
+            <div className="hidden md:flex gap-2">
+              <button
+                onClick={() => setEditMode(false)}
+                className="px-3 py-1 bg-gray-500 text-white rounded"
+              >
+                Odustani
+              </button>
+              <button
+                onClick={handleEditSave}
+                className="px-3 py-1 bg-green-500 text-white rounded mr-2"
+              >
+                Spremi
+              </button>
+            </div>
+          </div>
           <div className="mb-2">
             <label className="block font-semibold">Ocjena (1-5):</label>
             <input
@@ -307,18 +340,20 @@ const UgovorDetalji: React.FC = () => {
               rows={3}
             />
           </div>
-          <button
-            onClick={handleEditSave}
-            className="px-3 py-1 bg-green-500 text-white rounded mr-2"
-          >
-            Spremi
-          </button>
-          <button
-            onClick={() => setEditMode(false)}
-            className="px-3 py-1 bg-gray-500 text-white rounded"
-          >
-            Odustani
-          </button>
+          <div className="flex md:hidden gap-2">
+            <button
+              onClick={() => setEditMode(false)}
+              className="px-3 py-1 bg-gray-500 text-white rounded"
+            >
+              Odustani
+            </button>
+            <button
+              onClick={handleEditSave}
+              className="px-3 py-1 bg-green-500 text-white rounded mr-2"
+            >
+              Spremi
+            </button>
+          </div>
         </div>
       )}
     </div>

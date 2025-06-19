@@ -3,7 +3,7 @@ import {Controller, useFormContext} from 'react-hook-form';
 import debounce from 'lodash/debounce';
 import axiosInstance from '../utils/axiosConfig';
 import {Vjestina} from '../types/Vjestina';
-import {Check} from "lucide-react";
+import {Check, X} from "lucide-react";
 
 type Props = {
   name: string;
@@ -95,14 +95,16 @@ const VjestinaAutocomplete: React.FC<Props> = ({name}) => {
               {(value ?? []).map((id: number) => {
                 const v = selected.find((o) => o.id === id);
                 return (
-                  <span key={id} className="bg-gray-700 rounded-lg px-2">
-                    {(v && v.naziv) ? v.naziv : 'Učitavam...'}
+                  <span key={id} className="flex flex-row items-center p-3 bg-gray-700 rounded">
+                    <span className="">
+                      {(v && v.naziv) ? v.naziv : 'Učitavanje...'}
+                    </span>
                     <button
                       type="button"
                       onClick={() => field.onChange(value.filter((vid: number) => vid !== id))}
-                      className="ml-1 text-red-500"
+                      className="!p-0 !m-0 text-red-500 hover:text-red-600"
                     >
-                      &times;
+                      <X/>
                     </button>
                   </span>
                 );

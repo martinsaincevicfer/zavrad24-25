@@ -53,7 +53,7 @@ const RegistracijaPonuditelj: React.FC = () => {
 
   return (
     <div className="max-w-8xl mx-auto flex flex-col items-center justify-center">
-      <ToastContainer theme="auto" position="top-center"
+      <ToastContainer theme="auto" position="bottom-right"
                       toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
                       limit={1}
       />

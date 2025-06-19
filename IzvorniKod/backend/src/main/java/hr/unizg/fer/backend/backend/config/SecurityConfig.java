@@ -37,7 +37,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/projekti").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/projekti/{id}").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/korisnici/{id}").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/honorarci").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/ponude/projekt/{id}").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

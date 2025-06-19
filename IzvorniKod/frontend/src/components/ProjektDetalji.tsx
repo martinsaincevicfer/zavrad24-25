@@ -180,7 +180,7 @@ export const ProjektDetalji: React.FC = () => {
 
   return (
     <div className="container max-w-7xl mx-auto mt-5 px-3 sm:px-6 lg:px-9">
-      <ToastContainer theme="auto" position="top-center"
+      <ToastContainer theme="auto" position="bottom-right"
                       toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
                       limit={1}
       />
@@ -215,28 +215,28 @@ export const ProjektDetalji: React.FC = () => {
               className="text-l md:text-xl">{projekt.narucitelj ? formatKorisnikPodaci(projekt.narucitelj) : 'Učitavanje...'}
             </span>
           </div>
-          <div className="flex justify-between pb-2">
+          <div className="flex justify-between pb-3">
             <span className="font-semibold text-l md:text-xl">Budžet:</span>
             <span className="text-l md:text-xl">{formatNovac(projekt.budzet)}</span>
           </div>
-          <div className="flex justify-between pb-2">
+          <div className="flex justify-between pb-3">
             <span className="font-semibold text-l md:text-xl">Datum stvaranja:</span>
             <span className="text-l md:text-xl">{formatDatum(projekt.datumStvaranja)}</span>
           </div>
-          <div className="flex justify-between pb-2">
+          <div className="flex justify-between pb-3">
             <span className="font-semibold text-l md:text-xl">Rok izrade:</span>
             <span className="text-l md:text-xl">{formatDatum(projekt.rokIzrade).split(',')[0]}</span>
           </div>
-          <div className="flex flex-col justify-start gap-2">
+          <div className="flex flex-col justify-start gap-3">
             <h2 className="text-l md:text-xl font-semibold mb-2">Opis projekta:</h2>
             <p className="text-gray-700 dark:text-gray-300 mb-6 truncate text-l md:text-xl">{projekt.opis}</p>
           </div>
-          <h2 className="text-l md:text-xl font-semibold mb-2">Preporučene vještine:</h2>
-          <div className="flex flex-wrap gap-2">
+          <h2 className="text-l md:text-xl font-semibold mb-3">Preporučene vještine:</h2>
+          <div className="flex flex-wrap gap-3">
             {projekt.vjestine.map((vjestina) => (
               <div
                 key={vjestina.id}
-                className="flex items-center text-black bg-gray-200 dark:text-white dark:bg-gray-800 text-l md:text-xl px-3 py-1"
+                className="flex items-center text-black bg-gray-200 dark:text-white dark:bg-gray-800 rounded text-l md:text-xl px-3 py-1"
               >
                 <span>{vjestina.naziv}</span>
               </div>
@@ -267,7 +267,7 @@ export const ProjektDetalji: React.FC = () => {
         {!ulogiraniKorisnik && (
           <Link
             to={"/login"}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 w-1/3"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-fit mb-6"
           >
             Kreiraj novu ponudu
           </Link>
@@ -290,12 +290,14 @@ export const ProjektDetalji: React.FC = () => {
       )}
 
       {ulogiraniKorisnik && !jePonuditelj && !(ulogiraniKorisnik === korisnik?.email) && (
-        <Link
-          to={'/registracija/ponuditelj'}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Registriraj se kao ponuditelj
-        </Link>
+        <div className="my-6">
+          <Link
+            to={'/registracija/ponuditelj'}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-fit my-6"
+          >
+            Registriraj se kao ponuditelj
+          </Link>
+        </div>
       )}
 
       {ponude && (

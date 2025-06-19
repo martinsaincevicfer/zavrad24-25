@@ -6,6 +6,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {authService} from "../services/authService";
 import Dnevnikrada from "../types/Dnevnikrada.ts";
 import {useConfirm} from "../utils/ConfirmContextUtils.ts";
+import {Ugovor} from "../types/Ugovor.ts";
 
 const dnevnikSchema = z.object({
   poruka: z.string().min(5, "Opis mora imati barem 5 znakova"),
@@ -13,17 +14,18 @@ const dnevnikSchema = z.object({
 
 type DnevnikForm = z.infer<typeof dnevnikSchema>;
 
+const getLoggedInUserEmail = () => authService.getCurrentUser();
+
 interface Props {
-  ugovorId: number;
-  ugovorStatus: string;
+  ugovor: Ugovor;
 }
 
-const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
+const DnevniciRada: React.FC<Props> = ({ugovor}) => {
   const [dnevnici, setDnevnici] = useState<Dnevnikrada[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const jePonuditelj = authService.isUserInRole("ponuditelj");
   const confirm = useConfirm();
+  const loggedInEmail = getLoggedInUserEmail();
 
   const [editId, setEditId] = useState<number | null>(null);
   const [editPoruka, setEditPoruka] = useState<string>("");
@@ -42,7 +44,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
     setLoading(true);
     try {
       const res = await axiosInstance.get<Dnevnikrada[]>(
-        `/dnevnicirada/ugovor/${ugovorId}`
+        `/dnevnicirada/ugovor/${ugovor.id}`
       );
       setDnevnici(res.data);
       setError(null);
@@ -52,17 +54,17 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
     } finally {
       setLoading(false);
     }
-  }, [ugovorId]);
+  }, [ugovor.id]);
 
   useEffect(() => {
     fetchDnevnici();
-  }, [fetchDnevnici, ugovorId]);
+  }, [fetchDnevnici, ugovor.id]);
 
   const onSubmit = async (data: DnevnikForm) => {
     try {
       await axiosInstance.post("/dnevnicirada/stvori", {
-        ugovorId,
-        poruka: data.poruka,
+        ugovorId: ugovor.id,
+        poruka: data.poruka
       });
       reset();
       fetchDnevnici();
@@ -92,7 +94,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
     try {
       await axiosInstance.put(`/dnevnicirada/${id}`, {
         id,
-        ugovorId,
+        ugovorId: ugovor.id,
         poruka: editPoruka,
       });
       setEditId(null);
@@ -112,6 +114,9 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
   return (
     <div className="mt-4 rounded">
       <h2 className="mb-2 font-semibold text-l md:text-xl">Dnevnik rada:</h2>
+      {dnevnici.length === 0 && (
+        <div className="grid grid-cols-1 gap-2">Trenutno nema unosa u dnevniku rada.</div>
+      )}
       {loading ? (
         <div>Učitavanje...</div>
       ) : error ? (
@@ -120,7 +125,8 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
         <>
           <ul>
             {dnevnici.map((dnevnik) => (
-              <li key={dnevnik.id} className="mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded">
+              <li key={dnevnik.id}
+                  className="mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded flex flex-col md:flex-row justify-between gap-2">
                 {editId === dnevnik.id ? (
                   <>
                     <input
@@ -129,29 +135,33 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
                       onChange={e => setEditPoruka(e.target.value)}
                       className="w-full p-1 rounded border mb-2"
                     />
-                    <button
-                      onClick={() => handleEditSave(dnevnik.id)}
-                      className="px-3 py-1 bg-green-500 text-white rounded mr-2"
-                    >
-                      Spremi
-                    </button>
-                    <button
-                      onClick={handleEditCancel}
-                      className="px-3 py-1 bg-gray-500 text-white rounded"
-                    >
-                      Odustani
-                    </button>
+                    <div className="flex gap-2 items-center">
+                      <button
+                        onClick={handleEditCancel}
+                        className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
+                      >
+                        Odustani
+                      </button>
+                      <button
+                        onClick={() => handleEditSave(dnevnik.id)}
+                        className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                      >
+                        Spremi
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <>
                     <div>
-                      <span className="font-semibold">Opis:</span> {dnevnik.poruka}
+                      <span className="font-semibold text-l md:text-xl">
+                        {dnevnik.poruka}
+                      </span>
+                      <div className="text-sm text-gray-800 dark:text-gray-400">
+                        <span>Dodano:</span>{" "}
+                        {new Date(dnevnik.datumUnosa).toLocaleString("hr-HR")}
+                      </div>
                     </div>
-                    <div>
-                      <span className="font-semibold">Datum unosa:</span>{" "}
-                      {new Date(dnevnik.datumUnosa).toLocaleString("hr-HR")}
-                    </div>
-                    {jePonuditelj && ugovorStatus !== "zavrsen" && (
+                    {!(loggedInEmail === ugovor.projekt.narucitelj.email) && ugovor.status !== "zavrsen" && (
                       <div className="flex gap-2 mt-2">
                         <button
                           onClick={() => handleEditClick(dnevnik)}
@@ -172,10 +182,10 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
               </li>
             ))}
           </ul>
-          {jePonuditelj && ugovorStatus !== "zavrsen" && (
+          {!(loggedInEmail === ugovor.projekt.narucitelj.email) && ugovor.status !== "zavrsen" && (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-4">
               <div>
-                <label className="block font-semibold">Opis:</label>
+                <label className="block font-semibold mb-1">Poruka:</label>
                 <input
                   type="text"
                   {...register("poruka")}
@@ -186,7 +196,7 @@ const DnevniciRada: React.FC<Props> = ({ugovorId, ugovorStatus}) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-1"
               >
                 {isSubmitting ? "Spremanje..." : "Dodaj dnevnik rada"}
               </button>

@@ -49,7 +49,7 @@ const RegistracijaTvrtka = () => {
 
   return (
     <div className="max-w-8xl mx-auto px-3 rounded">
-      <ToastContainer theme="auto" position="top-center"
+      <ToastContainer theme="auto" position="bottom-right"
                       toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
                       limit={1}
       />

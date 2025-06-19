@@ -28,7 +28,7 @@ const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, isSubmitting}) => {
     formState: {errors, isSubmitting: formSubmitting},
   } = useForm<PonudaFormType>({
     resolver: zodResolver(ponudaSchema),
-    mode: 'onSubmit',
+    mode: 'all',
   });
 
 
@@ -60,7 +60,7 @@ const PonudaForm: React.FC<PonudaFormProps> = ({onSubmit, isSubmitting}) => {
         <textarea
           {...register('poruka')}
           rows={3}
-          className={`bg-gray-100 dark:bg-gray-800 mt-1 border  block w-full ${errors.poruka ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-blue-500 focus:border-blue-500`}
+          className={`bg-gray-100 dark:bg-gray-800 mt-1 border block w-full ${errors.poruka ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-blue-500 focus:border-blue-500`}
         ></textarea>
         {errors.poruka && (
           <p className="text-red-500 text-sm">{errors.poruka.message}</p>
