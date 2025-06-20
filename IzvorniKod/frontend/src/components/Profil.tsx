@@ -8,6 +8,8 @@ import {FormProvider, useForm} from "react-hook-form";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
+import {Recenzija} from "../types/Recenzija.ts";
+import {Star} from "lucide-react";
 
 const osobaSchema = z.object({
   ime: z.string().min(2, "Ime je obavezno"),
@@ -38,9 +40,10 @@ const Profil = () => {
   const [freelancerError, setFreelancerError] = useState<string>('');
   const [isEditingUser, setIsEditingUser] = useState(false);
   const [isEditingFreelancer, setIsEditingFreelancer] = useState(false);
-
   const jePonuditelj = authService.isUserInRole('ponuditelj');
   const jeAdministrator = authService.isUserInRole('administrator');
+  const [recenzije, setRecenzije] = useState<Recenzija[]>([]);
+  const [recenzijeLoading, setRecenzijeLoading] = useState(false);
 
   const osobaForm = useForm<OsobaForm>({
     resolver: zodResolver(osobaSchema),
@@ -119,6 +122,22 @@ const Profil = () => {
       });
     }
   }, [freelancerProfile, resetFreelancerForm]);
+
+  useEffect(() => {
+    const fetchRecenzije = async () => {
+      if (!jePonuditelj || !freelancerProfile?.id) return;
+      setRecenzijeLoading(true);
+      try {
+        const response = await axiosInstance.get<Recenzija[]>(`/recenzije/ponuditelj/${freelancerProfile.id}`);
+        setRecenzije(response.data);
+      } catch {
+        setRecenzije([]);
+      } finally {
+        setRecenzijeLoading(false);
+      }
+    };
+    fetchRecenzije();
+  }, [jePonuditelj, freelancerProfile?.id]);
 
   const onOsobaSubmit = async (data: OsobaForm) => {
     try {
@@ -323,7 +342,7 @@ const Profil = () => {
                     {freelancerErrors.edukacija && <p className="text-red-500">{freelancerErrors.edukacija.message}</p>}
                   </div>
                   <div>
-                    <label>Iskustvo</label>
+                    <label>Radno iskustvo</label>
                     <input {...freelancerRegister('iskustvo')} className="border p-2 rounded w-full"/>
                     {freelancerErrors.iskustvo && <p className="text-red-500">{freelancerErrors.iskustvo.message}</p>}
                   </div>
@@ -360,7 +379,7 @@ const Profil = () => {
                     <p className="font-semibold">{freelancerProfile.edukacija}</p>
                   </div>
                   <div className="p-4 rounded-lg">
-                    <p className="text-gray-600">Iskustvo</p>
+                    <p className="text-gray-600">Radno iskustvo</p>
                     <p className="font-semibold">{freelancerProfile.iskustvo}</p>
                   </div>
                   <div className="p-4 rounded-lg">
@@ -382,6 +401,46 @@ const Profil = () => {
               )
             )}
             {freelancerError && <div className="text-red-500">{freelancerError}</div>}
+          </div>
+        )}
+
+        {jePonuditelj && (
+          <div className="w-full pt-6 border-t-1">
+            <h2 className="text-2xl font-bold mb-4">Recenzije</h2>
+            {recenzijeLoading ? (
+              <div>Učitavanje recenzija...</div>
+            ) : recenzije.length === 0 ? (
+              <div>Još nema recenzija za vas.</div>
+            ) : (
+              <div className="space-y-4">
+                {recenzije.map((recenzija, idx) => (
+                  <div key={idx} className="border rounded p-4 bg-gray-200 dark:bg-gray-900 overflow-scroll">
+                    <div>
+                      <span className="font-semibold text-xl">{recenzija.naruciteljIme}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold">Ocjena:</span>
+                      <span className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) =>
+                          <Star
+                            key={i}
+                            fill={i < recenzija.ocjena ? '#BA8E23' : 'none'}
+                            className="w-5 h-5"
+                          />
+                        )}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-bold">Komentar:</span>
+                      <span className="ml-2">{recenzija.komentar}</span>
+                    </div>
+                    <div className="text-sm text-gray-500 mt-1">
+                      {new Date(recenzija.datumStvaranja).toLocaleDateString('hr-HR')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

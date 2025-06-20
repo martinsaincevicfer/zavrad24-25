@@ -136,7 +136,7 @@ const PonuditeljDetalji: React.FC = () => {
               <p>{ponuditelj.edukacija}</p>
             </div>
             <div>
-              <p className="font-medium mb-2">Iskustvo:</p>
+              <p className="font-medium mb-2">Radno iskustvo:</p>
               <p>{ponuditelj.iskustvo}</p>
             </div>
           </div>
@@ -171,22 +171,21 @@ const PonuditeljDetalji: React.FC = () => {
         ) : (
           <div className="space-y-4">
             {recenzije.map((recenzija, idx) => (
-              <div key={idx} className="border rounded p-4">
+              <div key={idx} className="border rounded p-4 bg-gray-200 dark:bg-gray-900 overflow-scroll">
                 <div>
-                  <span className="ml-2 font-semibold">{recenzija.naruciteljIme}</span>
+                  <span className="font-semibold text-xl">{recenzija.naruciteljIme}</span>
                 </div>
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2">
                   <span className="font-bold">Ocjena:</span>
                   <span className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) =>
-                      <Star
-                        key={i}
-                        fill={i < recenzija.ocjena ? '#ffffff' : 'none'}
-                        stroke={i < recenzija.ocjena ? '#ffffff' : 'currentColor'}
-                        className="w-5 h-5"
-                      />
-                    )}
-                  </span>
+                        {[...Array(5)].map((_, i) =>
+                          <Star
+                            key={i}
+                            fill={i < recenzija.ocjena ? '#BA8E23' : 'none'}
+                            className="w-5 h-5"
+                          />
+                        )}
+                      </span>
                 </div>
                 <div>
                   <span className="font-bold">Komentar:</span>

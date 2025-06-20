@@ -25,7 +25,6 @@ const UgovorDetalji: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const loggedInEmail = getLoggedInUserEmail();
   const [recenzijaStatus, setRecenzijaStatus] = useState<null | "success" | "error">(null);
-
   const [editMode, setEditMode] = useState(false);
   const [editOcjena, setEditOcjena] = useState<number>(1);
   const [editKomentar, setEditKomentar] = useState<string>("");
@@ -204,7 +203,7 @@ const UgovorDetalji: React.FC = () => {
           <span className="text-l md:text-xl">
             {ugovor.datumZavrsetka
               ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
-              : "N/A"}
+              : "Nepoznat"}
           </span>
         </div>
         <div className="flex flex-col justify-start gap-2">
@@ -257,24 +256,26 @@ const UgovorDetalji: React.FC = () => {
         </div>
       )}
 
-      {ugovor.recenzija && loggedInEmail === ugovor.projekt.narucitelj.email && !editMode && (
+      {ugovor.recenzija && !editMode && (
         <div className="p-4 mt-8 bg-gray-100 dark:bg-gray-800 rounded">
-          <div className="flex gap-2 mt-2 justify-between">
-            <h2 className="text-xl font-bold mb-2">Vaša recenzija</h2>
-            <div className="hidden md:flex gap-2">
-              <button
-                onClick={onEditClick}
-                className="bg-yellow-500 text-white px-3 py-1 rounded"
-              >
-                Uredi recenziju
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-red-500 text-white px-3 py-1 rounded"
-              >
-                Obriši recenziju
-              </button>
-            </div>
+          <div className="flex gap-2 justify-between items-center">
+            <h2 className="text-xl font-semibold">Ostvaljena recenzija:</h2>
+            {loggedInEmail === ugovor.projekt.narucitelj.email && (
+              <div className="hidden md:flex gap-2">
+                <button
+                  onClick={onEditClick}
+                  className="bg-yellow-500 text-white rounded"
+                >
+                  Uredi recenziju
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-500 text-white rounded"
+                >
+                  Obriši recenziju
+                </button>
+              </div>
+            )}
           </div>
           <div className="overflow-x-auto">
             <div>
@@ -284,20 +285,22 @@ const UgovorDetalji: React.FC = () => {
               <span className="font-semibold">Komentar:</span> {ugovor.recenzija.komentar}
             </div>
           </div>
-          <div className="flex md:hidden gap-2 mt-2">
-            <button
-              onClick={onEditClick}
-              className="bg-yellow-500 text-white px-3 py-1 rounded"
-            >
-              Uredi recenziju
-            </button>
-            <button
-              onClick={handleDelete}
-              className="bg-red-500 text-white px-3 py-1 rounded"
-            >
-              Obriši recenziju
-            </button>
-          </div>
+          {loggedInEmail === ugovor.projekt.narucitelj.email && (
+            <div className="flex md:hidden gap-2 mt-2">
+              <button
+                onClick={onEditClick}
+                className="bg-yellow-500 text-white rounded"
+              >
+                Uredi recenziju
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 text-white rounded"
+              >
+                Obriši recenziju
+              </button>
+            </div>
+          )}
         </div>
       )}
 

@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {Plus, Search} from "lucide-react";
 import {authService} from "../services/authService.ts";
-import homepageImg from '../assets/homepage1.jpg';
+import homepageImg from '../assets/homepage.jpg';
 
 const Homepage = () => {
   const jeAdministrator = authService.isUserInRole('administrator');
@@ -47,9 +47,27 @@ const Homepage = () => {
           )}
         </div>
       </div>
-      {/* More content below the image section */}
-      <div className="flex flex-col items-center justify-center gap-5 px-4 py-8">
-        {/* Add more text or content here */}
+      <h2 className="mt-35 text-center text-3xl font-bold">Zašto odabrati baš ovu stranicu?</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 py-8">
+        <div className="text-center p-8 bg-gray-100 dark:bg-gray-900 dark:text-white">
+          <h3 className="text-xl">Provjereni ponuditelji</h3>
+          <p className="text-m text-gray-600 dark:text-gray-200">Samo kvalitetni i ocijenjeni profesionalci – biraj
+            najbolje za svoj
+            projekt.</p>
+        </div>
+        <div className="text-center p-8 bg-gray-100 dark:bg-gray-900 dark:text-white">
+          <h3 className="text-xl">Brza i jednostavna upotreba</h3>
+          <p className="text-m text-gray-600 dark:text-gray-200">Registriraj projekt ili pronađi posao u nekoliko
+            klikova. Bez
+            komplikacija.</p>
+        </div>
+        <div className="text-center p-8 bg-gray-100 dark:bg-gray-900 dark:text-white">
+          <h3 className="text-xl">Sve na jednom mjestu</h3>
+          <p className="text-m text-gray-600 dark:text-gray-200">Dizajn, programiranje, pisanje – sve usluge koje ti
+            trebaju, na
+            jednom
+            mjestu.</p>
+        </div>
       </div>
     </div>
   );

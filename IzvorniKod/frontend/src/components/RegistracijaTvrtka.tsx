@@ -53,7 +53,7 @@ const RegistracijaTvrtka = () => {
                       toastClassName={"text-black bg-gray-100 dark:text-white dark:bg-gray-900"}
                       limit={1}
       />
-      <h1 className="text-xl font-bold mb-6 text-center">Registracija Tvrtke</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Registracija Tvrtke</h1>
       <form onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-4 px-3 sm:px-6 lg:px-9 md:max-w-1/3 mx-auto">
         <div className="flex flex-col gap-2">
@@ -122,7 +122,7 @@ const RegistracijaTvrtka = () => {
 
         <button
           type="submit"
-          className="p-2 bg-green-500 text-white rounded hover:bg-green-600"
+          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Registriraj se
         </button>

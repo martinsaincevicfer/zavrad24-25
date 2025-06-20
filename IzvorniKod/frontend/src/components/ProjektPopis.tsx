@@ -108,7 +108,7 @@ export const ProjektPopis: React.FC = () => {
           </div>
           {showFilters && (
             <div
-              className="flex flex-col sm:flex-row items-stretch justify-around gap-2 p-4 rounded-lg bg-gray-900">
+              className="flex flex-col sm:flex-row items-stretch justify-around gap-2 p-4 rounded-lg bg-gray-200 dark:bg-gray-900">
               <div className="flex flex-col w-full md:w-1/4">
                 <span className="mb-2">Minimalni budžet</span>
                 <input
@@ -152,10 +152,10 @@ export const ProjektPopis: React.FC = () => {
             <Link
               to={`/projekti/${projekt.id}`}
               key={projekt.id}
-              className="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800"
+              className="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-y-scroll h-70"
             >
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
-              <p className="text-black dark:text-white mb-2">{projekt.opis}</p>
+              <p className="text-black dark:text-white mb-2 whitespace-pre-line">{projekt.opis}</p>
               <p className="text-sm mb-2">
                 <span className="font-semibold">Budžet: </span>
                 <span>{formatNovac(projekt.budzet)}</span>

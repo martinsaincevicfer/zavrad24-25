@@ -60,18 +60,16 @@ export const MojiProjekti: React.FC = () => {
           <Link
             to={`/projekti/${projekt.id}`}
             key={projekt.id}
-            className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800"
+            className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-auto whitespace-pre-line"
           >
             <h2 className="text-xl font-semibold mb-2">{projekt.naziv}</h2>
-            <p className="truncate mb-4">{projekt.opis}</p>
-            <div className="space-y-1 text-sm">
-              <div>
-                <span className="font-medium">Budžet: </span>€{projekt.budzet}
-              </div>
-              <div>
-                <span className="font-medium">Rok izrade: </span>
-                {new Date(projekt.rokIzrade).toLocaleDateString("hr-HR")}
-              </div>
+            <p className="mb-4 whitespace-pre-line">{projekt.opis}</p>
+            <div>
+              <span className="font-medium">Budžet: </span>€{projekt.budzet}
+            </div>
+            <div>
+              <span className="font-medium">Rok izrade: </span>
+              {new Date(projekt.rokIzrade).toLocaleDateString("hr-HR")}
             </div>
           </Link>
         ))}

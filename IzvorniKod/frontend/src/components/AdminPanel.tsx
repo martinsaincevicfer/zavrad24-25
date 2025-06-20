@@ -98,8 +98,6 @@ const AdminPanel: React.FC = () => {
 
   return (
     <div className="p-6">
-      <hr className="mb-6"/>
-
       <div>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Popis vještina</h2>
@@ -183,18 +181,18 @@ const AdminPanel: React.FC = () => {
                       </td>
                       <td className="px-4 py-2 flex gap-2">
                         <button
-                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                          onClick={handleEditSubmit(onEditSubmit)}
-                          disabled={isEditSubmitting}
-                        >
-                          Spremi
-                        </button>
-                        <button
                           className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
                           onClick={cancelEdit}
                           type="button"
                         >
                           Odustani
+                        </button>
+                        <button
+                          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                          onClick={handleEditSubmit(onEditSubmit)}
+                          disabled={isEditSubmitting}
+                        >
+                          Spremi
                         </button>
                       </td>
                     </>

@@ -98,55 +98,55 @@ const MojePonude: React.FC = () => {
       ) : (
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {ponude.map((ponuda) => (
-            <li key={ponuda.id} className="p-4 bg-gray-200 dark:bg-gray-700">
+            <li key={ponuda.id} className="p-4 bg-gray-200 dark:bg-gray-700 overflow-auto">
               <h2 className="text-lg font-semibold">
                 Projekt: {ponuda.projekt.naziv}
               </h2>
-              <p className="text-sm">
+              <p>
                 <strong>Status:</strong> {ponuda.status}
               </p>
               {editPonudaId === ponuda.id ? (
                 <>
                   <div className="mb-2">
-                    <label className="block text-sm">Iznos (€):</label>
+                    <label className="block">Iznos (€):</label>
                     <input
                       type="number"
                       value={editIznos}
                       onChange={e => setEditIznos(Number(e.target.value))}
-                      className="w-full p-1 rounded"
+                      className="w-full p-1 rounded border"
                     />
                   </div>
                   <div className="mb-2">
-                    <label className="block text-sm">Poruka:</label>
+                    <label className="block">Poruka:</label>
                     <input
                       type="text"
                       value={editPoruka}
                       onChange={e => setEditPoruka(e.target.value)}
-                      className="w-full p-1 rounded"
+                      className="w-full p-1 rounded border"
                     />
                   </div>
                   <button
-                    onClick={() => handleEditSave(ponuda.id)}
-                    className="px-3 py-1 bg-green-500 text-white rounded mr-2"
-                  >
-                    Spremi
-                  </button>
-                  <button
                     onClick={() => setEditPonudaId(null)}
-                    className="px-3 py-1 bg-gray-500 text-white rounded"
+                    className="px-3 py-1 bg-gray-500 text-white rounded mr-2"
                   >
                     Odustani
+                  </button>
+                  <button
+                    onClick={() => handleEditSave(ponuda.id)}
+                    className="px-3 py-1 bg-green-500 text-white rounded"
+                  >
+                    Spremi
                   </button>
                 </>
               ) : (
                 <>
-                  <p className="text-sm">
+                  <p>
                     <strong>Iznos:</strong> {ponuda.iznos} €
                   </p>
-                  <p className="text-sm h-16 overflow-y-scroll">
+                  <p>
                     <strong>Poruka:</strong> {ponuda.poruka}
                   </p>
-                  <p className="text-sm">
+                  <p>
                     <strong>Datum slanja ponude:</strong> {formatDatum(ponuda.datumStvaranja)}
                   </p>
                   {ponuda.status !== "prihvacena" && (

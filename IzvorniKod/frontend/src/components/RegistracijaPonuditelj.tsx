@@ -79,9 +79,9 @@ const RegistracijaPonuditelj: React.FC = () => {
               <label htmlFor="edukacija" className="block text-sm font-medium">
                 Edukacija
               </label>
-              <input
+              <textarea
                 id="edukacija"
-                type="text"
+                rows={3}
                 className={`appearance-none rounded block w-full px-3 py-2 border focus:outline-none sm:text-sm ${
                   errors.edukacija ? 'border-red-500' : ''
                 }`}
@@ -91,7 +91,7 @@ const RegistracijaPonuditelj: React.FC = () => {
             </div>
             <div>
               <label htmlFor="iskustvo" className="block text-sm font-medium">
-                Iskustvo
+                Radno iskustvo
               </label>
               <textarea
                 id="iskustvo"

@@ -131,7 +131,6 @@ const DnevniciRada: React.FC<Props> = ({ugovor}) => {
                   <>
                     <input
                       type="text"
-                      value={editPoruka}
                       onChange={e => setEditPoruka(e.target.value)}
                       className="w-full p-1 rounded border mb-2"
                     />
@@ -198,7 +197,7 @@ const DnevniciRada: React.FC<Props> = ({ugovor}) => {
                 disabled={isSubmitting}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-1"
               >
-                {isSubmitting ? "Spremanje..." : "Dodaj dnevnik rada"}
+                {isSubmitting ? "Spremanje..." : "Dodaj unos u dnevnik rada"}
               </button>
             </form>
           )}

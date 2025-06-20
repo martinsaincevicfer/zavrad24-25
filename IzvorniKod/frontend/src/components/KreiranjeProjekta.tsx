@@ -116,7 +116,7 @@ const KreiranjeProjekta: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="vjestine">
-              Predložene vještine
+              Preporučene vještine
             </label>
             <VjestinaAutocomplete name="vjestine"/>
             {errors.vjestine && (

@@ -80,7 +80,7 @@ const MojiUgovori: React.FC = () => {
                 <strong>Datum završetka: </strong>
                 {ugovor.datumZavrsetka
                   ? new Date(ugovor.datumZavrsetka).toLocaleDateString()
-                  : "N/A"}
+                  : "Nepoznat"}
               </p>
             </Link>
           ))}
