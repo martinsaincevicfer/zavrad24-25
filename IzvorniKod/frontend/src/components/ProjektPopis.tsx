@@ -158,7 +158,7 @@ export const ProjektPopis: React.FC = () => {
             <Link
               to={`/projekti/${projekt.id}`}
               key={projekt.id}
-              className="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-y-scroll h-70"
+              className="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-y-scroll h-80"
             >
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
               <p className="text-black dark:text-white mb-2 whitespace-pre-line wrap-break-word">{projekt.opis}</p>
