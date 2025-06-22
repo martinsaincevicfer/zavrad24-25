@@ -185,7 +185,7 @@ export const ProjektDetalji: React.FC = () => {
                       limit={1}
       />
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-        <h1 className="text-3xl md:text-4xl font-bold">{projekt.naziv}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold w-8/10">{projekt.naziv}</h1>
         {ulogiraniKorisnik === korisnik?.email && !projektImaUgovor && (
           <div className="hidden md:flex gap-2 mt-4 items-center justify-center">
             {ulogiraniKorisnik === korisnik?.email && projekt.status !== 'zatvoren' && (
@@ -227,9 +227,13 @@ export const ProjektDetalji: React.FC = () => {
             <span className="font-semibold text-l md:text-xl">Rok izrade:</span>
             <span className="text-l md:text-xl">{formatDatum(projekt.rokIzrade).split(',')[0]}</span>
           </div>
-          <div className="flex flex-col justify-start gap-3">
+          <div className="flex flex-col justify-start gap-3 whitespace-pre-line wrap-break-word">
             <h2 className="text-l md:text-xl font-semibold mb-2">Opis projekta:</h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-6 truncate text-l md:text-xl">{projekt.opis}</p>
+            <p
+              className="text-gray-700 dark:text-gray-300 mb-6 text-l md:text-xl overflow-auto line-clamp-6"
+            >
+              {projekt.opis}
+            </p>
           </div>
           <h2 className="text-l md:text-xl font-semibold mb-3">Preporučene vještine:</h2>
           <div className="flex flex-wrap gap-3">

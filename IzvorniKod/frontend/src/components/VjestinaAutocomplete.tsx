@@ -95,7 +95,8 @@ const VjestinaAutocomplete: React.FC<Props> = ({name}) => {
               {(value ?? []).map((id: number) => {
                 const v = selected.find((o) => o.id === id);
                 return (
-                  <span key={id} className="flex flex-row items-center p-3 bg-gray-700 rounded">
+                  <span key={id}
+                        className="flex flex-row items-center p-3 text-black bg-gray-300 dark:text-white dark:bg-gray-700 rounded border">
                     <span className="">
                       {(v && v.naziv) ? v.naziv : 'Učitavanje...'}
                     </span>

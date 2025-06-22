@@ -143,7 +143,7 @@ const MojePonude: React.FC = () => {
                   <p>
                     <strong>Iznos:</strong> {ponuda.iznos} €
                   </p>
-                  <p>
+                  <p className="wrap-break-word line-clamp-4 overflow-auto">
                     <strong>Poruka:</strong> {ponuda.poruka}
                   </p>
                   <p>

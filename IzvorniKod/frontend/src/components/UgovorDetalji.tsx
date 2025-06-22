@@ -209,7 +209,7 @@ const UgovorDetalji: React.FC = () => {
         <div className="flex flex-col justify-start gap-2">
           <span className="font-semibold text-l md:text-xl">Opis:</span>
           <span
-            className="text-gray-700 dark:text-gray-300 mb-6 truncate text-l md:text-xl">{ugovor.projekt.opis}</span>
+            className="text-gray-700 dark:text-gray-300 mb-6 truncate text-l md:text-xl wrap-break-word line-clamp-3 overflow-auto">{ugovor.projekt.opis}</span>
         </div>
       </div>
 
@@ -281,7 +281,7 @@ const UgovorDetalji: React.FC = () => {
             <div>
               <span className="font-semibold">Ocjena:</span> {ugovor.recenzija.ocjena}
             </div>
-            <div>
+            <div className="wrap-break-word line-clamp-3 overflow-auto">
               <span className="font-semibold">Komentar:</span> {ugovor.recenzija.komentar}
             </div>
           </div>
@@ -335,7 +335,7 @@ const UgovorDetalji: React.FC = () => {
             />
           </div>
           <div className="mb-2">
-            <label className="block font-semibold">Komentar:</label>
+            <label className="block font-semibold wrap-break-word line-clamp-3 overflow-auto">Komentar:</label>
             <textarea
               value={editKomentar}
               onChange={e => setEditKomentar(e.target.value)}

@@ -5,13 +5,22 @@ import axiosInstance from "../utils/axiosConfig.ts";
 import {FormProvider, useForm} from "react-hook-form";
 import VjestinaAutocomplete from "./VjestinaAutocomplete.tsx";
 import debounce from "lodash/debounce";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 type SearchForm = {
   naziv: string;
   budzet: number | '';
-  rokIzrade: string;
-  vjestine: number[];
+  rokIzrade?: string | undefined;
+  vjestine?: number[] | undefined;
 };
+
+const searchFormSchema = z.object({
+  naziv: z.string().max(100, "Naziv je predugačak"),
+  budzet: z.union([z.number({invalid_type_error: 'Budžet mora biti broj.'}).min(0, "Budžet ne može biti negativan"), z.literal('')]),
+  rokIzrade: z.string().optional(),
+  vjestine: z.array(z.number()).optional(),
+});
 
 const formatNovac = (iznos: number) =>
   new Intl.NumberFormat('hr-HR', {
@@ -27,12 +36,9 @@ export const ProjektPopis: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const methods = useForm<SearchForm>({
-    defaultValues: {
-      naziv: '',
-      budzet: '',
-      rokIzrade: '',
-      vjestine: [],
-    },
+    resolver: zodResolver(searchFormSchema),
+    defaultValues: {naziv: '', budzet: '', rokIzrade: '', vjestine: []},
+    mode: "all"
   });
 
   const fetchData = useCallback(async (data: SearchForm) => {
@@ -155,7 +161,7 @@ export const ProjektPopis: React.FC = () => {
               className="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-y-scroll h-70"
             >
               <h2 className="text-xl font-bold mb-2">{projekt.naziv}</h2>
-              <p className="text-black dark:text-white mb-2 whitespace-pre-line">{projekt.opis}</p>
+              <p className="text-black dark:text-white mb-2 whitespace-pre-line wrap-break-word">{projekt.opis}</p>
               <p className="text-sm mb-2">
                 <span className="font-semibold">Budžet: </span>
                 <span>{formatNovac(projekt.budzet)}</span>

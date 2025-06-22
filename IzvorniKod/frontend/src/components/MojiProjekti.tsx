@@ -60,10 +60,10 @@ export const MojiProjekti: React.FC = () => {
           <Link
             to={`/projekti/${projekt.id}`}
             key={projekt.id}
-            className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-auto whitespace-pre-line"
+            className="p-4 bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-800 overflow-y-scroll h-70"
           >
             <h2 className="text-xl font-semibold mb-2">{projekt.naziv}</h2>
-            <p className="mb-4 whitespace-pre-line">{projekt.opis}</p>
+            <p className="mb-4 wrap-break-word line-clamp-3 overflow-auto">{projekt.opis}</p>
             <div>
               <span className="font-medium">Budžet: </span>€{projekt.budzet}
             </div>
